@@ -1,3 +1,6 @@
-[submodule "pack\\plugins\\start\\nvim-lspconfig"]
-	path = pack\\plugins\\start\\nvim-lspconfig
+[submodule "pack/plugins/start/nvim-lspconfig"]
+	path = pack/plugins/start/nvim-lspconfig
 	url = https://github.com/neovim/nvim-lspconfig
+[submodule "pack/plugins/start/sonokai"]
+	path = pack/plugins/start/sonokai
+	url = https://github.com/sainnhe/sonokai
