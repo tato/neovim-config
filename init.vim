@@ -3,7 +3,7 @@
 "     ᕙ(⇀‸↼‶)ᕗ
 "   
 
-lua require'nvim_lsp'.rust_analyzer.setup({})
+lua require'lspconfig'.rust_analyzer.setup({})
 lua << EOF
 -- https://github.com/nanotee/nvim-lua-guide
 EOF
