@@ -3,10 +3,47 @@
 "     ᕙ(⇀‸↼‶)ᕗ
 "   
 
-lua require'lspconfig'.rust_analyzer.setup({})
-lua << EOF
--- https://github.com/nanotee/nvim-lua-guide
-EOF
+
+" Plugins {{{
+
+call plug#begin()
+Plug 'neovim/nvim-lspconfig'
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-vinegar'
+Plug 'qpkorr/vim-bufkill'
+Plug 'tommcdo/vim-lion'
+
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
+
+Plug 'sainnhe/sonokai'
+
+let g:nuake_per_tab = 1
+Plug 'Lenovsky/nuake'
+nnoremap <F4> :Nuake<CR>
+inoremap <F4> <C-\><C-n>:Nuake<CR>
+tnoremap <F4> <C-\><C-n>:Nuake<CR>
+
+
+call plug#end()
+
+
+" @TODO que tenga manera de poner ; despues de struct
+" @TODO think about this: en general creo que está bien, pero va a haber
+"       que configurarle unas cuantas opciones
+"packadd! auto-pairs
+" @TODO no quiero que abra parentesis si estoy pegado a un texto
+
+"let g:ctrlp_map = '<Shift><Shift>'
+"let g:ctrlp_cmd = 'CtrlP' "CtrlPMixed if I want Files+Buffers+MRU
+"let g:ctrlp_match_window = 'bottom,order:btt,min:1,max:20'
+"let g:ctrlp_switch_buffer = '0'
+"let g:ctrlp_reuse_window = 'netrw\|help\|quickfix\|nofile'
+"let g:ctrlp_working_path_mode = 'w'
+"let g:ctrlp_open_new_file = 'r'
+"let g:ctrlp_user_command = [ '.git/', 'git --git-dir=%s/.git ls-files -oc --exclude-standard' ]
+"packadd! ctrlp.vim
+" }}}
 
 " Editor Features {{{
 
@@ -547,45 +584,18 @@ set errorformat^=%f(%l):\ note\ %t%n:\ %m
 
 " }}}
 
+" Language Servers {{{
+
+lua require'lspconfig'.rust_analyzer.setup({})
+lua << EOF
+-- https://github.com/nanotee/nvim-lua-guide
+EOF
+
+" }}}
+
 " @TODO
 nnoremap <C-R> :%s/
 
-" @TODO Plugins {{{
-
-packadd! traces.vim
-
-
-" @TODO que tenga manera de poner ; despues de struct
-" @TODO think about this: en general creo que está bien, pero va a haber
-"       que configurarle unas cuantas opciones
-"packadd! auto-pairs
-" @TODO no quiero que abra parentesis si estoy pegado a un texto
-
-let g:nuake_per_tab = 1
-packadd! nuake
-nnoremap <F4> :Nuake<CR>
-inoremap <F4> <C-\><C-n>:Nuake<CR>
-tnoremap <F4> <C-\><C-n>:Nuake<CR>
-
-packadd! vim-lion
-
-let g:ctrlp_map = '<C-o>'
-let g:ctrlp_cmd = 'CtrlP' "CtrlPMixed if I want Files+Buffers+MRU
-let g:ctrlp_match_window = 'bottom,order:btt,min:1,max:20'
-let g:ctrlp_switch_buffer = '0'
-let g:ctrlp_reuse_window = 'netrw\|help\|quickfix\|nofile'
-let g:ctrlp_working_path_mode = 'w'
-let g:ctrlp_open_new_file = 'r'
-packadd! ctrlp.vim
-
-packadd! vim-fugitive
-packadd! vim-vinegar
-
-packadd! vim-bufkill
-
-silent! helptags ALL
-
-" }}}
 
 
 "
