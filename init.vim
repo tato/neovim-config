@@ -4,6 +4,7 @@
 "   
 
 
+language en_US
 " Plugins {{{
 
 call plug#begin()
@@ -13,8 +14,25 @@ Plug 'tpope/vim-vinegar'
 Plug 'qpkorr/vim-bufkill'
 Plug 'tommcdo/vim-lion'
 
+Plug 'airblade/vim-gitgutter'
+let g:gitgutter_map_keys = 0
+augroup git_gutter_config
+  autocmd!
+  au VimEnter * GitGutterSignsDisable 
+  au VimEnter * GitGutterLineNrHighlightsEnable
+  au VimEnter * highlight GitGutterAddLineNr guibg=darkgreen
+  au VimEnter * highlight GitGutterChangeLineNr guibg=darkblue
+  au VimEnter * highlight GitGutterDeleteLineNr guibg=red
+  au VimEnter * highlight GitGutterChangeDeleteLine guibg=red
+augroup END
+
+
+Plug 'tpope/vim-sleuth'
+Plug 'editorconfig/editorconfig-vim'
+
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
+nnoremap <Space><Space> :GFiles<CR>
 
 Plug 'sainnhe/sonokai'
 
@@ -107,6 +125,7 @@ cnoremap <expr> <S-Tab> getcmdtype() == "/" \|\| getcmdtype() == "?" ? "<C-t>" :
 set gdefault
 " }}}
 " Graphical Interface {{{
+set updatetime=100
 
 if has('termguicolors')
     set termguicolors
@@ -129,6 +148,7 @@ set display=truncate "Show @@@ in last line if it is truncated
 
 set cursorline "Highlights current line
 set number " show line numbers on the left
+set relativenumber
 set foldcolumn=0 "0 character gutter
 
 set lazyredraw "Don't redraw when it's not necessary
@@ -145,6 +165,11 @@ set t_vb=
 " }}}
 
 cnoreabbrev H vert bo help
+
+nnoremap <silent> <C-h> :call windows#move('h')<CR>
+nnoremap <silent> <C-j> :call windows#move('j')<CR>
+nnoremap <silent> <C-k> :call windows#move('k')<CR>
+nnoremap <silent> <C-l> :call windows#move('l')<CR>
 
 " Misc Keyboard Shortcuts {{{
 
