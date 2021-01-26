@@ -62,44 +62,20 @@ call plug#end()
 filetype plugin indent on
 syntax on
 
-set encoding=utf-8
-set fileencoding=utf-8
-set fileformats=unix,dos
-
-set hidden "Enable hidden buffers, allows swapping between files without saving
-set clipboard^=unnamed " normal yank also copies to clipboard
-
-" TODO: editor config
-set tabstop=4
-set expandtab
-set softtabstop=4
-set shiftwidth=4
-
-set nofoldenable "Disable folding
-set foldmethod=indent "fold based on indent level
-set foldlevelstart=10 "first level that will be folded when a file is opened
-set foldnestmax=10 "maximum number of folds nested within each other
-
-set ignorecase "Case-insensitive search
-set smartcase "Case-insensitive when lower-case, Case-sensitive when upper-case
-
-set inccommand=nosplit
-
-set modeline
-set modelines=1
-
-set timeoutlen=1000
-set ttimeoutlen=0
-
-if !&scrolloff
-  set scrolloff=5 "Five line of context above
-endif
+set clipboard+=unnamedplus
+set expandtab tabstop=4 softtabstop=4 shiftwidth=4
+set nofoldenable foldmethod=indent foldlevelstart=10 foldnestmax=10
+set ignorecase smartcase inccommand=nosplit gdefault
+set modeline modelines=1
+set timeoutlen=1000 ttimeoutlen=0
+set scrolloff=5
+set hidden undofile
 
 " When editing a file, always jump to the last known cursor position.
 " Don't do it when the position is invalid, when inside an event handler
 " (happens when dropping a file on gvim) and for a commit message (it's
 " likely a different one than last time).
-augroup LastPositionJump
+augroup last_position_jump
     autocmd!
     au BufReadPost *
       \ if line("'\"") >= 1 && line("'\"") <= line("$") && &ft !~# 'commit'
@@ -108,17 +84,17 @@ augroup LastPositionJump
 augroup END
 
 
-set undofile
-
-" TODO: remember what this did lol
+" TODO: What does this do?
 set wildcharm=<C-z>
 cnoremap <expr> <Tab>   getcmdtype() == "/" \|\| getcmdtype() == "?" ? "<C-g>" : "<C-z>"
 cnoremap <expr> <S-Tab> getcmdtype() == "/" \|\| getcmdtype() == "?" ? "<C-t>" : "<S-Tab>"
 
-set gdefault
 " }}}
-" Graphical Interface {{{
+" Interface {{{
 set updatetime=100
+set title cursorline number relativenumber lazyredraw showmatch
+set wrap linebreak display=truncate
+set noerrorbells visualbell t_vb=
 
 if has('termguicolors')
     set termguicolors
@@ -127,34 +103,6 @@ let g:sonokai_style = 'atlantis'
 let g:sonokai_enable_italic = 1
 let g:sonokai_disable_italic_comment = 1
 colorscheme sonokai
-
-set title "Show filename in title
-set guioptions= "Remove every gui element on gvim
-
-set display=truncate "Show @@@ in last line if it is truncated
-
-"@TODO: Research tags for C symbol navigation
-"https://medium.com/usevim/vim-101-preview-window-40039d37f4ec
-"http://vim.wikia.com/wiki/Browsing_programs_with_tags#Creating_a_tags_file_using_ctags
-"The %w item in a statusline shows where a window is a 'Preview Window', which
-"I assume has something to do with this
-
-set cursorline "Highlights current line
-set number " show line numbers on the left
-set relativenumber
-set foldcolumn=0 "0 character gutter
-
-set lazyredraw "Don't redraw when it's not necessary
-set showmatch "Highlight matching parenthesis and brackets
-
-set wrap
-set linebreak "Wrap words rather than characters
-
-" Disable bell sounds
-set noerrorbells
-set visualbell
-set t_vb=
-
 " }}}
 
 cnoreabbrev H vert bo help
@@ -577,8 +525,11 @@ EOF
 
 " TODO https://github.com/nanotee/nvim-lua-guide
 if has('win32')
-  let $PATH=$PATH.';'.fnamemodify($MYVIMRC, ':h')
+  let s:path_separator = ';'
+else
+  let s:path_separator = ':'
 endif
+let $PATH=$PATH.s:path_separator.fnamemodify($MYVIMRC.'/bin', ':h')
 
 " }}}
 
