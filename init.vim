@@ -90,6 +90,8 @@ nnoremap <silent> <C-j> :call windows#move('j')<CR>
 nnoremap <silent> <C-k> :call windows#move('k')<CR>
 nnoremap <silent> <C-l> :call windows#move('l')<CR>
 
+nnoremap <silent> <F2> :call quickhelp#open()<CR>
+
 " Misc Keyboard Shortcuts {{{
 
 nnoremap ; :
@@ -466,18 +468,6 @@ augroup END
 set wildcharm=<C-z>
 cnoremap <expr> <Tab>   getcmdtype() == "/" \|\| getcmdtype() == "?" ? "<C-g>" : "<C-z>"
 cnoremap <expr> <S-Tab> getcmdtype() == "/" \|\| getcmdtype() == "?" ? "<C-t>" : "<S-Tab>"
-
-
-" TODO
-function OpenQuickHelp()
-    let buf = nvim_create_buf(v:false, v:true)
-    call nvim_buf_set_lines(buf, 0, -1, v:true, readfile($MYVIMRCPATH.'/help.txt'))
-    let opts = {'relative': 'editor', 'width': &columns/2, 'height': &lines/2, 'col': &columns/4,
-        \ 'row': &lines/4, 'anchor': 'NW', 'style': 'minimal'}
-    let win = nvim_open_win(buf, 0, opts)
-    " optional: change highlight, otherwise Pmenu is used
-    " call nvim_win_set_option(win, 'winhl', 'Normal:MyHighlight')
-endfunction
 
 
 "
