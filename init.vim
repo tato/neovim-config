@@ -4,7 +4,8 @@
 "   
 
 
-language en_US
+silent! language en_US
+silent! language en_US.utf-8
 " Plugins {{{
 
 call plug#begin()
@@ -42,25 +43,17 @@ nnoremap <F4> :Nuake<CR>
 inoremap <F4> <C-\><C-n>:Nuake<CR>
 tnoremap <F4> <C-\><C-n>:Nuake<CR>
 
+Plug 'vim-airline/vim-airline'
+let g:airline_powerline_fonts = 1
+let g:airline#extensions#tabline#enabled = 1
 
 call plug#end()
-
 
 " @TODO que tenga manera de poner ; despues de struct
 " @TODO think about this: en general creo que está bien, pero va a haber
 "       que configurarle unas cuantas opciones
 "packadd! auto-pairs
 " @TODO no quiero que abra parentesis si estoy pegado a un texto
-
-"let g:ctrlp_map = '<Shift><Shift>'
-"let g:ctrlp_cmd = 'CtrlP' "CtrlPMixed if I want Files+Buffers+MRU
-"let g:ctrlp_match_window = 'bottom,order:btt,min:1,max:20'
-"let g:ctrlp_switch_buffer = '0'
-"let g:ctrlp_reuse_window = 'netrw\|help\|quickfix\|nofile'
-"let g:ctrlp_working_path_mode = 'w'
-"let g:ctrlp_open_new_file = 'r'
-"let g:ctrlp_user_command = [ '.git/', 'git --git-dir=%s/.git ls-files -oc --exclude-standard' ]
-"packadd! ctrlp.vim
 " }}}
 
 " Editor Features {{{
@@ -224,10 +217,8 @@ nnoremap J <NOP>
 vnoremap J <NOP>
 
 ",h -> Disable Last Search Highlight
-"nnoremap ,h :nohlsearch<CR>=has('diff')?'<Bar>diffupdate':''<CR><CR><C-L>
-"nnoremap ,h :nohlsearch<CR>
-if maparg('<C-L>', 'n') ==# ''
-  nnoremap <silent> <C-L> :nohlsearch<C-R>=has('diff')?'<Bar>diffupdate':''<CR><CR><C-L>
+if maparg('<Space>l', 'n') ==# ''
+  nnoremap <silent> <Space>l :nohlsearch<C-R>=has('diff')?'<Bar>diffupdate':''<CR><CR><C-L>
 endif
 
 ",ff -> File Find
@@ -275,88 +266,6 @@ inoremap [;    [<CR>];<Esc>O
 inoremap [,    [<CR>],<Esc>O
 " }}}
 
-" Status Line {{{
-" https://www.blaenkdenum.com/posts/a-simpler-vim-statusline/
-fu! StatusLine(winnr)
-    let stat = ''
-    let active = winnr() == a:winnr
-    let buffer = winbufnr(a:winnr)
-
-    let modified = getbufvar(buffer, '&modified')
-    let readonly = getbufvar(buffer, '&ro')
-    let fname = bufname(buffer)
-
-    fu! Color(active, num, content)
-        if a:active
-            return '%' . a:num . '*' . a:content . '%*'
-        else
-            return a:content
-        endif
-    endf
-
-    " column
-    "let stat .= '%1*' . (col(".") / 100 >= 1 ? '%v ' : ' %2v ') . '%*'
-
-    " line
-    let stat .= '%1*'.'%4l'.'%*'
-
-    " file
-    let stat .= Color(active, 4, active ? ' » %<' : ' « %<')
-    let stat .= Color(active, 4, '%f')
-    let stat .= Color(active, 4, active ? ' « ' : ' » ')
-
-    let stat .= Color(active, 2, modified ? ' +' : '')
-    let stat .= Color(active, 2, readonly ? ' READONLY' : '')
-
-    " right side
-    let stat .= '%='
-
-    " git branch
-    let head = ''
-    if exists('*fugitive#head')
-        let head = fugitive#head()
-
-        if empty(head) && exists('*fugitive#detect') && !exists('b:git_dir')
-            call fugitive#detect(getcwd())
-            let head = fugitive#head()
-        endif
-    endif
-
-    if !empty(head)
-        let stat .= Color(active, 3, ' GIT ') . head . ' '
-    endif
-
-    return stat
-endf
-augroup set_status_line
-    autocmd!
-    au VimEnter,WinEnter,BufWinEnter,BufUnload * :call SetStatusLine()
-augroup END
-fu! SetStatusLine()
-    for nr in range(1, winnr('$'))
-        call setwinvar(nr, '&statusline', '%!StatusLine('.nr.')')
-    endfor
-endf
-
-"hi User1 ctermfg=33  guifg=#268bd2  ctermbg=15 guibg=#fdf6e3 gui=bold
-"hi User2 ctermfg=125 guifg=#d33682  ctermbg=7  guibg=#eee8d5 gui=bold
-"hi User3 ctermfg=64  guifg=#719e07  ctermbg=7  guibg=#eee8d5 gui=bold
-"hi User4 ctermfg=37  guifg=#2aa198  ctermbg=7  guibg=#eee8d5 gui=bold
-
-"hi User1 ctermfg=0   ctermbg=4   guifg=#c1cdc1 guibg=#222222 gui=bold
-"hi User2 ctermfg=0   ctermbg=4   guifg=#000000 guibg=#8f6f8f gui=bold
-"hi User3 ctermfg=0   ctermbg=4   guifg=#000000 guibg=#8f6f8f gui=bold
-"hi User4 ctermfg=0   ctermbg=4   guifg=#000000 guibg=#8f6f8f gui=bold
-"hi User5 ctermfg=0   ctermbg=4   guifg=#8f6f8f guibg=#c1cdc1 gui=bold
-
-hi link User1 StatusLine
-hi link User2 StatusLine
-hi link User3 StatusLine
-hi link User4 StatusLine
-
-"set statusline=---\ %f%(\ (%M%H%R)%)\ (%Y)\ ---%=%(%l,%c%V\ ---\ %=\ %P%)\ ---
-" █▓▒░ » « 🔒 ☰ ¶ ㏑ ρ Þ ∥ Ɇ Ξ
-" }}}
 " @TODO Mode-Aware Cursors {{{
 " https://github.com/blaenk/dots/blob/9843177fa6155e843eb9e84225f458cd0205c969/vim/vimrc.ln#L49-L64
 "set guicursor=a:block
