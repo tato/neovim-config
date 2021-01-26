@@ -15,7 +15,7 @@ Plug 'tpope/vim-vinegar'
 Plug 'qpkorr/vim-bufkill'
 Plug 'tommcdo/vim-lion'
 
-Plug 'airblade/vim-gitgutter'
+Plug 'airblade/vim-gitgutter', { 'commit': '0bcd8c5' }
 let g:gitgutter_map_keys = 0
 augroup git_gutter_config
   autocmd!
