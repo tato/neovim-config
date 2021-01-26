@@ -4,8 +4,8 @@
 "   
 
 
-language en_US
-let $VIMCONFIG=fnamemodify($MYVIMRC, ':h')
+silent! language en_US
+silent! language en_US.utf-8
 " Plugins {{{
 
 call plug#begin()
@@ -20,13 +20,13 @@ let g:gitgutter_map_keys = 0
 augroup git_gutter_config
   autocmd!
   au VimEnter * GitGutterSignsDisable 
+  au VimEnter * GitGutterLineHighlightsDisable
   au VimEnter * GitGutterLineNrHighlightsEnable
-  au VimEnter * highlight GitGutterAddLineNr guibg=darkgreen
-  au VimEnter * highlight GitGutterChangeLineNr guibg=darkblue
-  au VimEnter * highlight GitGutterDeleteLineNr guibg=darkred
-  au VimEnter * highlight GitGutterChangeDeleteLine guibg=darkred
+  au VimEnter * highlight GitGutterAddLineNr guifg=lightgreen
+  au VimEnter * highlight GitGutterChangeLineNr guifg=lightblue
+  au VimEnter * highlight GitGutterDeleteLineNr guifg=lightred
+  au VimEnter * highlight GitGutterChangeDeleteLine guifg=lightred
 augroup END
-
 
 Plug 'tpope/vim-sleuth'
 Plug 'editorconfig/editorconfig-vim'
@@ -43,90 +43,38 @@ nnoremap <F4> :Nuake<CR>
 inoremap <F4> <C-\><C-n>:Nuake<CR>
 tnoremap <F4> <C-\><C-n>:Nuake<CR>
 
+Plug 'vim-airline/vim-airline'
+let g:airline_powerline_fonts = 1
+let g:airline#extensions#tabline#enabled = 1
+
+Plug 'tpope/vim-commentary'
 
 call plug#end()
-
 
 " @TODO que tenga manera de poner ; despues de struct
 " @TODO think about this: en general creo que está bien, pero va a haber
 "       que configurarle unas cuantas opciones
 "packadd! auto-pairs
 " @TODO no quiero que abra parentesis si estoy pegado a un texto
-
-"let g:ctrlp_map = '<Shift><Shift>'
-"let g:ctrlp_cmd = 'CtrlP' "CtrlPMixed if I want Files+Buffers+MRU
-"let g:ctrlp_match_window = 'bottom,order:btt,min:1,max:20'
-"let g:ctrlp_switch_buffer = '0'
-"let g:ctrlp_reuse_window = 'netrw\|help\|quickfix\|nofile'
-"let g:ctrlp_working_path_mode = 'w'
-"let g:ctrlp_open_new_file = 'r'
-"let g:ctrlp_user_command = [ '.git/', 'git --git-dir=%s/.git ls-files -oc --exclude-standard' ]
-"packadd! ctrlp.vim
 " }}}
-
-" Editor Features {{{
-
-" Enable filetype plugins, filetype indent settings and syntax highlighting
+" VIM Options {{{
 filetype plugin indent on
 syntax on
 
-set encoding=utf-8
-set fileencoding=utf-8
-set fileformats=unix,dos
+set clipboard+=unnamedplus
+set expandtab tabstop=4 softtabstop=4 shiftwidth=4
+set nofoldenable foldmethod=indent foldlevelstart=10 foldnestmax=10
+set ignorecase smartcase inccommand=nosplit gdefault
+set modeline modelines=1
+set timeoutlen=1000 ttimeoutlen=0
+set scrolloff=5
+set hidden undofile
 
-set hidden "Enable hidden buffers, allows swapping between files without saving
-set clipboard^=unnamed " normal yank also copies to clipboard
-
-" TODO: editor config
-set tabstop=4
-set expandtab
-set softtabstop=4
-set shiftwidth=4
-
-set nofoldenable "Disable folding
-set foldmethod=indent "fold based on indent level
-set foldlevelstart=10 "first level that will be folded when a file is opened
-set foldnestmax=10 "maximum number of folds nested within each other
-
-set ignorecase "Case-insensitive search
-set smartcase "Case-insensitive when lower-case, Case-sensitive when upper-case
-
-set inccommand=nosplit
-
-set modeline
-set modelines=1
-
-set timeoutlen=1000
-set ttimeoutlen=0
-
-if !&scrolloff
-  set scrolloff=5 "Five line of context above
-endif
-
-" When editing a file, always jump to the last known cursor position.
-" Don't do it when the position is invalid, when inside an event handler
-" (happens when dropping a file on gvim) and for a commit message (it's
-" likely a different one than last time).
-augroup LastPositionJump
-    autocmd!
-    au BufReadPost *
-      \ if line("'\"") >= 1 && line("'\"") <= line("$") && &ft !~# 'commit'
-      \ |   exe "normal! g`\""
-      \ | endif
-augroup END
-
-
-set undofile
-
-" TODO: remember what this did lol
-set wildcharm=<C-z>
-cnoremap <expr> <Tab>   getcmdtype() == "/" \|\| getcmdtype() == "?" ? "<C-g>" : "<C-z>"
-cnoremap <expr> <S-Tab> getcmdtype() == "/" \|\| getcmdtype() == "?" ? "<C-t>" : "<S-Tab>"
-
-set gdefault
-" }}}
-" Graphical Interface {{{
 set updatetime=100
+set title cursorline number relativenumber lazyredraw showmatch
+set wrap linebreak display=truncate
+set noerrorbells visualbell t_vb=
+" }}}
 
 if has('termguicolors')
     set termguicolors
@@ -136,41 +84,14 @@ let g:sonokai_enable_italic = 1
 let g:sonokai_disable_italic_comment = 1
 colorscheme sonokai
 
-set title "Show filename in title
-set guioptions= "Remove every gui element on gvim
-
-set display=truncate "Show @@@ in last line if it is truncated
-
-"@TODO: Research tags for C symbol navigation
-"https://medium.com/usevim/vim-101-preview-window-40039d37f4ec
-"http://vim.wikia.com/wiki/Browsing_programs_with_tags#Creating_a_tags_file_using_ctags
-"The %w item in a statusline shows where a window is a 'Preview Window', which
-"I assume has something to do with this
-
-set cursorline "Highlights current line
-set number " show line numbers on the left
-set relativenumber
-set foldcolumn=0 "0 character gutter
-
-set lazyredraw "Don't redraw when it's not necessary
-set showmatch "Highlight matching parenthesis and brackets
-
-set wrap
-set linebreak "Wrap words rather than characters
-
-" Disable bell sounds
-set noerrorbells
-set visualbell
-set t_vb=
-
-" }}}
-
 cnoreabbrev H vert bo help
 
 nnoremap <silent> <C-h> :call windows#move('h')<CR>
 nnoremap <silent> <C-j> :call windows#move('j')<CR>
 nnoremap <silent> <C-k> :call windows#move('k')<CR>
 nnoremap <silent> <C-l> :call windows#move('l')<CR>
+
+nnoremap <silent> <F2> :call quickhelp#open()<CR>
 
 " Misc Keyboard Shortcuts {{{
 
@@ -197,14 +118,6 @@ nnoremap gk :<C-u>call BreakHere()<CR>
 " Ctrl-S -> Save Files
 nnoremap <C-s> :wa<CR>
 
-"Move to beginning/end of line
-"@TODO: These need work, they need to be configured as modifiers and
-"       also need a more comfortable mapping. What is this, emacs?
-" nnoremap <C-b> ^
-" nnoremap <C-e> $
-" vnoremap <C-b> ^
-" vnoremap <C-e> $
-
 "Y copies to end of line, instead of being a copy of yy
 map Y y$
 
@@ -225,15 +138,9 @@ nnoremap J <NOP>
 vnoremap J <NOP>
 
 ",h -> Disable Last Search Highlight
-"nnoremap ,h :nohlsearch<CR>=has('diff')?'<Bar>diffupdate':''<CR><CR><C-L>
-"nnoremap ,h :nohlsearch<CR>
-if maparg('<C-L>', 'n') ==# ''
-  nnoremap <silent> <C-L> :nohlsearch<C-R>=has('diff')?'<Bar>diffupdate':''<CR><CR><C-L>
+if maparg('<Space>l', 'n') ==# ''
+  nnoremap <silent> <Space>l :nohlsearch<C-R>=has('diff')?'<Bar>diffupdate':''<CR><CR><C-L>
 endif
-
-",ff -> File Find
-"nnoremap ,ff :find <C-R>=fnameescape(expand('%:p:h')).'/**/*'<CR>
-"nnoremap ,ff :find <C-R>='**/*'<CR>
 
 "gb -> Buffer navigation
 nnoremap gb :ls<CR>:buffer<Space>
@@ -244,135 +151,6 @@ nnoremap ,b :buffer *
 " ,fsd -> File Source Dotfile
 nnoremap ,fed :e $MYVIMRC<CR>
 nnoremap ,fsd :source $MYVIMRC<CR> | nohlsearch | call startup#maximize()
-
-" }}}
-" Comment/Uncomment Lines {{{
-" TODO better
-" -- Comment a line of code with ',cc', uncomment with ',cu'
-"https://stackoverflow.com/questions/1676632/whats-a-quick-way-to-comment-uncomment-lines-in-vim
-augroup filetype_comments
-    autocmd!
-    au FileType c,cpp,java       let b:comment_leader = '// '
-    au FileType rust             let b:comment_leader = '// '
-    au FileType sh,ruby,python   let b:comment_leader = '# '
-    au FileType conf,fstab       let b:comment_leader = '# '
-    au FileType gdscript         let b:comment_leader = '# '
-    au FileType vim              let b:comment_leader = '" '
-    au FileType haskell          let b:comment_leader = '-- '
-    au FileType dosbatch         let b:comment_leader = ':: '
-augroup END
-noremap <silent> ,cc :<C-B>silent <C-E>s/^/<C-R>=escape(b:comment_leader,'\/')<CR>/<CR>:nohlsearch<CR>
-noremap <silent> ,cu :<C-B>silent <C-E>s/^\V<C-R>=escape(b:comment_leader,'\/')<CR>//e<CR>:nohlsearch<CR>
-" }}}
-" Brackets Autoexpansion {{{
-
-" see packadd! auto-pairs
-inoremap (<CR> (<CR>)<Esc>O
-inoremap {<CR> {<CR>}<Esc>O
-inoremap {;    {<CR>};<Esc>O
-inoremap {,    {<CR>},<Esc>O
-inoremap [<CR> [<CR>]<Esc>O
-inoremap [;    [<CR>];<Esc>O
-inoremap [,    [<CR>],<Esc>O
-" }}}
-
-" Status Line {{{
-" https://www.blaenkdenum.com/posts/a-simpler-vim-statusline/
-fu! StatusLine(winnr)
-    let stat = ''
-    let active = winnr() == a:winnr
-    let buffer = winbufnr(a:winnr)
-
-    let modified = getbufvar(buffer, '&modified')
-    let readonly = getbufvar(buffer, '&ro')
-    let fname = bufname(buffer)
-
-    fu! Color(active, num, content)
-        if a:active
-            return '%' . a:num . '*' . a:content . '%*'
-        else
-            return a:content
-        endif
-    endf
-
-    " column
-    "let stat .= '%1*' . (col(".") / 100 >= 1 ? '%v ' : ' %2v ') . '%*'
-
-    " line
-    let stat .= '%1*'.'%4l'.'%*'
-
-    " file
-    let stat .= Color(active, 4, active ? ' » %<' : ' « %<')
-    let stat .= Color(active, 4, '%f')
-    let stat .= Color(active, 4, active ? ' « ' : ' » ')
-
-    let stat .= Color(active, 2, modified ? ' +' : '')
-    let stat .= Color(active, 2, readonly ? ' READONLY' : '')
-
-    " right side
-    let stat .= '%='
-
-    " git branch
-    let head = ''
-    if exists('*fugitive#head')
-        let head = fugitive#head()
-
-        if empty(head) && exists('*fugitive#detect') && !exists('b:git_dir')
-            call fugitive#detect(getcwd())
-            let head = fugitive#head()
-        endif
-    endif
-
-    if !empty(head)
-        let stat .= Color(active, 3, ' GIT ') . head . ' '
-    endif
-
-    return stat
-endf
-augroup set_status_line
-    autocmd!
-    au VimEnter,WinEnter,BufWinEnter,BufUnload * :call SetStatusLine()
-augroup END
-fu! SetStatusLine()
-    for nr in range(1, winnr('$'))
-        call setwinvar(nr, '&statusline', '%!StatusLine('.nr.')')
-    endfor
-endf
-
-"hi User1 ctermfg=33  guifg=#268bd2  ctermbg=15 guibg=#fdf6e3 gui=bold
-"hi User2 ctermfg=125 guifg=#d33682  ctermbg=7  guibg=#eee8d5 gui=bold
-"hi User3 ctermfg=64  guifg=#719e07  ctermbg=7  guibg=#eee8d5 gui=bold
-"hi User4 ctermfg=37  guifg=#2aa198  ctermbg=7  guibg=#eee8d5 gui=bold
-
-"hi User1 ctermfg=0   ctermbg=4   guifg=#c1cdc1 guibg=#222222 gui=bold
-"hi User2 ctermfg=0   ctermbg=4   guifg=#000000 guibg=#8f6f8f gui=bold
-"hi User3 ctermfg=0   ctermbg=4   guifg=#000000 guibg=#8f6f8f gui=bold
-"hi User4 ctermfg=0   ctermbg=4   guifg=#000000 guibg=#8f6f8f gui=bold
-"hi User5 ctermfg=0   ctermbg=4   guifg=#8f6f8f guibg=#c1cdc1 gui=bold
-
-hi link User1 StatusLine
-hi link User2 StatusLine
-hi link User3 StatusLine
-hi link User4 StatusLine
-
-"set statusline=---\ %f%(\ (%M%H%R)%)\ (%Y)\ ---%=%(%l,%c%V\ ---\ %=\ %P%)\ ---
-" █▓▒░ » « 🔒 ☰ ¶ ㏑ ρ Þ ∥ Ɇ Ξ
-" }}}
-" @TODO Mode-Aware Cursors {{{
-" https://github.com/blaenk/dots/blob/9843177fa6155e843eb9e84225f458cd0205c969/vim/vimrc.ln#L49-L64
-"set guicursor=a:block
-"set guicursor+=o:hor50-Cursor
-"set guicursor+=n:Cursor
-"set guicursor+=i-ci-sm:ver25-InsertCursor
-"set guicursor+=r-cr:ReplaceCursor-hor20
-"set guicursor+=c:Cursor
-"set guicursor+=v-ve:VisualCursor
-"set guicursor+=a:blinkon0
-""set guicursor+=sm:block-Cursor-blinkwait175-blinkoff150-blinkon175
-"hi CommandCursor ctermfg=15 guifg=#fdf6e3 ctermbg=166 guibg=#cb4b16
-"hi InsertCursor  ctermfg=15 guifg=#fdf6e3 ctermbg=37  guibg=#b1d631
-"hi ReplaceCursor ctermfg=15 guifg=#fdf6e3 ctermbg=65  guibg=#ff6a6a
-"hi VisualCursor  ctermfg=15 guifg=#fdf6e3 ctermbg=125 guibg=#90b0d1
 
 " }}}
 
@@ -550,15 +328,15 @@ command! SC vnew | setlocal nobuflisted buftype=nofile bufhidden=wipe noswapfile
 " }}}
 
 " @TODO Custom C/C++ Highlighting {{{
-augroup custom_c_highlighting
-    autocmd!
-    au FileType c,cpp syn keyword cType int8 int16 int32 int64
-    au FileType c,cpp syn keyword cType uint8 uint16 uint32 uint64
-    au FileType c,cpp syn keyword cType real32 real64 bool32
-    au FileType c,cpp syn keyword cType i8 i16 i32 i64 u8 u16 u32 u64 f32 f64
-    au FileType c,cpp syn keyword cType v2 v2i v3 v3i v4 v4i m4
-    au FileType c,cpp syn keyword cStorageClass local_persist global_variable internal
-augroup END
+"augroup custom_c_highlighting
+"    autocmd!
+"    au FileType c,cpp syn keyword cType int8 int16 int32 int64
+"    au FileType c,cpp syn keyword cType uint8 uint16 uint32 uint64
+"    au FileType c,cpp syn keyword cType real32 real64 bool32
+"    au FileType c,cpp syn keyword cType i8 i16 i32 i64 u8 u16 u32 u64 f32 f64
+"    au FileType c,cpp syn keyword cType v2 v2i v3 v3i v4 v4i m4
+"    au FileType c,cpp syn keyword cStorageClass local_persist global_variable internal
+"augroup END
 " }}}
 " @TODO Wacky Compilation {{{
 
@@ -615,14 +393,35 @@ lua require('lsp_config')
 
 " TODO https://github.com/nanotee/nvim-lua-guide
 if has('win32')
-  let $PATH=$PATH.';'.fnamemodify($MYVIMRC, ':h')
+  let s:path_separator = ';'
+else
+  let s:path_separator = ':'
 endif
+let $MYVIMRCPATH=fnamemodify($MYVIMRC, ':h')
+let $PATH=$PATH.s:path_separator.$MYVIMRCPATH.'/bin'
 
 " }}}
 
 " @TODO
 nnoremap <C-R> :%s/
 
+" When editing a file, always jump to the last known cursor position.
+" Don't do it when the position is invalid, when inside an event handler
+" (happens when dropping a file on gvim) and for a commit message (it's
+" likely a different one than last time).
+augroup last_position_jump
+    autocmd!
+    au BufReadPost *
+      \ if line("'\"") >= 1 && line("'\"") <= line("$") && &ft !~# 'commit'
+      \ |   exe "normal! g`\""
+      \ | endif
+augroup END
+
+
+" TODO: What does this do?
+set wildcharm=<C-z>
+cnoremap <expr> <Tab>   getcmdtype() == "/" \|\| getcmdtype() == "?" ? "<C-g>" : "<C-z>"
+cnoremap <expr> <S-Tab> getcmdtype() == "/" \|\| getcmdtype() == "?" ? "<C-t>" : "<S-Tab>"
 
 
 "
@@ -647,6 +446,7 @@ nnoremap <C-R> :%s/
 "
 "     TODO https://github.com/voldikss/vim-floaterm
 "     TODO https://old.reddit.com/r/vim/comments/ey4mlp/thanks_to_bram_and_lacygoill_fzf_now_works/
+"     TODO https://old.reddit.com/r/vim/comments/6h0dy7/which_autoclosing_plugin_do_you_use/
 "
 
 " vim:foldenable:foldmethod=marker:foldlevel=0
