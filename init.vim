@@ -20,13 +20,13 @@ let g:gitgutter_map_keys = 0
 augroup git_gutter_config
   autocmd!
   au VimEnter * GitGutterSignsDisable 
+  au VimEnter * GitGutterLineHighlightsDisable
   au VimEnter * GitGutterLineNrHighlightsEnable
-  au VimEnter * highlight GitGutterAddLineNr guibg=darkgreen
-  au VimEnter * highlight GitGutterChangeLineNr guibg=darkblue
-  au VimEnter * highlight GitGutterDeleteLineNr guibg=red
-  au VimEnter * highlight GitGutterChangeDeleteLine guibg=red
+  au VimEnter * highlight GitGutterAddLineNr guifg=lightgreen
+  au VimEnter * highlight GitGutterChangeLineNr guifg=lightblue
+  au VimEnter * highlight GitGutterDeleteLineNr guifg=lightred
+  au VimEnter * highlight GitGutterChangeDeleteLine guifg=lightred
 augroup END
-
 
 Plug 'tpope/vim-sleuth'
 Plug 'editorconfig/editorconfig-vim'
@@ -56,9 +56,7 @@ call plug#end()
 " @TODO no quiero que abra parentesis si estoy pegado a un texto
 " }}}
 
-" Editor Features {{{
-
-" Enable filetype plugins, filetype indent settings and syntax highlighting
+" VIM Options {{{
 filetype plugin indent on
 syntax on
 
@@ -71,30 +69,11 @@ set timeoutlen=1000 ttimeoutlen=0
 set scrolloff=5
 set hidden undofile
 
-" When editing a file, always jump to the last known cursor position.
-" Don't do it when the position is invalid, when inside an event handler
-" (happens when dropping a file on gvim) and for a commit message (it's
-" likely a different one than last time).
-augroup last_position_jump
-    autocmd!
-    au BufReadPost *
-      \ if line("'\"") >= 1 && line("'\"") <= line("$") && &ft !~# 'commit'
-      \ |   exe "normal! g`\""
-      \ | endif
-augroup END
-
-
-" TODO: What does this do?
-set wildcharm=<C-z>
-cnoremap <expr> <Tab>   getcmdtype() == "/" \|\| getcmdtype() == "?" ? "<C-g>" : "<C-z>"
-cnoremap <expr> <S-Tab> getcmdtype() == "/" \|\| getcmdtype() == "?" ? "<C-t>" : "<S-Tab>"
-
-" }}}
-" Interface {{{
 set updatetime=100
 set title cursorline number relativenumber lazyredraw showmatch
 set wrap linebreak display=truncate
 set noerrorbells visualbell t_vb=
+" }}}
 
 if has('termguicolors')
     set termguicolors
@@ -103,7 +82,6 @@ let g:sonokai_style = 'atlantis'
 let g:sonokai_enable_italic = 1
 let g:sonokai_disable_italic_comment = 1
 colorscheme sonokai
-" }}}
 
 cnoreabbrev H vert bo help
 
@@ -137,14 +115,6 @@ nnoremap gk :<C-u>call BreakHere()<CR>
 " Ctrl-S -> Save Files
 nnoremap <C-s> :wa<CR>
 
-"Move to beginning/end of line
-"@TODO: These need work, they need to be configured as modifiers and
-"       also need a more comfortable mapping. What is this, emacs?
-" nnoremap <C-b> ^
-" nnoremap <C-e> $
-" vnoremap <C-b> ^
-" vnoremap <C-e> $
-
 "Y copies to end of line, instead of being a copy of yy
 map Y y$
 
@@ -168,10 +138,6 @@ vnoremap J <NOP>
 if maparg('<Space>l', 'n') ==# ''
   nnoremap <silent> <Space>l :nohlsearch<C-R>=has('diff')?'<Bar>diffupdate':''<CR><CR><C-L>
 endif
-
-",ff -> File Find
-"nnoremap ,ff :find <C-R>=fnameescape(expand('%:p:h')).'/**/*'<CR>
-"nnoremap ,ff :find <C-R>='**/*'<CR>
 
 "gb -> Buffer navigation
 nnoremap gb :ls<CR>:buffer<Space>
@@ -467,61 +433,7 @@ set errorformat^=%f(%l):\ note\ %t%n:\ %m
 " }}}
 
 " Language Servers {{{
-lua << EOF
-local nvim_lsp = require('lspconfig')
-local on_attach = function(client, bufnr)
-  local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
-  local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
-
-  buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
-
-  -- Mappings.
-  local opts = { noremap=true, silent=true }
-  buf_set_keymap('n', 'gD', '<Cmd>lua vim.lsp.buf.declaration()<CR>', opts)
-  buf_set_keymap('n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<CR>', opts)
-  buf_set_keymap('n', 'K', '<Cmd>lua vim.lsp.buf.hover()<CR>', opts)
-  buf_set_keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
-  buf_set_keymap('n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
-  buf_set_keymap('n', '<space>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', opts)
-  buf_set_keymap('n', '<space>wr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', opts)
-  buf_set_keymap('n', '<space>wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', opts)
-  buf_set_keymap('n', '<space>D', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
-  buf_set_keymap('n', '<space>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
-  buf_set_keymap('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
-  buf_set_keymap('n', '<space>e', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>', opts)
-  buf_set_keymap('n', '[d', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts)
-  buf_set_keymap('n', ']d', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
-  buf_set_keymap('n', '<space>q', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
-
-  -- Set some keybinds conditional on server capabilities
-  if client.resolved_capabilities.document_formatting then
-    buf_set_keymap("n", "<space>f", "<cmd>lua vim.lsp.buf.formatting()<CR>", opts)
-  elseif client.resolved_capabilities.document_range_formatting then
-    buf_set_keymap("n", "<space>f", "<cmd>lua vim.lsp.buf.formatting()<CR>", opts)
-  end
-
-  -- Set autocommands conditional on server_capabilities
-  if client.resolved_capabilities.document_highlight then
-    vim.api.nvim_exec([[
-      hi LspReferenceRead cterm=bold ctermbg=red guibg=LightYellow
-      hi LspReferenceText cterm=bold ctermbg=red guibg=LightYellow
-      hi LspReferenceWrite cterm=bold ctermbg=red guibg=LightYellow
-      augroup lsp_document_highlight
-        autocmd!
-        autocmd CursorHold <buffer> lua vim.lsp.buf.document_highlight()
-        autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()
-      augroup END
-    ]], false)
-  end
-end
-
--- Use a loop to conveniently both setup defined servers 
--- and map buffer local keybindings when the language server attaches
-local servers = { "rust_analyzer" }
-for _, lsp in ipairs(servers) do
-  nvim_lsp[lsp].setup { on_attach = on_attach }
-end
-EOF
+lua require('lsp')
 
 " TODO https://github.com/nanotee/nvim-lua-guide
 if has('win32')
@@ -529,13 +441,43 @@ if has('win32')
 else
   let s:path_separator = ':'
 endif
-let $PATH=$PATH.s:path_separator.fnamemodify($MYVIMRC.'/bin', ':h')
+let $MYVIMRCPATH=fnamemodify($MYVIMRC, ':h')
+let $PATH=$PATH.s:path_separator.$MYVIMRCPATH.'/bin'
 
 " }}}
 
 " @TODO
 nnoremap <C-R> :%s/
 
+" When editing a file, always jump to the last known cursor position.
+" Don't do it when the position is invalid, when inside an event handler
+" (happens when dropping a file on gvim) and for a commit message (it's
+" likely a different one than last time).
+augroup last_position_jump
+    autocmd!
+    au BufReadPost *
+      \ if line("'\"") >= 1 && line("'\"") <= line("$") && &ft !~# 'commit'
+      \ |   exe "normal! g`\""
+      \ | endif
+augroup END
+
+
+" TODO: What does this do?
+set wildcharm=<C-z>
+cnoremap <expr> <Tab>   getcmdtype() == "/" \|\| getcmdtype() == "?" ? "<C-g>" : "<C-z>"
+cnoremap <expr> <S-Tab> getcmdtype() == "/" \|\| getcmdtype() == "?" ? "<C-t>" : "<S-Tab>"
+
+
+" TODO
+function OpenQuickHelp()
+    let buf = nvim_create_buf(v:false, v:true)
+    call nvim_buf_set_lines(buf, 0, -1, v:true, readfile($MYVIMRCPATH.'/help.txt'))
+    let opts = {'relative': 'editor', 'width': &columns/2, 'height': &lines/2, 'col': &columns/4,
+        \ 'row': &lines/4, 'anchor': 'NW', 'style': 'minimal'}
+    let win = nvim_open_win(buf, 0, opts)
+    " optional: change highlight, otherwise Pmenu is used
+    " call nvim_win_set_option(win, 'winhl', 'Normal:MyHighlight')
+endfunction
 
 
 "
