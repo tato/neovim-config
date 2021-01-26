@@ -47,6 +47,8 @@ Plug 'vim-airline/vim-airline'
 let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#enabled = 1
 
+Plug 'tpope/vim-commentary'
+
 call plug#end()
 
 " @TODO que tenga manera de poner ; despues de struct
@@ -55,7 +57,6 @@ call plug#end()
 "packadd! auto-pairs
 " @TODO no quiero que abra parentesis si estoy pegado a un texto
 " }}}
-
 " VIM Options {{{
 filetype plugin indent on
 syntax on
@@ -150,53 +151,6 @@ nnoremap ,b :buffer *
 " ,fsd -> File Source Dotfile
 nnoremap ,fed :e $MYVIMRC<CR>
 nnoremap ,fsd :source $MYVIMRC<CR> | nohlsearch | call startup#maximize()
-
-" }}}
-" Comment/Uncomment Lines {{{
-" TODO better
-" -- Comment a line of code with ',cc', uncomment with ',cu'
-"https://stackoverflow.com/questions/1676632/whats-a-quick-way-to-comment-uncomment-lines-in-vim
-augroup filetype_comments
-    autocmd!
-    au FileType c,cpp,java       let b:comment_leader = '// '
-    au FileType rust             let b:comment_leader = '// '
-    au FileType sh,ruby,python   let b:comment_leader = '# '
-    au FileType conf,fstab       let b:comment_leader = '# '
-    au FileType gdscript         let b:comment_leader = '# '
-    au FileType vim              let b:comment_leader = '" '
-    au FileType haskell          let b:comment_leader = '-- '
-    au FileType dosbatch         let b:comment_leader = ':: '
-augroup END
-noremap <silent> ,cc :<C-B>silent <C-E>s/^/<C-R>=escape(b:comment_leader,'\/')<CR>/<CR>:nohlsearch<CR>
-noremap <silent> ,cu :<C-B>silent <C-E>s/^\V<C-R>=escape(b:comment_leader,'\/')<CR>//e<CR>:nohlsearch<CR>
-" }}}
-" Brackets Autoexpansion {{{
-
-" see packadd! auto-pairs
-inoremap (<CR> (<CR>)<Esc>O
-inoremap {<CR> {<CR>}<Esc>O
-inoremap {;    {<CR>};<Esc>O
-inoremap {,    {<CR>},<Esc>O
-inoremap [<CR> [<CR>]<Esc>O
-inoremap [;    [<CR>];<Esc>O
-inoremap [,    [<CR>],<Esc>O
-" }}}
-
-" @TODO Mode-Aware Cursors {{{
-" https://github.com/blaenk/dots/blob/9843177fa6155e843eb9e84225f458cd0205c969/vim/vimrc.ln#L49-L64
-"set guicursor=a:block
-"set guicursor+=o:hor50-Cursor
-"set guicursor+=n:Cursor
-"set guicursor+=i-ci-sm:ver25-InsertCursor
-"set guicursor+=r-cr:ReplaceCursor-hor20
-"set guicursor+=c:Cursor
-"set guicursor+=v-ve:VisualCursor
-"set guicursor+=a:blinkon0
-""set guicursor+=sm:block-Cursor-blinkwait175-blinkoff150-blinkon175
-"hi CommandCursor ctermfg=15 guifg=#fdf6e3 ctermbg=166 guibg=#cb4b16
-"hi InsertCursor  ctermfg=15 guifg=#fdf6e3 ctermbg=37  guibg=#b1d631
-"hi ReplaceCursor ctermfg=15 guifg=#fdf6e3 ctermbg=65  guibg=#ff6a6a
-"hi VisualCursor  ctermfg=15 guifg=#fdf6e3 ctermbg=125 guibg=#90b0d1
 
 " }}}
 
@@ -374,15 +328,15 @@ command! SC vnew | setlocal nobuflisted buftype=nofile bufhidden=wipe noswapfile
 " }}}
 
 " @TODO Custom C/C++ Highlighting {{{
-augroup custom_c_highlighting
-    autocmd!
-    au FileType c,cpp syn keyword cType int8 int16 int32 int64
-    au FileType c,cpp syn keyword cType uint8 uint16 uint32 uint64
-    au FileType c,cpp syn keyword cType real32 real64 bool32
-    au FileType c,cpp syn keyword cType i8 i16 i32 i64 u8 u16 u32 u64 f32 f64
-    au FileType c,cpp syn keyword cType v2 v2i v3 v3i v4 v4i m4
-    au FileType c,cpp syn keyword cStorageClass local_persist global_variable internal
-augroup END
+"augroup custom_c_highlighting
+"    autocmd!
+"    au FileType c,cpp syn keyword cType int8 int16 int32 int64
+"    au FileType c,cpp syn keyword cType uint8 uint16 uint32 uint64
+"    au FileType c,cpp syn keyword cType real32 real64 bool32
+"    au FileType c,cpp syn keyword cType i8 i16 i32 i64 u8 u16 u32 u64 f32 f64
+"    au FileType c,cpp syn keyword cType v2 v2i v3 v3i v4 v4i m4
+"    au FileType c,cpp syn keyword cStorageClass local_persist global_variable internal
+"augroup END
 " }}}
 " @TODO Wacky Compilation {{{
 
@@ -492,6 +446,7 @@ cnoremap <expr> <S-Tab> getcmdtype() == "/" \|\| getcmdtype() == "?" ? "<C-t>" :
 "
 "     TODO https://github.com/voldikss/vim-floaterm
 "     TODO https://old.reddit.com/r/vim/comments/ey4mlp/thanks_to_bram_and_lacygoill_fzf_now_works/
+"     TODO https://old.reddit.com/r/vim/comments/6h0dy7/which_autoclosing_plugin_do_you_use/
 "
 
 " vim:foldenable:foldmethod=marker:foldlevel=0
