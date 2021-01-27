@@ -15,18 +15,18 @@ Plug 'tpope/vim-vinegar'
 Plug 'qpkorr/vim-bufkill'
 Plug 'tommcdo/vim-lion'
 
-Plug 'airblade/vim-gitgutter', { 'commit': '0bcd8c5' }
-let g:gitgutter_map_keys = 0
-augroup git_gutter_config
-  autocmd!
-  au VimEnter * GitGutterSignsDisable 
-  au VimEnter * GitGutterLineHighlightsDisable
-  au VimEnter * GitGutterLineNrHighlightsEnable
-  au VimEnter * highlight GitGutterAddLineNr guifg=lightgreen
-  au VimEnter * highlight GitGutterChangeLineNr guifg=lightblue
-  au VimEnter * highlight GitGutterDeleteLineNr guifg=lightred
-  au VimEnter * highlight GitGutterChangeDeleteLine guifg=lightred
-augroup END
+" Plug 'airblade/vim-gitgutter', { 'commit': '0bcd8c5' }
+" let g:gitgutter_map_keys = 0
+" augroup git_gutter_config
+"   autocmd!
+"   au VimEnter * GitGutterSignsDisable 
+"   au VimEnter * GitGutterLineHighlightsDisable
+"   au VimEnter * GitGutterLineNrHighlightsEnable
+"   au VimEnter * highlight GitGutterAddLineNr guifg=lightgreen
+"   au VimEnter * highlight GitGutterChangeLineNr guifg=lightblue
+"   au VimEnter * highlight GitGutterDeleteLineNr guifg=lightred
+"   au VimEnter * highlight GitGutterChangeDeleteLine guifg=lightred
+" augroup END
 
 Plug 'tpope/vim-sleuth'
 Plug 'editorconfig/editorconfig-vim'
@@ -48,6 +48,8 @@ let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#enabled = 1
 
 Plug 'tpope/vim-commentary'
+
+Plug 'cespare/vim-toml'
 
 call plug#end()
 
@@ -422,6 +424,11 @@ augroup END
 set wildcharm=<C-z>
 cnoremap <expr> <Tab>   getcmdtype() == "/" \|\| getcmdtype() == "?" ? "<C-g>" : "<C-z>"
 cnoremap <expr> <S-Tab> getcmdtype() == "/" \|\| getcmdtype() == "?" ? "<C-t>" : "<S-Tab>"
+
+augroup ui_options
+  autocmd!
+  au UIEnter * runtime ginit.vim
+augroup END
 
 
 "
