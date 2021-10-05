@@ -16,13 +16,14 @@ function supok#configure_gruvbox()
         return
     endif
 
+
     let g:gruvbox_bold = 1
     let g:gruvbox_italic = 0
     let g:gruvbox_transparent_bg = 1
     let g:gruvbox_underline = 1
     let g:gruvbox_undercurl = 1
     let g:gruvbox_contrast_dark = "hard"
-    let g:gruvbox_contrast_light = "medium"
+    let g:gruvbox_contrast_light = "hard"
     let g:gruvbox_italicize_strings = 0
     let g:gruvbox_improved_strings = 1
     colorscheme gruvbox
@@ -38,10 +39,3 @@ function supok#mapping(keys, mapping, desc)
     let let_stmt = let_stmt . " = a:desc"
     execute let_stmt
 endf
-
-" see adjust_comment_line_length on init.vim
-function supok#adjust_comment_line_length()
-    let syn_element = synIDattr(synID(line("."), col(".") - 1, 1), "name")
-    let &textwidth = syn_element =~? 'comment' ? 79 : 0
-    echo "tw = " . &textwidth
-endfunction
