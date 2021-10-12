@@ -28,6 +28,38 @@
 silent! language en_US
 silent! language en_US.utf-8
 
+nnoremap <Space> <Nop>
+let mapleader = " "
+
+" TODO:
+" https://syncthing.net/downloads/
+" https://mkaz.blog/working-with-vim/vimwiki/
+" https://github.com/vimwiki/vimwiki#installation
+
+call plug#begin(stdpath("data") . "/plugged")
+Plug 'nvim-lua/plenary.nvim'
+Plug 'nvim-treesitter/nvim-treesitter'
+Plug 'gruvbox-community/gruvbox'
+Plug 'cespare/vim-toml'
+Plug 'tpope/vim-fugitive'
+Plug 'airblade/vim-gitgutter'
+Plug 'kyazdani42/nvim-web-devicons'
+Plug 'glepnir/galaxyline.nvim'
+Plug 'mhinz/vim-startify'
+Plug 'liuchengxu/vim-which-key'
+Plug 'vimwiki/vimwiki'
+Plug 'nvim-telescope/telescope.nvim'
+
+" Plug 'nvim-telescope/telescope.nvim'
+" Plug 'jiangmiao/auto-pairs'
+" fzf
+" startup
+" ?editorconfig?
+" projects
+" ?command palette? integrate with which-key
+Plug 'thirtythreeforty/lessspace.vim'
+call plug#end()
+
 set fileformats=unix,dos
 set hidden undofile
 set clipboard+=unnamedplus
@@ -40,29 +72,6 @@ set noswapfile
 set formatoptions-=t formatoptions+=croj textwidth=79
 set termguicolors
 set inccommand=nosplit
-
-call plug#begin(stdpath("data") . "/plugged")
-Plug 'gruvbox-community/gruvbox'
-
-Plug 'cespare/vim-toml'
-
-Plug 'tpope/vim-fugitive'
-Plug 'airblade/vim-gitgutter'
-
-Plug 'kyazdani42/nvim-web-devicons'
-Plug 'glepnir/galaxyline.nvim'
-
-Plug 'mhinz/vim-startify'
-Plug 'liuchengxu/vim-which-key'
-Plug 'thirtythreeforty/lessspace.vim'
-" Plug 'nvim-telescope/telescope.nvim'
-" Plug 'jiangmiao/auto-pairs'
-" fzf
-" startup
-" ?editorconfig?
-" projects
-" ?command palette? integrate with which-key
-call plug#end()
 
 inoremap jk <ESC>
 nnoremap j gj
@@ -78,23 +87,24 @@ map Y y$
 nnoremap gV `[v`]
 nnoremap Q :let<Space>@q=''<Left><C-R><C-R>q
 
-nnoremap <Space> <Nop>
-let mapleader = " "
 
 call which_key#register("<Space>", "g:which_key_map")
 nnoremap <silent> <leader> :<c-u>WhichKey "<Space>"<CR>
 let g:which_key_map = {}
 
-lua require("statusline")
-
-" TODO: nnoremap . :Startify
-let g:startify_bookmarks = [ '~/.config/nvim' ]
-let g:startify_custom_header = startify#pad(readfile(stdpath("config") . "/banner.txt"))
-
 let g:gitgutter_signs = 0
 let g:gitgutter_map_keys = 0
 
-set guifont=FiraCode\ NF:h16
+lua require("colors")
+lua require("statusline")
+
+let g:startify_files_number = 5
+let g:startify_bookmarks = [ { "c": "~/.config/nvim" }, { "w": "D:/monky garden" } ]
+let g:startify_commands = [ { "o": [ "Open Vimwiki on monky garden", "echom haha" ] } ]
+let g:startify_custom_header = startify#pad(readfile(stdpath("config") . "/banner.txt"))
+
+let g:vimwiki_list = [{"path": "D:/monky garden", "path_html": "D:/monky garden html"}]
+" let g:vimwiki_key_mappings = { "all_maps": 0, }
 
 call supok#configure_gruvbox()
 
@@ -140,6 +150,7 @@ set wildcharm=<C-z>
 cnoremap <expr> <Tab> getcmdtype() == "/" \|\| getcmdtype() == "?" ? "<C-g>" : "<C-z>"
 cnoremap <expr> <S-Tab> getcmdtype() == "/" \|\| getcmdtype() == "?" ? "<C-t>" : "<S-Tab>"
 
+set guifont=FiraCode\ NF:h16,Fira\ Code:h16,Cousine:h16
 
 " " List Commands {{{
 " " https://gist.github.com/romainl/047aca21e338df7ccf771f96858edb86

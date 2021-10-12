@@ -151,7 +151,12 @@ galaxyline.section.left[3] = {
 
 galaxyline.section.right[1] = {
     FileType = {
-        provider = { "FileIcon", function() return vim.bo.filetype.." " end },
+        provider = function()
+            local ft = vim.bo.filetype
+            local name = vim.fn.expand("%:t")
+            local icon = icons.get_filetype_icon(name, ft)
+            return icon..ft.." "
+        end,
         condition = condition_has_filename,
         separator = icons.get_icon("separator_right"),
         separator_highlight = { colors.white_4, palette.white_2 },

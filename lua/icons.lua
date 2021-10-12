@@ -4,6 +4,10 @@ local M = {}
 
 local nvim_web_devicons_loaded, nvim_web_devicons = pcall(require, "nvim-web-devicons")
 nvim_web_devicons.setup { default = true }
+nvim_web_devicons.set_icon {
+    help = { icon="", color="#eeeeee", name="help" },
+    vimwiki = { icon="ﴬ ", color="#eeeeee", name="vimwiki" }
+}
 
 if not nvim_web_devicons_loaded then
     icons_enabled = false
