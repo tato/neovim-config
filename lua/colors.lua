@@ -1,6 +1,6 @@
 
-"https://en.wikipedia.org/wiki/CIELAB_color_space#From_CIEXYZ_to_CIELAB
-"https://www.mathworks.com/help/images/ref/rgb2lab.html
+--https://en.wikipedia.org/wiki/CIELAB_color_space#From_CIEXYZ_to_CIELAB
+--https://www.mathworks.com/help/images/ref/rgb2lab.html
 
 local M = {}
 

@@ -1,13 +1,8 @@
-"⠀⠀⠘⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀ ⡜⠀⠀⠀
-"⠀⠀⠀⠑⡀⠀⠀⠀⠀⠀⠀⠀⠀VIM⠀⠀⠀⠀⠀⠀⠀⠀⠀⡔⠁⠀⠀⠀
-"⠀⠀⠀⠀⠈⠢⢄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⠴⠊⠀⠀⠀⠀⠀
-"⠀⠀⠀⠀⠀⠀⠀⢸⠀⠀⠀⢀⣀⣀⣀⣀⣀⡀⠤⠄⠒⠈⠀⠀⠀⠀⠀⠀⠀⠀
-"⠀⠀⠀⠀⠀⠀⠀⠘⣀⠄⠊⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-"⣿⣿⣿⠃⠀⠀⠀⠀⠀⠀⠀⠀⡜⠘⠀⠀⠀⠀⠈⣿⠀⠁⣿⢳⠁⢈⢰⡦⠈⠀⢻
-"⣿⣿⡏⠀⠀⢀⣀⠀⠀⡀⠀⠀⢀⠀⠀⠁⠀⠀⠈⠉⠀⠀⠀⡘⠀⢰⠛⢠⣴⣄⣌
-"⣿⣿⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠁⢠⣠⡀⠀⠀⠀⠂⠀⠀⠀⠐⠀⠈⣡⠻⢹⢿
-"⣿⣿⠀⠀⠀⠁⠀⠀⠀⠄⠀⠀⡀⣀⣼⣟⣿⢵⣤⣤⣤⣤⣤⣤⣄⣀⣀⣠⠀⠢⣽
-"⣿⡿⠀⠀⠀⠀⠀⢐⣌⢖⣰⠊⠁⢸⣿⡟⠈⠀⢾⣿⣿⣿⣿⣿⣿⣿⣿⣾⡄⢰⢺
+"⣿⣿⣿⠃⠀⠀⠀⠀⠀⠀⠀⠀⡜⠘⠀⠀⠀⠀⠈⣿⠀⠁⣿⢳⠁⢈⢰⡦⠈⠀⢻ ⠀⠀⠘⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀ ⡜⠀⠀⠀
+"⣿⣿⡏⠀⠀⢀⣀⠀⠀⡀⠀⠀⢀⠀⠀⠁⠀⠀⠈⠉⠀⠀⠀⡘⠀⢰⠛⢠⣴⣄⣌ ⠀⠀⠀⠑⡀⠀⠀⠀⠀⠀⠀⠀⠀VIM⠀⠀⠀⠀⠀⠀⠀⠀⠀⡔⠁⠀⠀⠀
+"⣿⣿⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠁⢠⣠⡀⠀⠀⠀⠂⠀⠀⠀⠐⠀⠈⣡⠻⢹⢿ ⠀⠀⠀⠀⠈⠢⢄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⠴⠊⠀⠀⠀⠀⠀
+"⣿⣿⠀⠀⠀⠁⠀⠀⠀⠄⠀⠀⡀⣀⣼⣟⣿⢵⣤⣤⣤⣤⣤⣤⣄⣀⣀⣠⠀⠢⣽ ⠀⠀⠀⠀⠀⠀⠀⢸⠀⠀⠀⢀⣀⣀⣀⣀⣀⡀⠤⠄⠒⠈⠀⠀⠀⠀⠀⠀⠀⠀
+"⣿⡿⠀⠀⠀⠀⠀⢐⣌⢖⣰⠊⠁⢸⣿⡟⠈⠀⢾⣿⣿⣿⣿⣿⣿⣿⣿⣾⡄⢰⢺ ⠀⠀⠀⠀⠀⠀⠀⠘⣀⠄⠊⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
 "⣿⡇⠀⠀⠀⠀⢀⡀⢴⢖⣠⣣⣴⣿⢿⡇⣈⠐⢺⣿⣿⣿⣿⣿⣿⣿⣿⣿⡀⢠⣸
 "⣿⣷⡀⠀⠀⠀⠀⠸⣼⣿⣿⣿⣿⡷⠋⠅⠀⡀⢼⣿⠯⣿⣿⣿⣿⣿⣿⣿⡇⣼⣿
 "⡿⠁⠸⣄⣦⡀⠀⢡⣿⣿⣿⣿⣏⡤⠄⠄⠀⠀⠈⠉⠁⠘⢿⣿⣿⣿⣿⣿⣯⢸⣿
@@ -31,11 +26,6 @@ silent! language en_US.utf-8
 nnoremap <Space> <Nop>
 let mapleader = " "
 
-" TODO:
-" https://syncthing.net/downloads/
-" https://mkaz.blog/working-with-vim/vimwiki/
-" https://github.com/vimwiki/vimwiki#installation
-
 call plug#begin(stdpath("data") . "/plugged")
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-treesitter/nvim-treesitter'
@@ -50,14 +40,9 @@ Plug 'liuchengxu/vim-which-key'
 Plug 'vimwiki/vimwiki'
 Plug 'nvim-telescope/telescope.nvim'
 
-" Plug 'nvim-telescope/telescope.nvim'
 " Plug 'jiangmiao/auto-pairs'
-" fzf
-" startup
 " ?editorconfig?
 " projects
-" ?command palette? integrate with which-key
-Plug 'thirtythreeforty/lessspace.vim'
 call plug#end()
 
 set fileformats=unix,dos
@@ -95,6 +80,11 @@ let g:which_key_map = {}
 let g:gitgutter_signs = 0
 let g:gitgutter_map_keys = 0
 
+lua << EOF
+    require("telescope").setup {
+    }
+EOF
+
 lua require("colors")
 lua require("statusline")
 
@@ -107,7 +97,6 @@ let g:vimwiki_list = [{"path": "D:/monky garden", "path_html": "D:/monky garden 
 " let g:vimwiki_key_mappings = { "all_maps": 0, }
 
 call supok#configure_gruvbox()
-
 
 call supok#mapping("h", ":call supok#move('h')<CR>", "go / create win left")
 call supok#mapping("j", ":call supok#move('j')<CR>", "go / create win down")
@@ -152,47 +141,6 @@ cnoremap <expr> <S-Tab> getcmdtype() == "/" \|\| getcmdtype() == "?" ? "<C-t>" :
 
 set guifont=FiraCode\ NF:h16,Fira\ Code:h16,Cousine:h16
 
-" " List Commands {{{
-" " https://gist.github.com/romainl/047aca21e338df7ccf771f96858edb86
-" " make list-like commands more intuitive
-" function! CCR()
-"     let cmdline = getcmdline()
-"     if cmdline =~ '\v\C^(ls|files|buffers)'
-"         " like :ls but prompts for a buffer command
-"         return "\<CR>:b"
-"     elseif cmdline =~ '\v\C/(#|nu|num|numb|numbe|number)$'
-"         " like :g//# but prompts for a command
-"         return "\<CR>:"
-"     elseif cmdline =~ '\v\C^(dli|il)'
-"         " like :dlist or :ilist but prompts for a count for :djump or :ijump
-"         return "\<CR>:" . cmdline[0] . "j  " . split(cmdline, " ")[1] . "\<S-Left>\<Left>"
-"     elseif cmdline =~ '\v\C^(cli|lli)'
-"         " like :clist or :llist but prompts for an error/location number
-"         return "\<CR>:sil " . repeat(cmdline[0], 2) . "\<Space>"
-"     elseif cmdline =~ '\C^old'
-"         " like :oldfiles but prompts for an old file to edit
-"         set nomore
-"         return "\<CR>:sil se more|e #<"
-"     elseif cmdline =~ '\C^changes'
-"         " like :changes but prompts for a change to jump to
-"         set nomore
-"         return "\<CR>:sil se more|norm! g;\<S-Left>"
-"     elseif cmdline =~ '\C^ju'
-"         " like :jumps but prompts for a position to jump to
-"         set nomore
-"         return "\<CR>:sil se more|norm! \<C-o>\<S-Left>"
-"     elseif cmdline =~ '\C^marks'
-"         " like :marks but prompts for a mark to jump to
-"         return "\<CR>:norm! `"
-"     elseif cmdline =~ '\C^undol'
-"         " like :undolist but prompts for a change to undo
-"         return "\<CR>:u "
-"     else
-"         return "\<CR>"
-"     endif
-" endfunction
-" cnoremap <expr> <CR> CCR()
-" " }}}
 " " Custom Text Objects {{{
 " " https://gist.github.com/romainl/c0a8b57a36aec71a986f1120e1931f20
 "
