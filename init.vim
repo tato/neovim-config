@@ -23,26 +23,28 @@
 silent! language en_US
 silent! language en_US.utf-8
 
-nnoremap <Space> <Nop>
-let mapleader = " "
+let mapleader = " " | nnoremap <Space> <Nop>
 
 call plug#begin(stdpath("data") . "/plugged")
-Plug 'nvim-lua/plenary.nvim'
-Plug 'nvim-treesitter/nvim-treesitter'
 Plug 'gruvbox-community/gruvbox'
-Plug 'cespare/vim-toml'
+Plug 'cespare/vim-toml', { 'for': 'toml' }
 Plug 'tpope/vim-fugitive'
+
 Plug 'airblade/vim-gitgutter'
 Plug 'kyazdani42/nvim-web-devicons'
 Plug 'glepnir/galaxyline.nvim'
+
 Plug 'mhinz/vim-startify'
 Plug 'liuchengxu/vim-which-key'
 Plug 'vimwiki/vimwiki'
+
+Plug 'nvim-lua/plenary.nvim'
+Plug 'nvim-treesitter/nvim-treesitter'
 Plug 'nvim-telescope/telescope.nvim'
 
 " Plug 'jiangmiao/auto-pairs'
-" ?editorconfig?
-" projects
+" Plug ?editorconfig?
+" Plug ?projects?
 call plug#end()
 
 set fileformats=unix,dos
@@ -80,6 +82,11 @@ let g:which_key_map = {}
 let g:gitgutter_signs = 0
 let g:gitgutter_map_keys = 0
 
+let g:startify_files_number = 5
+let g:startify_bookmarks = [ { "c": "~/.config/nvim" }, { "w": "D:/monky garden" } ]
+let g:startify_commands = [ { "o": [ "Open Vimwiki on monky garden", "echom haha" ] } ]
+let g:startify_custom_header = startify#pad(readfile(stdpath("config") . "/banner.txt"))
+
 lua << EOF
     require("telescope").setup {
     }
@@ -87,16 +94,12 @@ EOF
 
 lua require("colors")
 lua require("statusline")
+lua require("config").configure_gruvbox()
 
-let g:startify_files_number = 5
-let g:startify_bookmarks = [ { "c": "~/.config/nvim" }, { "w": "D:/monky garden" } ]
-let g:startify_commands = [ { "o": [ "Open Vimwiki on monky garden", "echom haha" ] } ]
-let g:startify_custom_header = startify#pad(readfile(stdpath("config") . "/banner.txt"))
 
 let g:vimwiki_list = [{"path": "D:/monky garden", "path_html": "D:/monky garden html"}]
 " let g:vimwiki_key_mappings = { "all_maps": 0, }
 
-lua require("config").configure_gruvbox()
 
 lua << EOF
 local cfg = require("config")
