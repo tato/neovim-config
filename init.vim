@@ -96,24 +96,30 @@ let g:startify_custom_header = startify#pad(readfile(stdpath("config") . "/banne
 let g:vimwiki_list = [{"path": "D:/monky garden", "path_html": "D:/monky garden html"}]
 " let g:vimwiki_key_mappings = { "all_maps": 0, }
 
-call supok#configure_gruvbox()
+lua require("config").configure_gruvbox()
 
-call supok#mapping("h", ":call supok#move('h')<CR>", "go / create win left")
-call supok#mapping("j", ":call supok#move('j')<CR>", "go / create win down")
-call supok#mapping("k", ":call supok#move('k')<CR>", "go / create win up")
-call supok#mapping("l", ":call supok#move('l')<CR>", "go / create win right")
-call supok#mapping("H", "<C-w>H", "move win left")
-call supok#mapping("J", "<C-w>J", "move win down")
-call supok#mapping("K", "<C-w>K", "move win up")
-call supok#mapping("L", "<C-w>L", "move win right")
-call supok#mapping("q", ":close<CR>", "close win")
+lua << EOF
+local cfg = require("config")
+cfg.mapping("h", ":lua require('config').move('h')<CR>", "go / create win left")
+cfg.mapping("j", ":lua require('config').move('j')<CR>", "go / create win down")
+cfg.mapping("k", ":lua require('config').move('k')<CR>", "go / create win up")
+cfg.mapping("l", ":lua require('config').move('l')<CR>", "go / create win right")
+cfg.mapping("H", "<C-w>H", "move win left")
+cfg.mapping("J", "<C-w>J", "move win down")
+cfg.mapping("K", "<C-w>K", "move win up")
+cfg.mapping("L", "<C-w>L", "move win right")
+cfg.mapping("q", ":close<CR>", "close win")
+EOF
 
 let g:which_key_map.f = { "name": "+file" }
 let g:which_key_map.f.e = { "name": "+edit file" }
 let g:which_key_map.f.s = { "name": "+source file" }
-call supok#mapping("fed", ":e $MYVIMRC<CR>", "edit init.vim")
-call supok#mapping("feg", ":e ~/.goneovim/settings.toml<CR>", "edit goneovim settings")
-call supok#mapping("fsd", ":source $MYVIMRC<CR> | nohlsearch", "source / refresh init.vim")
+lua << EOF
+local cfg = require("config")
+cfg.mapping("fed", ":e $MYVIMRC<CR>", "edit init.vim")
+cfg.mapping("feg", ":e ~/.goneovim/settings.toml<CR>", "edit goneovim settings")
+cfg.mapping("fsd", ":source $MYVIMRC<CR> | nohlsearch", "source / refresh init.vim")
+EOF
 
 " nnoremap <silent> <C-.> :nohlsearch<C-R>=has('diff')?'<Bar>diffupdate':''<CR><CR><C-L>
 
