@@ -20,23 +20,35 @@
 "⣿⣿⡏⠀⣿⣿⣿⠿⠃⢀⣴⣶⣾⣿⣿⣿⣿⣷⣾⢠⣶⣾⣮⣙⡻⣿⢿⣿⣿⣿⣿
 "⣿⣿⡇⠀⣿⣿⠃⠀⠀⣼⣿⣿⣿⣿⣿⣿⣿⣿⡟⡼⠿⣿⣿⣿⣿⣮⡑⡝⣿⣿⣿
 
+" try to set english language for the editor. it is usually spanish by default
+" on my systems, which is annoying when comparing certain error messages and
+" such. in theory this could fail, but i would be surprised if it does.
 silent! language en_US
 silent! language en_US.utf-8
 
-let mapleader = " " | nnoremap <Space> <Nop>
+" set mapleader before anything else. if any plugin defines a <Leader> mapping
+" while mapleader isn't set, it would use the default value of \. usually i
+" don't want plugins to set mappings by default, but just in case.
+" the default mapping of <space> needs to be cleared for mapleader to work.
+let mapleader = " " | nnoremap <Space> <Nop> 
+
+
+function! GitSignsSetup(info)
+    lua require("gitsigns").setup()
+endf
 
 call plug#begin(stdpath("data") . "/plugged")
-Plug 'gruvbox-community/gruvbox'
 Plug 'cespare/vim-toml', { 'for': 'toml' }
+Plug 'ziglang/zig.vim'
+
 Plug 'tpope/vim-fugitive'
 
-Plug 'airblade/vim-gitgutter'
 Plug 'kyazdani42/nvim-web-devicons'
-Plug 'glepnir/galaxyline.nvim'
+Plug 'lewis6991/gitsigns.nvim', { 'do': function('GitSignsSetup') }
+Plug 'famiu/feline.nvim'
 
 Plug 'mhinz/vim-startify'
-Plug 'liuchengxu/vim-which-key'
-Plug 'vimwiki/vimwiki'
+" Plug 'vimwiki/vimwiki'
 
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-treesitter/nvim-treesitter'
@@ -46,6 +58,7 @@ Plug 'nvim-telescope/telescope.nvim'
 " Plug ?editorconfig?
 " Plug ?projects?
 call plug#end()
+
 
 set fileformats=unix,dos
 set hidden undofile
@@ -75,10 +88,6 @@ nnoremap gV `[v`]
 nnoremap Q :let<Space>@q=''<Left><C-R><C-R>q
 
 
-call which_key#register("<Space>", "g:which_key_map")
-nnoremap <silent> <leader> :<c-u>WhichKey "<Space>"<CR>
-let g:which_key_map = {}
-
 let g:gitgutter_signs = 0
 let g:gitgutter_map_keys = 0
 
@@ -94,35 +103,26 @@ EOF
 
 lua require("colors")
 lua require("statusline")
-lua require("config").configure_gruvbox()
+colorscheme supok
 
 
-let g:vimwiki_list = [{"path": "D:/monky garden", "path_html": "D:/monky garden html"}]
-" let g:vimwiki_key_mappings = { "all_maps": 0, }
+" <leader>h/j/k/l: move to window in a direction. if it doesn't
+" exist, create it.
+nnoremap <silent> <leader>h :lua require('config').move('h')<CR>
+nnoremap <silent> <leader>j :lua require('config').move('j')<CR>
+nnoremap <silent> <leader>k :lua require('config').move('k')<CR>
+nnoremap <silent> <leader>l :lua require('config').move('l')<CR>
+" <leader>H/J/K/L: move window to a direction
+nnoremap <silent> <leader>H <C-w>H
+nnoremap <silent> <leader>J <C-w>J
+nnoremap <silent> <leader>K <C-w>K
+nnoremap <silent> <leader>L <C-w>L
+" <leader>q: close window
+nnoremap <silent> <leader>q :close<CR>
 
 
-lua << EOF
-local cfg = require("config")
-cfg.mapping("h", ":lua require('config').move('h')<CR>", "go / create win left")
-cfg.mapping("j", ":lua require('config').move('j')<CR>", "go / create win down")
-cfg.mapping("k", ":lua require('config').move('k')<CR>", "go / create win up")
-cfg.mapping("l", ":lua require('config').move('l')<CR>", "go / create win right")
-cfg.mapping("H", "<C-w>H", "move win left")
-cfg.mapping("J", "<C-w>J", "move win down")
-cfg.mapping("K", "<C-w>K", "move win up")
-cfg.mapping("L", "<C-w>L", "move win right")
-cfg.mapping("q", ":close<CR>", "close win")
-EOF
-
-let g:which_key_map.f = { "name": "+file" }
-let g:which_key_map.f.e = { "name": "+edit file" }
-let g:which_key_map.f.s = { "name": "+source file" }
-lua << EOF
-local cfg = require("config")
-cfg.mapping("fed", ":e $MYVIMRC<CR>", "edit init.vim")
-cfg.mapping("feg", ":e ~/.goneovim/settings.toml<CR>", "edit goneovim settings")
-cfg.mapping("fsd", ":source $MYVIMRC<CR> | nohlsearch", "source / refresh init.vim")
-EOF
+nnoremap <silent> <leader>fed :e $MYVIMRC<CR>
+nnoremap <silent> <leader>fsd :source $MYVIMRC<CR> | nohlsearch
 
 " nnoremap <silent> <C-.> :nohlsearch<C-R>=has('diff')?'<Bar>diffupdate':''<CR><CR><C-L>
 
@@ -148,51 +148,10 @@ set wildcharm=<C-z>
 cnoremap <expr> <Tab> getcmdtype() == "/" \|\| getcmdtype() == "?" ? "<C-g>" : "<C-z>"
 cnoremap <expr> <S-Tab> getcmdtype() == "/" \|\| getcmdtype() == "?" ? "<C-t>" : "<S-Tab>"
 
-set guifont=FiraCode\ NF:h16,Fira\ Code:h16,Cousine:h16
-
-" " Custom Text Objects {{{
-" " https://gist.github.com/romainl/c0a8b57a36aec71a986f1120e1931f20
-"
-" " 24 simple text-objects
-" " ----------------------
-" " i_ i. i: i, i; i| i/ i\ i* i+ i- i#
-" " a_ a. a: a, a; a| a/ a\ a* a+ a- a#
-" for char in [ '_', '.', ':', ',', ';', '<bar>', '/', '<bslash>', '*', '+', '-', '#' ]
-"     execute 'xnoremap i' . char . ' :<C-u>normal! T' . char . 'vt' . char . '<CR>'
-"     execute 'onoremap i' . char . ' :normal vi' . char . '<CR>'
-"     execute 'xnoremap a' . char . ' :<C-u>normal! F' . char . 'vf' . char . '<CR>'
-"     execute 'onoremap a' . char . ' :normal va' . char . '<CR>'
-" endfor
-"" line text-objects
-" " -----------------
-" " il al
-" xnoremap il g_o^
-" onoremap il :normal vil<CR>
-" xnoremap al $o0
-" onoremap al :normal val<CR>
-"
-" " number text-objects (integer and float)
-" " ---------------------------------------
-" " in an
-" function! VisualNumber()
-"     call search('\d\([^0-9\.]\|$\)', 'cW')
-"     normal v
-"     call search('\(^\|[^0-9\.]\d\)', 'becW')
-" endfunction
-" xnoremap in :<C-u>call VisualNumber()<CR>
-" onoremap in :normal vin<CR>
-"
-" " buffer text-objects
-" " -------------------
-" " i% a%
-" xnoremap i% :<C-u>let z = @/\|1;/^./kz<CR>G??<CR>:let @/ = z<CR>V'z
-" onoremap i% :normal vi%<CR>
-" xnoremap a% GoggV
-" onoremap a% :normal va%<CR>
-"
-" " comment text-objects
-" " --------------------
-" " i? a?
-" xnoremap <buffer> i? ?/\*<CR>o/\*\/<CR>
-" onoremap <buffer> i? :normal vi?<CR>
-" " }}}
+nnoremap <leader>i :call <SID>SynStack()<CR>
+function! <SID>SynStack()
+    if !exists("*synstack")
+        return
+    endif
+    echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
+endfunction

@@ -12,15 +12,6 @@ function M.move(direction)
     end
 end
 
-function M.mapping(keys, mapping, desc)
-    vim.cmd("nnoremap <silent> <leader>"..keys.." "..mapping)
-    -- :(
-    local ptr = vim.g.which_key_map
-    for i = 1, #keys - 1 do
-        ptr = ptr[keys:sub(i, i)]
-    end
-    ptr[keys:sub(#keys, #keys)] = desc
-end
 
 function M.configure_gruvbox()
     -- i have no idea why this has a new line at the start
