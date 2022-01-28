@@ -33,19 +33,18 @@ silent! language en_US.utf-8
 let mapleader = " " | nnoremap <Space> <Nop> 
 
 
-function! GitSignsSetup(info)
-    lua require("gitsigns").setup()
-endf
+" function! GitSignsSetup(info)
+"     lua require("gitsigns").setup()
+" endf
 
 call plug#begin(stdpath("data") . "/plugged")
 Plug 'cespare/vim-toml', { 'for': 'toml' }
 Plug 'ziglang/zig.vim'
 
-Plug 'tpope/vim-fugitive'
-
-Plug 'kyazdani42/nvim-web-devicons'
-Plug 'lewis6991/gitsigns.nvim', { 'do': function('GitSignsSetup') }
-Plug 'famiu/feline.nvim'
+" Plug 'tpope/vim-fugitive'
+" Plug 'kyazdani42/nvim-web-devicons'
+" Plug 'lewis6991/gitsigns.nvim', { 'do': function('GitSignsSetup') }
+" Plug 'famiu/feline.nvim'
 
 Plug 'mhinz/vim-startify'
 " Plug 'vimwiki/vimwiki'
@@ -55,8 +54,6 @@ Plug 'nvim-treesitter/nvim-treesitter'
 Plug 'nvim-telescope/telescope.nvim'
 
 " Plug 'jiangmiao/auto-pairs'
-" Plug ?editorconfig?
-" Plug ?projects?
 call plug#end()
 
 
@@ -101,8 +98,8 @@ lua << EOF
     }
 EOF
 
-lua require("colors")
-lua require("statusline")
+" lua require("colors")
+" lua require("statusline")
 colorscheme supok
 
 
@@ -148,6 +145,8 @@ set wildcharm=<C-z>
 cnoremap <expr> <Tab> getcmdtype() == "/" \|\| getcmdtype() == "?" ? "<C-g>" : "<C-z>"
 cnoremap <expr> <S-Tab> getcmdtype() == "/" \|\| getcmdtype() == "?" ? "<C-t>" : "<S-Tab>"
 
+" echo the names of the highlighting groups applied to the character under the
+" cursor. The names may be linked to a more general group, which isn't shown.
 nnoremap <leader>i :call <SID>SynStack()<CR>
 function! <SID>SynStack()
     if !exists("*synstack")

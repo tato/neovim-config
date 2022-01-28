@@ -43,6 +43,7 @@ cursor = ["NONE", "NONE", background_light]
 error = ["NONE", "red", "NONE"]
 
 # :help highlight-default :help group-name
+# TODO: Special
 # TODO: DiffAdd, DiffChange, DiffDelete, DiffText, FoldColumn, SignColumn,
 # IncSearch, Substitute, MatchParen, ModeMsg, MsgArea, MsgSeparator, MoreMsg,
 # Pmenu, PmenuSel, PmenuSbar, PmenuThumb, Question, QuickFixLine, Search,
@@ -77,6 +78,7 @@ groups = {
     "CursorLine": highlight,
 
     "Operator": disabled,
+    "Delimiter": disabled,
 
     "Cursor": cursor,
     "lCursor": cursor,
@@ -84,7 +86,11 @@ groups = {
     "TermCursor": cursor,
     "TermCursorNC": cursor,
 
+    "Error": error,
     "ErrorMsg": error,
+
+    # vim
+    "vimUserFunc": disabled,
 
     # zig (via zig.vim)
     "zigDummyVariable": default,

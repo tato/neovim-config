@@ -53,12 +53,15 @@ hi ColorColumn gui=NONE guifg=NONE guibg=#3C3836
 hi CursorColumn gui=NONE guifg=NONE guibg=#3C3836
 hi CursorLine gui=NONE guifg=NONE guibg=#3C3836
 hi Operator gui=NONE guifg=NONE guibg=NONE
+hi Delimiter gui=NONE guifg=NONE guibg=NONE
 hi Cursor gui=NONE guifg=NONE guibg=#45444b
 hi lCursor gui=NONE guifg=NONE guibg=#45444b
 hi CursorIM gui=NONE guifg=NONE guibg=#45444b
 hi TermCursor gui=NONE guifg=NONE guibg=#45444b
 hi TermCursorNC gui=NONE guifg=NONE guibg=#45444b
+hi Error gui=NONE guifg=red guibg=NONE
 hi ErrorMsg gui=NONE guifg=red guibg=NONE
+hi vimUserFunc gui=NONE guifg=NONE guibg=NONE
 hi zigDummyVariable gui=NONE guifg=#dad6ff guibg=#25242b
 hi zigVarDecl gui=bold guifg=#7c5ffc guibg=NONE
 hi zigExecution gui=bold guifg=#7c5ffc guibg=NONE
