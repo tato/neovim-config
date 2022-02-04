@@ -20,6 +20,8 @@
 "⣿⣿⡏⠀⣿⣿⣿⠿⠃⢀⣴⣶⣾⣿⣿⣿⣿⣷⣾⢠⣶⣾⣮⣙⡻⣿⢿⣿⣿⣿⣿
 "⣿⣿⡇⠀⣿⣿⠃⠀⠀⣼⣿⣿⣿⣿⣿⣿⣿⣿⡟⡼⠿⣿⣿⣿⣿⣮⡑⡝⣿⣿⣿
 
+" TODO supok colors: zigDummyVariable -> disabled
+
 " try to set english language for the editor. it is usually spanish by default
 " on my systems, which is annoying when comparing certain error messages and
 " such. in theory this could fail, but i would be surprised if it does.
@@ -33,17 +35,17 @@ silent! language en_US.utf-8
 let mapleader = " " | nnoremap <Space> <Nop> 
 
 
-" function! GitSignsSetup(info)
-"     lua require("gitsigns").setup()
-" endf
-
 call plug#begin(stdpath("data") . "/plugged")
-Plug 'cespare/vim-toml', { 'for': 'toml' }
+Plug 'cespare/vim-toml'
 Plug 'ziglang/zig.vim'
+Plug 'beyondmarc/glsl.vim'
 
 " Plug 'tpope/vim-fugitive'
 " Plug 'kyazdani42/nvim-web-devicons'
 " Plug 'lewis6991/gitsigns.nvim', { 'do': function('GitSignsSetup') }
+" function! GitSignsSetup(info)
+"     lua require("gitsigns").setup()
+" endf
 " Plug 'famiu/feline.nvim'
 
 Plug 'mhinz/vim-startify'
@@ -97,6 +99,10 @@ lua << EOF
     require("telescope").setup {
     }
 EOF
+nnoremap <C-p> <cmd>lua require('telescope.builtin').find_files()<cr>
+nnoremap <leader>fg <cmd>lua require('telescope.builtin').live_grep()<cr>
+nnoremap <leader>fb <cmd>lua require('telescope.builtin').buffers()<cr>
+nnoremap <leader>fh <cmd>lua require('telescope.builtin').help_tags()<cr>
 
 " lua require("colors")
 " lua require("statusline")
