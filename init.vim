@@ -31,8 +31,7 @@ silent! language en_US.utf-8
 " set mapleader before anything else. if any plugin defines a <Leader> mapping
 " while mapleader isn't set, it would use the default value of \. usually i
 " don't want plugins to set mappings by default, but just in case.
-" the default mapping of <space> needs to be cleared for mapleader to work.
-let mapleader = " " | nnoremap <Space> <Nop> 
+let mapleader = " "
 
 
 call plug#begin(stdpath("data") . "/plugged")
@@ -147,9 +146,9 @@ augroup END
 " When writing a search query in the command line, but before committing
 " to that search, use Tab to go to the next match and Shift-Tab to go to the
 " previous match
-set wildcharm=<C-z>
-cnoremap <expr> <Tab> getcmdtype() == "/" \|\| getcmdtype() == "?" ? "<C-g>" : "<C-z>"
-cnoremap <expr> <S-Tab> getcmdtype() == "/" \|\| getcmdtype() == "?" ? "<C-t>" : "<S-Tab>"
+" set wildcharm=<C-z>
+" cnoremap <expr> <Tab> getcmdtype() == "/" \|\| getcmdtype() == "?" ? "<C-g>" : "<C-z>"
+" cnoremap <expr> <S-Tab> getcmdtype() == "/" \|\| getcmdtype() == "?" ? "<C-t>" : "<S-Tab>"
 
 " echo the names of the highlighting groups applied to the character under the
 " cursor. The names may be linked to a more general group, which isn't shown.
