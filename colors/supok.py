@@ -29,26 +29,28 @@ LICENSE = """
 
 foreground = "#dad6ff" 
 foreground_dark = "#a7a4c3"
+foreground_darker = "#656565"
 background = "#25242b"
 background_light = "#45444b"
+primary_color = "#7c5ffc"
+secondary_color = "#f9c236"
 
 default = ["NONE", foreground, background]
 grey = ["NONE", foreground_dark, "NONE"]
-greyer = ["NONE", "#656565", "NONE"]
-primary = ["bold", "#7c5ffc", "NONE"]
-secondary = ["NONE", "#f9c236", "NONE"]
+greyer = ["NONE", foreground_darker, "NONE"]
+primary = ["bold", primary_color, "NONE"]
+secondary = ["NONE", secondary_color, "NONE"]
 highlight = ["NONE", "NONE", "#3C3836"]
 disabled = ["NONE", "NONE", "NONE"]
 cursor = ["NONE", "NONE", background_light]
 error = ["NONE", "red", "NONE"]
 
 # :help highlight-default :help group-name
-# TODO: Special
-# TODO: DiffAdd, DiffChange, DiffDelete, DiffText, FoldColumn, SignColumn,
+# TODO: DiffAdd, DiffChange, DiffDelete, DiffText, 
 # IncSearch, Substitute, MatchParen, ModeMsg, MsgArea, MsgSeparator, MoreMsg,
 # Pmenu, PmenuSel, PmenuSbar, PmenuThumb, Question, QuickFixLine, Search,
 # SpecialKey, SpellBad, SpellCap, SpellLocal, SpellRare, StatusLine,
-# StatusLineNC, TabLine, TabLineFill, TabLineSel, Title, Visual, VisualNOS,
+# StatusLineNC, TabLine, TabLineFill, TabLineSel, Visual, VisualNOS,
 # WarningMsg, Whitespace, 
 groups = {
     "Normal": default,
@@ -63,10 +65,12 @@ groups = {
     "LineNrAbove": greyer,
     "LineNrBelow": greyer,
     "NonText": greyer,
+    "Pmenu": [greyer[0], greyer[1], background_light],
 
     "Statement": primary,
     "Type": primary,
     "PreProc": primary,
+    "Title": primary,
 
     "Constant": secondary,
     "Todo": secondary,
@@ -79,6 +83,9 @@ groups = {
 
     "Operator": disabled,
     "Delimiter": disabled,
+    "Special": disabled,
+    "FoldColumn": disabled,
+    "SignColumn": disabled,
 
     "Cursor": cursor,
     "lCursor": cursor,
@@ -93,6 +100,8 @@ groups = {
     "vimUserFunc": disabled,
 
     # zig (via zig.vim)
+    # TODO: a color for control-flow keywords, another for "normal" keywords,
+    # special for defer
     "zigDummyVariable": disabled,
     "zigVarDecl": primary,
     "zigExecution": primary,

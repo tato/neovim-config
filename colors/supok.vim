@@ -42,9 +42,11 @@ hi LineNr gui=NONE guifg=#656565 guibg=NONE
 hi LineNrAbove gui=NONE guifg=#656565 guibg=NONE
 hi LineNrBelow gui=NONE guifg=#656565 guibg=NONE
 hi NonText gui=NONE guifg=#656565 guibg=NONE
+hi Pmenu gui=NONE guifg=#656565 guibg=#45444b
 hi Statement gui=bold guifg=#7c5ffc guibg=NONE
 hi Type gui=bold guifg=#7c5ffc guibg=NONE
 hi PreProc gui=bold guifg=#7c5ffc guibg=NONE
+hi Title gui=bold guifg=#7c5ffc guibg=NONE
 hi Constant gui=NONE guifg=#f9c236 guibg=NONE
 hi Todo gui=NONE guifg=#f9c236 guibg=NONE
 hi Directory gui=NONE guifg=#f9c236 guibg=NONE
@@ -54,6 +56,9 @@ hi CursorColumn gui=NONE guifg=NONE guibg=#3C3836
 hi CursorLine gui=NONE guifg=NONE guibg=#3C3836
 hi Operator gui=NONE guifg=NONE guibg=NONE
 hi Delimiter gui=NONE guifg=NONE guibg=NONE
+hi Special gui=NONE guifg=NONE guibg=NONE
+hi FoldColumn gui=NONE guifg=NONE guibg=NONE
+hi SignColumn gui=NONE guifg=NONE guibg=NONE
 hi Cursor gui=NONE guifg=NONE guibg=#45444b
 hi lCursor gui=NONE guifg=NONE guibg=#45444b
 hi CursorIM gui=NONE guifg=NONE guibg=#45444b
