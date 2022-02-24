@@ -62,6 +62,6 @@ hi TermCursorNC gui=NONE guifg=NONE guibg=#45444b
 hi Error gui=NONE guifg=red guibg=NONE
 hi ErrorMsg gui=NONE guifg=red guibg=NONE
 hi vimUserFunc gui=NONE guifg=NONE guibg=NONE
-hi zigDummyVariable gui=NONE guifg=#dad6ff guibg=#25242b
+hi zigDummyVariable gui=NONE guifg=NONE guibg=NONE
 hi zigVarDecl gui=bold guifg=#7c5ffc guibg=NONE
 hi zigExecution gui=bold guifg=#7c5ffc guibg=NONE

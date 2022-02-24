@@ -20,8 +20,6 @@
 "⣿⣿⡏⠀⣿⣿⣿⠿⠃⢀⣴⣶⣾⣿⣿⣿⣿⣷⣾⢠⣶⣾⣮⣙⡻⣿⢿⣿⣿⣿⣿
 "⣿⣿⡇⠀⣿⣿⠃⠀⠀⣼⣿⣿⣿⣿⣿⣿⣿⣿⡟⡼⠿⣿⣿⣿⣿⣮⡑⡝⣿⣿⣿
 
-" TODO supok colors: zigDummyVariable -> disabled
-
 " try to set english language for the editor. it is usually spanish by default
 " on my systems, which is annoying when comparing certain error messages and
 " such. in theory this could fail, but i would be surprised if it does.
@@ -38,23 +36,12 @@ call plug#begin(stdpath("data") . "/plugged")
 Plug 'cespare/vim-toml'
 Plug 'ziglang/zig.vim'
 Plug 'beyondmarc/glsl.vim'
-
-" Plug 'tpope/vim-fugitive'
-" Plug 'kyazdani42/nvim-web-devicons'
-" Plug 'lewis6991/gitsigns.nvim', { 'do': function('GitSignsSetup') }
-" function! GitSignsSetup(info)
-"     lua require("gitsigns").setup()
-" endf
-" Plug 'famiu/feline.nvim'
+Plug 'famiu/feline.nvim'
 
 Plug 'mhinz/vim-startify'
-" Plug 'vimwiki/vimwiki'
-
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-treesitter/nvim-treesitter'
 Plug 'nvim-telescope/telescope.nvim'
-
-" Plug 'jiangmiao/auto-pairs'
 call plug#end()
 
 
@@ -64,7 +51,7 @@ set clipboard+=unnamedplus
 set tabstop=4 shiftwidth=4 expandtab
 set ignorecase smartcase
 set scrolloff=5
-set title cursorline number showmatch noruler
+set title cursorline number relativenumber showmatch noruler
 set linebreak
 set noswapfile
 set formatoptions-=t formatoptions+=croj textwidth=79
@@ -86,12 +73,31 @@ nnoremap gV `[v`]
 nnoremap Q :let<Space>@q=''<Left><C-R><C-R>q
 
 
-let g:gitgutter_signs = 0
-let g:gitgutter_map_keys = 0
+lua << EOF
+    local supok_theme = {
+        bg = '#dad6ff',
+        fg = '#25242b',
+        black = '#1B1B1B',
+        skyblue = '#50B0F0',
+        cyan = '#009090',
+        green = '#297702',
+        oceanblue = '#0066cc',
+        magenta = '#C26BDB',
+        orange = '#FF9000',
+        red = '#D10000',
+        violet = '#9E93E8',
+        white = '#FFFFFF',
+        yellow = '#E1E120',
+    }
+    require('feline').setup({
+        preset = 'noicon',
+        theme = supok_theme,
+    });
+EOF
 
 let g:startify_files_number = 5
-let g:startify_bookmarks = [ { "c": "~/.config/nvim" }, { "w": "D:/monky garden" } ]
-let g:startify_commands = [ { "o": [ "Open Vimwiki on monky garden", "echom haha" ] } ]
+let g:startify_bookmarks = [ { "c": "~/.config/nvim" }, { "l": "C:/code/land" } ]
+let g:startify_commands = [ ]
 let g:startify_custom_header = startify#pad(readfile(stdpath("config") . "/banner.txt"))
 
 lua << EOF

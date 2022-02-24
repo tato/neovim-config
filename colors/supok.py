@@ -93,7 +93,7 @@ groups = {
     "vimUserFunc": disabled,
 
     # zig (via zig.vim)
-    "zigDummyVariable": default,
+    "zigDummyVariable": disabled,
     "zigVarDecl": primary,
     "zigExecution": primary,
 }
