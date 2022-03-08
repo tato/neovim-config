@@ -44,7 +44,6 @@ Plug 'nvim-treesitter/nvim-treesitter'
 Plug 'nvim-telescope/telescope.nvim'
 call plug#end()
 
-
 set fileformats=unix,dos
 set hidden undofile
 set clipboard+=unnamedplus
@@ -78,10 +77,10 @@ lua << EOF
         bg = '#dad6ff',
         fg = '#25242b',
         black = '#1B1B1B',
-        skyblue = '#50B0F0',
+        skyblue = '#9c86f9',
         cyan = '#009090',
-        green = '#297702',
-        oceanblue = '#0066cc',
+        green = '#051c00',
+        oceanblue = '#7c5ffc', -- primary_color
         magenta = '#C26BDB',
         orange = '#FF9000',
         red = '#D10000',

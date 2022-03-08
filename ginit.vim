@@ -1,1 +1,1 @@
-set guifont=Cousine:h15
+set guifont=Iosevka\ Fixed:h18

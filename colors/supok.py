@@ -27,20 +27,29 @@ LICENSE = """
 # This license applies both to this generator program and the
 # generated vim colorscheme file
 
+purple = "#7259e0"
+blue = "#5984e0"
+blue = "#84a7f4"
+pink = "#b559e0"
+yellow = "#f4c755"
+green = "#d2f455"
+red = "#f47855"
+
 foreground = "#dad6ff" 
 foreground_dark = "#a7a4c3"
 foreground_darker = "#656565"
-background = "#25242b"
-background_light = "#45444b"
-primary_color = "#7c5ffc"
-secondary_color = "#f9c236"
+background = "#16151c"
+background_light = "#25242b"
+primary_color = purple
+secondary_color = yellow
+highlight_color = "#352d38"
 
 default = ["NONE", foreground, background]
 grey = ["NONE", foreground_dark, "NONE"]
 greyer = ["NONE", foreground_darker, "NONE"]
 primary = ["bold", primary_color, "NONE"]
 secondary = ["NONE", secondary_color, "NONE"]
-highlight = ["NONE", "NONE", "#3C3836"]
+highlight = ["NONE", "NONE", highlight_color]
 disabled = ["NONE", "NONE", "NONE"]
 cursor = ["NONE", "NONE", background_light]
 error = ["NONE", "red", "NONE"]
@@ -68,14 +77,22 @@ groups = {
     "Pmenu": [greyer[0], greyer[1], background_light],
 
     "Statement": primary,
-    "Type": primary,
+    "Conditional": [primary[0], pink, primary[2]],
+    "Repeat": [primary[0], pink, primary[2]],
+    "Exception": [primary[0], pink, primary[2]],
+    "Type": [primary[0], blue, primary[2]],
+    "StorageClass": primary,
+    "Structure": primary,
+    "Typedef": primary,
     "PreProc": primary,
     "Title": primary,
 
     "Constant": secondary,
-    "Todo": secondary,
+    "String": [secondary[0], green, secondary[2]],
     "Directory": secondary,
     "CursorLineNr": [secondary[0], secondary[1], highlight[2]],
+
+    "Todo": ["NONE", background_light, red],
 
     "ColorColumn": highlight,
     "CursorColumn": highlight,
@@ -98,6 +115,7 @@ groups = {
 
     # vim
     "vimUserFunc": disabled,
+    "vimTodo": ["NONE", background_light, red],
 
     # zig (via zig.vim)
     # TODO: a color for control-flow keywords, another for "normal" keywords,
@@ -105,6 +123,9 @@ groups = {
     "zigDummyVariable": disabled,
     "zigVarDecl": primary,
     "zigExecution": primary,
+
+    # lua
+    "luaTable": disabled,
 }
 
 boilerplate = """
