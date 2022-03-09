@@ -79,3 +79,6 @@ hi zigDummyVariable gui=NONE guifg=NONE guibg=NONE
 hi zigVarDecl gui=bold guifg=#7259e0 guibg=NONE
 hi zigExecution gui=bold guifg=#7259e0 guibg=NONE
 hi luaTable gui=NONE guifg=NONE guibg=NONE
+hi GitSignsAddNr gui=NONE guifg=#568e55 guibg=NONE
+hi GitSignsChangeNr gui=NONE guifg=#686756 guibg=NONE
+hi GitSignsDeleteNr gui=NONE guifg=#665252 guibg=NONE

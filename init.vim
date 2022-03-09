@@ -33,15 +33,20 @@ let mapleader = " "
 
 
 call plug#begin(stdpath("data") . "/plugged")
+Plug 'neovim/nvim-lspconfig'
+Plug 'ms-jpq/coq_nvim', {'branch': 'coq'}
+
 Plug 'cespare/vim-toml'
 Plug 'ziglang/zig.vim'
 Plug 'beyondmarc/glsl.vim'
-Plug 'famiu/feline.nvim'
 
-Plug 'mhinz/vim-startify'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-treesitter/nvim-treesitter'
 Plug 'nvim-telescope/telescope.nvim'
+
+Plug 'lewis6991/gitsigns.nvim'
+Plug 'feline-nvim/feline.nvim'
+Plug 'mhinz/vim-startify'
 call plug#end()
 
 set fileformats=unix,dos
@@ -71,25 +76,187 @@ map Y y$
 nnoremap gV `[v`]
 nnoremap Q :let<Space>@q=''<Left><C-R><C-R>q
 
+lua << EOF
+    local lspconfig = require("lspconfig")
+    local coq = require("coq")
+    vim.g.coq_settings = { clients = { snippets = { warn = {} } } }
+
+    -- Mappings.
+    -- See `:help vim.diagnostic.*` for documentation on any of the below functions
+    local map = vim.api.nvim_set_keymap
+    local opts = { noremap=true, silent=true }
+    map('n', '<space>e', '<cmd>lua vim.diagnostic.open_float()<CR>', opts)
+    map('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<CR>', opts)
+    map('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>', opts)
+    -- map('n', '<space>q', '<cmd>lua vim.diagnostic.setloclist()<CR>', opts)
+
+    local on_attach = function(client, bufnr)
+      -- Enable completion triggered by <c-x><c-o>
+      -- vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
+
+      -- Mappings.
+      -- See `:help vim.lsp.*` for documentation on any of the below functions
+      local bufmap = vim.api.nvim_buf_set_keymap
+      bufmap(bufnr, 'n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>', opts)
+      bufmap(bufnr, 'n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
+      bufmap(bufnr, 'n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
+      bufmap(bufnr, 'n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
+      bufmap(bufnr, 'n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
+      -- bufmap(bufnr, 'n', '<space>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', opts)
+      -- bufmap(bufnr, 'n', '<space>wr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', opts)
+      -- bufmap(bufnr, 'n', '<space>wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', opts)
+      bufmap(bufnr, 'n', '<space>D', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
+      bufmap(bufnr, 'n', '<space>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
+      -- bufmap(bufnr, 'n', '<space>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
+      bufmap(bufnr, 'n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
+      bufmap(bufnr, 'n', '<space>f', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
+    end
+
+    local servers = { "zls" }
+    for _, lsp in pairs(servers) do
+        lspconfig[lsp].setup(coq.lsp_ensure_capabilities{ on_attach = on_attach, })
+    end
+EOF
+
+COQnow -s
 
 lua << EOF
-    local supok_theme = {
-        bg = '#dad6ff',
-        fg = '#25242b',
-        black = '#1B1B1B',
-        skyblue = '#9c86f9',
-        cyan = '#009090',
-        green = '#051c00',
-        oceanblue = '#7c5ffc', -- primary_color
-        magenta = '#C26BDB',
-        orange = '#FF9000',
-        red = '#D10000',
-        violet = '#9E93E8',
-        white = '#FFFFFF',
-        yellow = '#E1E120',
+    require("gitsigns").setup { signcolumn = false }
+
+    local feline = require("feline")
+    local vi_mode_utils = require("feline.providers.vi_mode")
+
+    local mode_hl = function (fg)
+        return function() 
+            if fg == "white" then fg = "black" end
+            return {
+                name = vi_mode_utils.get_mode_highlight_name(),
+                fg = fg,
+                -- bg = vi_mode_utils.get_mode_color(),
+                bg = "white",
+                style = "bold",
+            }
+        end
+    end
+    
+    local components = { active = {}, inactive = {} }
+    components.active[1] = {
+        {
+            provider = "▊ ",
+            hl = mode_hl("skyblue"),
+        },
+        {
+            provider = "vi_mode",
+            hl = mode_hl("white"),
+            right_sep = { str = " ", hl = mode_hl("white") },
+            icon = "",
+        },
+        {
+            provider = "file_info",
+            hl = { fg = "white", bg = "oceanblue", style = "bold" },
+            left_sep = { str = " ", hl = { bg = "oceanblue" } },
+            right_sep = { str = " ", hl = { bg = "oceanblue", } },
+            icon = "",
+        },
+        {
+            provider = "file_size",
+            left_sep = " ",
+            right_sep = {
+                " ",
+                { str = "vertical_bar_thin", hl = { fg = "fg", bg = "bg" } },
+            },
+        },
+        {
+            provider = "position",
+            left_sep = " ",
+            right_sep = {
+                " ",
+                { str = "vertical_bar_thin", hl = { fg = "fg", bg = "bg" } },
+            },
+        },
+        {
+            provider = "diagnostic_errors",
+            hl = { fg = "red" },
+            icon = "🥵",
+        },
+        {
+            provider = "diagnostic_warnings",
+            hl = { fg = "yellow" },
+            icon = "😅",
+        },
     }
-    require('feline').setup({
-        preset = 'noicon',
+
+    components.active[2] = {
+        {
+            provider = "git_branch",
+            hl = { style = "bold" },
+            left_sep = {
+                { str = "vertical_bar_thin", hl = { fg = "fg", bg = "bg" } },
+            },
+            icon = " ",
+        },
+        {
+            provider = "git_diff_added",
+            icon = " +",
+        },
+        {
+            provider = "git_diff_changed",
+            icon = " ~",
+        },
+        {
+            provider = "git_diff_removed",
+            right_sep = {
+                " ",
+                { str = "vertical_bar_thin", hl = { fg = "fg", bg = "bg" } },
+            },
+            icon = " -",
+        },
+        {
+            provider = "line_percentage",
+            hl = { style = "bold" },
+            left_sep = " ",
+            right_sep = " ",
+        },
+        {
+            provider = "scroll_bar",
+            hl = { fg = "skyblue", style = "bold" },
+        },
+    }
+
+    components.inactive[1] = {
+        {
+            provider = "file_info",
+            icon = "",
+            hl = { fg = "white", bg = "oceanblue", style = "bold" },
+            left_sep = { str = " ", hl = { fg = "NONE", bg = "oceanblue" } },
+            right_sep = {
+                { str = " ", hl = { fg = "NONE", bg = "oceanblue" } },
+                " ",
+            },
+        },
+        -- Empty component to fix the highlight till the end of the statusline
+        {},
+    }
+
+
+    local supok_theme = {
+        bg = "#dad6ff",
+        fg = "#25242b",
+        black = "#1B1B1B",
+        skyblue = "#9c86f9",
+        cyan = "#009090",
+        green = "#051c00",
+        oceanblue = "#7c5ffc", -- primary_color
+        magenta = "#C26BDB",
+        orange = "#FF9000",
+        red = "#D10000",
+        violet = "#9E93E8",
+        white = "#FFFFFF",
+        yellow = "#E1E120",
+    }
+
+    feline.setup({
+        components = components,
         theme = supok_theme,
     });
 EOF
@@ -130,6 +297,14 @@ nnoremap <silent> <leader>q :close<CR>
 
 nnoremap <silent> <leader>fed :e $MYVIMRC<CR>
 nnoremap <silent> <leader>fsd :source $MYVIMRC<CR> | nohlsearch
+
+function! TheBigReset()
+    nohlsearch
+    diffupdate
+    cclose
+    mode
+endfunction
+nnoremap <silent> <C-l> <Cmd>call TheBigReset()<CR>
 
 " nnoremap <silent> <C-.> :nohlsearch<C-R>=has('diff')?'<Bar>diffupdate':''<CR><CR><C-L>
 
