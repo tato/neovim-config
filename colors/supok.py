@@ -17,25 +17,25 @@ LICENSE = """
 # This license applies both to this generator program and the
 # generated vim colorscheme file
 
-purple = "#7259e0"
-blue = "#5984e0"
-blue = "#84a7f4"
-pink = "#b559e0"
-yellow = "#f4c755"
-green = "#d2f455"
-red = "#f47855"
+white = "#EEF6EF"
+white_2 = "#B8BEB8"
+white_3 = "#818580"
+black = "#141411"
+blue = "#62AAE4"
+red = "#E01A4F"
+green = "#5DD57B"
+aqua = "#60C0B0"
+purple = "#CB6DEE"
+yellow = "#FBCD37"
 
-foreground = "#dad6ff" 
-foreground_dark = "#a7a4c3"
-foreground_darker = "#656565"
-foreground_darker_greenish = "#568e55"
-foreground_darker_orangish = "#686756"
-foreground_darker_reddish = "#665252"
-background = "#16151c"
-background_light = "#25242b"
+background = black
+background_light = background
+foreground = white
+foreground_dark = white_2
+foreground_darker = white_3
 primary_color = purple
-secondary_color = yellow
-highlight_color = "#352d38"
+secondary_color = aqua
+highlight_color = background
 
 default = ["NONE", foreground, background]
 grey = ["NONE", foreground_dark, "NONE"]
@@ -49,12 +49,19 @@ error = ["NONE", "red", "NONE"]
 
 # :help highlight-default :help group-name
 # TODO: DiffAdd, DiffChange, DiffDelete, DiffText, 
-# IncSearch, Substitute, MatchParen, ModeMsg, MsgArea, MsgSeparator, MoreMsg,
-# Pmenu, PmenuSel, PmenuSbar, PmenuThumb, Question, QuickFixLine, Search,
+# ModeMsg, MsgArea, MsgSeparator, MoreMsg,
+# Pmenu, PmenuSel, PmenuSbar, PmenuThumb, Question, QuickFixLine,
 # SpecialKey, SpellBad, SpellCap, SpellLocal, SpellRare, StatusLine,
-# StatusLineNC, TabLine, TabLineFill, TabLineSel, Visual, VisualNOS,
+# StatusLineNC, TabLine, TabLineFill, TabLineSel
 # WarningMsg, Whitespace, 
 groups = {
+    "Visual": ["NONE", background, foreground],
+    "VisualNOS": ["NONE", background, foreground],
+    "Search": ["NONE", background, yellow],
+    "Substitute": ["NONE", background, yellow],
+    "IncSearch": ["NONE", background, yellow],
+    "MatchParen": ["NONE", background, yellow],
+
     "Normal": default,
     "VertSplit": default,
 
@@ -70,10 +77,8 @@ groups = {
     "Pmenu": [greyer[0], greyer[1], background_light],
 
     "Statement": primary,
-    "Conditional": [primary[0], pink, primary[2]],
-    "Repeat": [primary[0], pink, primary[2]],
-    "Exception": [primary[0], pink, primary[2]],
-    "Type": [primary[0], blue, primary[2]],
+    # "Type": [primary[0], blue, primary[2]],
+    "Type": primary,
     "StorageClass": primary,
     "Structure": primary,
     "Typedef": primary,
@@ -82,10 +87,11 @@ groups = {
 
     "Constant": secondary,
     "String": [secondary[0], green, secondary[2]],
+    "SpecialChar": secondary,
     "Directory": secondary,
-    "CursorLineNr": [secondary[0], secondary[1], highlight[2]],
+    "CursorLineNr": [secondary[0], yellow, highlight[2]],
 
-    "Todo": ["NONE", background_light, red],
+    "Todo": ["underline", red, background],
 
     "ColorColumn": highlight,
     "CursorColumn": highlight,
@@ -108,12 +114,13 @@ groups = {
 
     # vim
     "vimUserFunc": disabled,
-    "vimTodo": ["NONE", background_light, red],
 
     # zig (via zig.vim)
     "zigDummyVariable": disabled,
     "zigVarDecl": primary,
     "zigExecution": primary,
+    "zigEscape": secondary,
+    "zigBuiltinFn": ["italic", grey[1], grey[2]],
 
     # lua
     "luaTable": disabled,

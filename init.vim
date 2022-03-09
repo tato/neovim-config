@@ -128,12 +128,12 @@ lua << EOF
 
     local mode_hl = function (fg)
         return function() 
-            if fg == "white" then fg = "black" end
+            if fg == "bg" then fg = "fg" end
             return {
                 name = vi_mode_utils.get_mode_highlight_name(),
                 fg = fg,
                 -- bg = vi_mode_utils.get_mode_color(),
-                bg = "white",
+                bg = "bg",
                 style = "bold",
             }
         end
@@ -143,19 +143,19 @@ lua << EOF
     components.active[1] = {
         {
             provider = "▊ ",
-            hl = mode_hl("skyblue"),
+            hl = mode_hl("purple"),
         },
         {
             provider = "vi_mode",
-            hl = mode_hl("white"),
-            right_sep = { str = " ", hl = mode_hl("white") },
+            hl = mode_hl("bg"),
+            right_sep = { str = " ", hl = mode_hl("bg") },
             icon = "",
         },
         {
             provider = "file_info",
-            hl = { fg = "white", bg = "oceanblue", style = "bold" },
-            left_sep = { str = " ", hl = { bg = "oceanblue" } },
-            right_sep = { str = " ", hl = { bg = "oceanblue", } },
+            hl = { fg = "fg", bg = "purple", style = "bold" },
+            left_sep = { str = " ", hl = { bg = "purple" } },
+            right_sep = { str = " ", hl = { bg = "purple", } },
             icon = "",
         },
         {
@@ -175,14 +175,10 @@ lua << EOF
             },
         },
         {
-            provider = "diagnostic_errors",
-            hl = { fg = "red" },
-            icon = "🥵",
+            provider = "diagnostic_errors", icon = "🥵"
         },
         {
-            provider = "diagnostic_warnings",
-            hl = { fg = "yellow" },
-            icon = "😅",
+            provider = "diagnostic_warnings", icon = "😅"
         },
     }
 
@@ -219,7 +215,7 @@ lua << EOF
         },
         {
             provider = "scroll_bar",
-            hl = { fg = "skyblue", style = "bold" },
+            hl = { fg = "purple", style = "bold" },
         },
     }
 
@@ -227,10 +223,10 @@ lua << EOF
         {
             provider = "file_info",
             icon = "",
-            hl = { fg = "white", bg = "oceanblue", style = "bold" },
-            left_sep = { str = " ", hl = { fg = "NONE", bg = "oceanblue" } },
+            hl = { fg = "white", bg = "purple", style = "bold" },
+            left_sep = { str = " ", hl = { fg = "NONE", bg = "purple" } },
             right_sep = {
-                { str = " ", hl = { fg = "NONE", bg = "oceanblue" } },
+                { str = " ", hl = { fg = "NONE", bg = "purple" } },
                 " ",
             },
         },
@@ -240,19 +236,9 @@ lua << EOF
 
 
     local supok_theme = {
-        bg = "#dad6ff",
+        bg = "#EEF6EF",
         fg = "#25242b",
-        black = "#1B1B1B",
-        skyblue = "#9c86f9",
-        cyan = "#009090",
-        green = "#051c00",
-        oceanblue = "#7c5ffc", -- primary_color
-        magenta = "#C26BDB",
-        orange = "#FF9000",
-        red = "#D10000",
-        violet = "#9E93E8",
-        white = "#FFFFFF",
-        yellow = "#E1E120",
+        purple = "#CB6DEE",
     }
 
     feline.setup({
@@ -298,13 +284,7 @@ nnoremap <silent> <leader>q :close<CR>
 nnoremap <silent> <leader>fed :e $MYVIMRC<CR>
 nnoremap <silent> <leader>fsd :source $MYVIMRC<CR> | nohlsearch
 
-function! TheBigReset()
-    nohlsearch
-    diffupdate
-    cclose
-    mode
-endfunction
-nnoremap <silent> <C-l> <Cmd>call TheBigReset()<CR>
+nnoremap <silent> <C-l> :nohlsearch <bar> diffupdate <bar> cclose <bar> mode<CR>
 
 " nnoremap <silent> <C-.> :nohlsearch<C-R>=has('diff')?'<Bar>diffupdate':''<CR><CR><C-L>
 
