@@ -79,7 +79,10 @@ nnoremap Q :let<Space>@q=''<Left><C-R><C-R>q
 lua << EOF
     local lspconfig = require("lspconfig")
     local coq = require("coq")
-    vim.g.coq_settings = { clients = { snippets = { warn = {} } } }
+    vim.g.coq_settings = { 
+        ["clients.snippets.warn"] = {},
+        ["display.icons.mode"] = "none",
+    }
 
     -- Mappings.
     -- See `:help vim.diagnostic.*` for documentation on any of the below functions
@@ -175,10 +178,10 @@ lua << EOF
             },
         },
         {
-            provider = "diagnostic_errors", icon = "🥵"
+            provider = "diagnostic_errors", icon = "X"
         },
         {
-            provider = "diagnostic_warnings", icon = "😅"
+            provider = "diagnostic_warnings", icon = "!"
         },
     }
 
@@ -223,7 +226,7 @@ lua << EOF
         {
             provider = "file_info",
             icon = "",
-            hl = { fg = "white", bg = "purple", style = "bold" },
+            hl = { fg = "fg", bg = "purple", style = "bold" },
             left_sep = { str = " ", hl = { fg = "NONE", bg = "purple" } },
             right_sep = {
                 { str = " ", hl = { fg = "NONE", bg = "purple" } },
@@ -236,9 +239,9 @@ lua << EOF
 
 
     local supok_theme = {
-        bg = "#EEF6EF",
-        fg = "#25242b",
-        purple = "#CB6DEE",
+        bg = vim.g.supok_colors.fg,
+        fg = vim.g.supok_colors.bg,
+        purple = vim.g.supok_colors.purple,
     }
 
     feline.setup({

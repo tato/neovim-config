@@ -17,24 +17,27 @@ LICENSE = """
 # This license applies both to this generator program and the
 # generated vim colorscheme file
 
-white = "#EEF6EF"
-white_2 = "#B8BEB8"
-white_3 = "#818580"
-black = "#141411"
-blue = "#62AAE4"
-red = "#E01A4F"
-green = "#5DD57B"
-aqua = "#60C0B0"
-purple = "#CB6DEE"
-yellow = "#FBCD37"
+import types
+colors = types.SimpleNamespace()
+colors.white = "#EEF6EF"
+colors.white_2 = "#B8BEB8"
+colors.white_3 = "#818580"
+colors.black = "#141411"
+colors.blue = "#62AAE4"
+colors.red = "#E01A4F"
+colors.green = "#5DD57B"
+colors.aqua = "#60C0B0"
+colors.purple = "#CB6DEE"
+colors.purple = "#b79ef7"
+colors.yellow = "#FBCD37"
 
-background = black
+background = colors.black
 background_light = background
-foreground = white
-foreground_dark = white_2
-foreground_darker = white_3
-primary_color = purple
-secondary_color = aqua
+foreground = colors.white
+foreground_dark = colors.white_2
+foreground_darker = colors.white_3
+primary_color = colors.purple
+secondary_color = colors.aqua
 highlight_color = background
 
 default = ["NONE", foreground, background]
@@ -44,24 +47,16 @@ primary = ["bold", primary_color, "NONE"]
 secondary = ["NONE", secondary_color, "NONE"]
 highlight = ["NONE", "NONE", highlight_color]
 disabled = ["NONE", "NONE", "NONE"]
-cursor = ["NONE", "NONE", background_light]
-error = ["NONE", "red", "NONE"]
+cursor = ["reverse", "NONE", "NONE"]
+error = ["NONE", colors.red, "NONE"]
 
 # :help highlight-default :help group-name
-# TODO: DiffAdd, DiffChange, DiffDelete, DiffText, 
-# ModeMsg, MsgArea, MsgSeparator, MoreMsg,
+# TODO: ModeMsg, MsgArea, MsgSeparator, MoreMsg,
 # Pmenu, PmenuSel, PmenuSbar, PmenuThumb, Question, QuickFixLine,
 # SpecialKey, SpellBad, SpellCap, SpellLocal, SpellRare, StatusLine,
-# StatusLineNC, TabLine, TabLineFill, TabLineSel
+# TabLine, TabLineFill, TabLineSel
 # WarningMsg, Whitespace, 
 groups = {
-    "Visual": ["NONE", background, foreground],
-    "VisualNOS": ["NONE", background, foreground],
-    "Search": ["NONE", background, yellow],
-    "Substitute": ["NONE", background, yellow],
-    "IncSearch": ["NONE", background, yellow],
-    "MatchParen": ["NONE", background, yellow],
-
     "Normal": default,
     "VertSplit": default,
 
@@ -77,7 +72,7 @@ groups = {
     "Pmenu": [greyer[0], greyer[1], background_light],
 
     "Statement": primary,
-    # "Type": [primary[0], blue, primary[2]],
+    # "Type": [primary[0], colors.blue, primary[2]],
     "Type": primary,
     "StorageClass": primary,
     "Structure": primary,
@@ -86,31 +81,47 @@ groups = {
     "Title": primary,
 
     "Constant": secondary,
-    "String": [secondary[0], green, secondary[2]],
+    "String": [secondary[0], colors.green, secondary[2]],
     "SpecialChar": secondary,
     "Directory": secondary,
-    "CursorLineNr": [secondary[0], yellow, highlight[2]],
+    "CursorLineNr": [secondary[0], colors.yellow, highlight[2]],
 
-    "Todo": ["underline", red, background],
+    "Todo": ["underline", colors.red, background],
 
-    "ColorColumn": highlight,
+    "ColorColumn":  highlight,
     "CursorColumn": highlight,
-    "CursorLine": highlight,
+    "CursorLine":   highlight,
 
-    "Operator": disabled,
-    "Delimiter": disabled,
-    "Special": disabled,
+    "Operator":   disabled,
+    "Delimiter":  disabled,
+    "Special":    disabled,
     "FoldColumn": disabled,
     "SignColumn": disabled,
 
-    "Cursor": cursor,
-    "lCursor": cursor,
-    "CursorIM": cursor,
-    "TermCursor": cursor,
+    "Cursor":       cursor,
+    "lCursor":      cursor,
+    "CursorIM":     cursor,
+    "TermCursor":   cursor,
     "TermCursorNC": cursor,
 
-    "Error": error,
+    "Error":    error,
     "ErrorMsg": error,
+
+    "Visual":    ["NONE", background, foreground],
+    "VisualNOS": ["NONE", background, foreground],
+
+    "Search":     ["NONE", background, colors.yellow],
+    "Substitute": ["NONE", background, colors.yellow],
+    "IncSearch":  ["NONE", background, colors.yellow],
+    "MatchParen": ["NONE", background, colors.yellow],
+
+    "DiffAdd":    ["NONE", background, colors.blue],
+    "DiffChange": ["NONE", background, colors.yellow], 
+    "DiffDelete": ["NONE", background, colors.red],
+    "DiffText": default, 
+
+    "StatusLine":   ["NONE", foreground, background],
+    "StatusLineNC": ["NONE", foreground, background],
 
     # vim
     "vimUserFunc": disabled,
@@ -143,4 +154,9 @@ with open("supok.vim", "w", newline="") as f:
 
     for group, [gui, fg, bg] in groups.items():
         f.write(f"hi {group} gui={gui} guifg={fg} guibg={bg}\n")
+
+    f.write("let g:supok_colors = {}\n")
+    for name, color in colors.__dict__.items():
+        f.write(f"let g:supok_colors.{name} = '{color}'\n")
+
         
