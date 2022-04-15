@@ -33,6 +33,9 @@ let mapleader = " "
 
 
 call plug#begin(stdpath("data") . "/plugged")
+Plug 'rktjmp/lush.nvim'
+Plug 'mcchrish/zenbones.nvim'
+
 Plug 'neovim/nvim-lspconfig'
 Plug 'ms-jpq/coq_nvim', {'branch': 'coq'}
 
@@ -122,6 +125,8 @@ lua << EOF
 EOF
 
 COQnow -s
+
+colorscheme supok
 
 lua << EOF
     require("gitsigns").setup { signcolumn = false }
@@ -239,9 +244,12 @@ lua << EOF
 
 
     local supok_theme = {
-        bg = vim.g.supok_colors.fg,
-        fg = vim.g.supok_colors.bg,
-        purple = vim.g.supok_colors.purple,
+        -- bg = vim.g.supok_colors.white,
+        -- fg = vim.g.supok_colors.black,
+        -- purple = vim.g.supok_colors.purple,
+        bg = "#EEF6EF",
+        fg = "#141411",
+        purple = "#b79ef7",
     }
 
     feline.setup({
@@ -264,9 +272,6 @@ nnoremap <leader>fg <cmd>lua require('telescope.builtin').live_grep()<cr>
 nnoremap <leader>fb <cmd>lua require('telescope.builtin').buffers()<cr>
 nnoremap <leader>fh <cmd>lua require('telescope.builtin').help_tags()<cr>
 
-" lua require("colors")
-" lua require("statusline")
-colorscheme supok
 
 
 " <leader>h/j/k/l: move to window in a direction. if it doesn't
