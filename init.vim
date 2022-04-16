@@ -128,6 +128,8 @@ COQnow -s
 
 colorscheme supok
 
+" lua require("statusline").setup()
+
 lua << EOF
     require("gitsigns").setup { signcolumn = false }
 
@@ -168,10 +170,11 @@ lua << EOF
         },
         {
             provider = "file_size",
-            left_sep = " ",
+            left_sep = { str = " ", hl = "StatusLine" },
+            hl = "StatusLine",
             right_sep = {
-                " ",
-                { str = "vertical_bar_thin", hl = { fg = "fg", bg = "bg" } },
+                { str = " ", hl = "StatusLine" },
+                { str = "vertical_bar_thin", hl = "StatusLine" },
             },
         },
         {
@@ -242,11 +245,7 @@ lua << EOF
         {},
     }
 
-
     local supok_theme = {
-        -- bg = vim.g.supok_colors.white,
-        -- fg = vim.g.supok_colors.black,
-        -- purple = vim.g.supok_colors.purple,
         bg = "#EEF6EF",
         fg = "#141411",
         purple = "#b79ef7",

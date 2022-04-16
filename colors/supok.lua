@@ -93,8 +93,8 @@ local theme = lush(function()
         DiffDelete { bg=red, fg=Normal.bg },
         DiffText { Normal },
 
-        StatusLine { bg=Normal.bg, fg=Normal.fg },
-        StatusLineNC { bg=Normal.bg, fg=Normal.fg },
+        StatusLine { bg=Normal.fg, fg=Normal.bg },
+        StatusLineNC { bg=white_2, fg=Normal.bg },
 
         -- vim
         vimUserFunc { },
