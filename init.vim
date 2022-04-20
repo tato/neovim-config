@@ -31,12 +31,12 @@ silent! language en_US.utf-8
 " don't want plugins to set mappings by default, but just in case.
 let mapleader = " "
 
-
 call plug#begin(stdpath("data") . "/plugged")
 Plug 'rktjmp/lush.nvim'
-Plug 'mcchrish/zenbones.nvim'
 
+" TODO: dig into nvim-lspconfig 
 Plug 'neovim/nvim-lspconfig'
+" TODO: dig into coq_nvim
 Plug 'ms-jpq/coq_nvim', {'branch': 'coq'}
 
 Plug 'cespare/vim-toml'
@@ -45,8 +45,10 @@ Plug 'beyondmarc/glsl.vim'
 
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-treesitter/nvim-treesitter'
+" TODO: dig into telescope
 Plug 'nvim-telescope/telescope.nvim'
 
+" TODO: replace feline and get rid of gitsigns 
 Plug 'lewis6991/gitsigns.nvim'
 Plug 'feline-nvim/feline.nvim'
 Plug 'mhinz/vim-startify'
@@ -69,6 +71,10 @@ let &showbreak = "→   "
 colorscheme supok
 
 
+" TODO: keybinding considerations:
+"  - is there a better option for <ESC> than jk?: jj, ctrl-c, ctrl-[, 
+"  - $ and ^ are annoying so i always do Ijk and Ajk. find a better mapping?
+"  - should I get used to commands with : instead of ;?
 inoremap jk <ESC>
 nnoremap j gj
 nnoremap k gk
@@ -82,6 +88,11 @@ nnoremap <C-s> :wa<CR>
 map Y y$
 nnoremap gV `[v`]
 
+" TODO: 
+" - better mapping for completion... I got used to doing ctrl-n because
+" ctrl-x+ctrl-o is so annoying
+" - don't autocomplete "BUF" stuff... aka word completion
+" - compilation/running/etc
 lua << EOF
     local lspconfig = require("lspconfig")
     local coq = require("coq")
@@ -274,7 +285,6 @@ let b:banner =<< trim END
 ⠀⠀⠀⠀⠀⠀⠈⠳⢤⣀⡶⠤⣷⣅⡀⠀⠀⠀⣀⡠⢔⠕⠁⠀⠀
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠙⠫⠿⠿⠿⠛⠋⠁⠀⠀⠀⠀
 END
-
 let g:startify_files_number = 5
 let g:startify_bookmarks = [ { "c": "~/.config/nvim" }, { "l": "C:/code/land" } ]
 let g:startify_commands = [ ]
