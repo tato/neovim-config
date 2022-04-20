@@ -59,11 +59,15 @@ set tabstop=4 shiftwidth=4 expandtab
 set ignorecase smartcase
 set scrolloff=5
 set title cursorline number relativenumber showmatch noruler
-set linebreak
 set noswapfile
-set formatoptions-=t formatoptions+=croj textwidth=79
+set formatoptions-=tc formatoptions+=roj textwidth=79 " reminder: i_CTRL-U
 set termguicolors
 set inccommand=nosplit
+set linebreak breakindent
+let &showbreak = "→   "
+
+colorscheme supok
+
 
 inoremap jk <ESC>
 nnoremap j gj
@@ -122,11 +126,9 @@ lua << EOF
         lspconfig[lsp].setup(coq.lsp_ensure_capabilities{ on_attach = on_attach, })
     end
 EOF
-
 COQnow -s
 
-colorscheme supok
-
+" TODO
 " lua require("statusline").setup()
 
 lua << EOF
