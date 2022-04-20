@@ -7,9 +7,29 @@ function M.move(direction)
     local nr = vim.fn.winnr()
     vim.cmd("wincmd "..direction)
     if vim.fn.winnr() == nr then
-        vim.cmd("wincmd n")
-        vim.cmd("wincmd "..string.upper(direction))
+        local splitbelow = vim.opt.splitbelow:get()
+        local splitright = vim.opt.splitright:get()
+
+        if direction == "h" then
+            vim.opt.splitright = false
+            vim.cmd("vsplit")
+        elseif direction == "j" then
+            vim.opt.splitbelow = true
+            vim.cmd("split")
+        elseif direction == "k" then
+            vim.opt.splitbelow = false
+            vim.cmd("split")
+        elseif direction == "l" then
+            vim.opt.splitright = true
+            vim.cmd("vsplit")
+        end
+
+        vim.cmd("enew")
+
+        vim.opt.splitbelow = splitbelow
+        vim.opt.splitright = splitright
     end
 end
+
 
 return M
