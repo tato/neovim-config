@@ -42,7 +42,7 @@ local theme = lush(function()
         LineNr { Comment },
         LineNrAbove { Comment },
         LineNrBelow { Comment },
-        NonText { Comment },
+        NonText { bg=Comment.bg, fg=Comment.fg.darken(60) },
         Pmenu { gui=Comment.gui, bg=black, fg=Comment.fg },
 
         Statement { gui="bold", fg=purple },
