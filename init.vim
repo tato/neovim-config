@@ -73,14 +73,10 @@ let &showbreak = "→   "
 " Some help buffers have dos line endings on Windows for some reason, and they
 " throw an error when opened because vim can't parse the modeline. Allow help
 " buffers to be opened with dos line endings to avoid that error.
-"
-" I have no way to detect if the buffer is a help buffer before the modeline
-" has been processed so I run the workaround for all .txt files. I'm sure this
-" will never come up in the future.
 set fileformats=unix
 augroup line_endings_dont_matter_in_help_buffers
     autocmd!
-    au BufReadPre  *.txt set fileformats+=dos
+    au BufReadPre  *.txt if &buftype == "help" | set fileformats+=dos | end
     au BufReadPost *.txt set fileformats-=dos
 augroup END
 
@@ -95,20 +91,17 @@ augroup END
 
 colorscheme supok
 
-" TODO: keybinding considerations:
-"  - is there a better option for <ESC> than jk?: jj, ctrl-c, ctrl-[, 
-"  - $ and ^ are annoying so i always do Ijk and Ajk. find a better mapping?
-"  - should I get used to commands with : instead of ;?
 inoremap jk <ESC>
 nnoremap j gj
 nnoremap k gk
 vnoremap j gj
 vnoremap k gk
-nnoremap ; :
-xnoremap ; :
-nnoremap : ;
-xnoremap : ;
+noremap H ^
+noremap L $
+noremap ; :
+noremap : ;
 nnoremap <C-s> :wa<CR>
+nnoremap Q :q<CR>
 map Y y$
 nnoremap gV `[v`]
 
