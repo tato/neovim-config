@@ -77,7 +77,6 @@ xnoremap : ;
 nnoremap <C-s> :wa<CR>
 map Y y$
 nnoremap gV `[v`]
-nnoremap Q :let<Space>@q=''<Left><C-R><C-R>q
 
 lua << EOF
     local lspconfig = require("lspconfig")
