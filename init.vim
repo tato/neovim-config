@@ -89,6 +89,10 @@ augroup ignore_swapfile_for_small_files
     au BufReadPost * if getfsize(expand("%")) < 256*1024*1024 | setlocal noswapfile | end
 augroup END
 
+augroup gui_conf
+    autocmd!
+    au UIEnter * set guifont=Iosevka\ Fixed:h18
+augroup END
 colorscheme supok
 
 inoremap jk <ESC>
@@ -104,6 +108,28 @@ nnoremap <C-s> :wa<CR>
 nnoremap Q :q<CR>
 map Y y$
 nnoremap gV `[v`]
+
+" clear search highlighting, close quickfix window, reload display
+nnoremap <silent> <C-l> :nohlsearch <bar> diffupdate <bar> cclose <bar> mode<CR>
+
+" <leader>h/j/k/l: move to window in a direction. if it doesn't
+" exist, create it.
+nnoremap <silent> <leader>h :lua require('config').move('h')<CR>
+nnoremap <silent> <leader>j :lua require('config').move('j')<CR>
+nnoremap <silent> <leader>k :lua require('config').move('k')<CR>
+nnoremap <silent> <leader>l :lua require('config').move('l')<CR>
+" <leader>H/J/K/L: move window to a direction
+nnoremap <silent> <leader>wh <C-w>H
+nnoremap <silent> <leader>wj <C-w>J
+nnoremap <silent> <leader>wk <C-w>K
+nnoremap <silent> <leader>wl <C-w>L
+" <leader>q: close window
+nnoremap <silent> <leader>q :close<CR>
+
+" edit/source init.vim
+nnoremap <silent> <leader>fed :e $MYVIMRC<CR>
+nnoremap <silent> <leader>fsd :source $MYVIMRC<CR> | nohlsearch
+
 
 " TODO: 
 " - better mapping for completion... I got used to doing ctrl-n because
@@ -316,36 +342,6 @@ nnoremap <C-p> <cmd>lua require('telescope.builtin').find_files()<cr>
 nnoremap <leader>fg <cmd>lua require('telescope.builtin').live_grep()<cr>
 nnoremap <leader>fb <cmd>lua require('telescope.builtin').buffers()<cr>
 nnoremap <leader>fh <cmd>lua require('telescope.builtin').help_tags()<cr>
-
-augroup gui_conf
-    autocmd!
-    au UIEnter * set guifont=Iosevka\ Fixed:h18
-augroup END
-
-" <leader>h/j/k/l: move to window in a direction. if it doesn't
-" exist, create it.
-nnoremap <silent> <leader>h :lua require('config').move('h')<CR>
-nnoremap <silent> <leader>j :lua require('config').move('j')<CR>
-nnoremap <silent> <leader>k :lua require('config').move('k')<CR>
-nnoremap <silent> <leader>l :lua require('config').move('l')<CR>
-" <leader>H/J/K/L: move window to a direction
-nnoremap <silent> <leader>wh <C-w>H
-nnoremap <silent> <leader>wj <C-w>J
-nnoremap <silent> <leader>wk <C-w>K
-nnoremap <silent> <leader>wl <C-w>L
-" <leader>q: close window
-nnoremap <silent> <leader>q :close<CR>
-
-
-nnoremap <silent> <leader>fed :e $MYVIMRC<CR>
-nnoremap <silent> <leader>fsd :source $MYVIMRC<CR> | nohlsearch
-
-nnoremap <silent> <C-l> :nohlsearch <bar> diffupdate <bar> cclose <bar> mode<CR>
-
-" nnoremap <silent> <C-.> :nohlsearch<C-R>=has('diff')?'<Bar>diffupdate':''<CR><CR><C-L>
-
-" nnoremap gb :ls<CR>:buffer<Space>
-" nnoremap <leader>b :buffer *
 
 " When editing a file, always jump to the last known cursor position.
 " Don't do it when the position is invalid, when inside an event handler
