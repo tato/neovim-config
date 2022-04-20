@@ -300,10 +300,10 @@ nnoremap <silent> <leader>j :lua require('config').move('j')<CR>
 nnoremap <silent> <leader>k :lua require('config').move('k')<CR>
 nnoremap <silent> <leader>l :lua require('config').move('l')<CR>
 " <leader>H/J/K/L: move window to a direction
-nnoremap <silent> <leader>H <C-w>H
-nnoremap <silent> <leader>J <C-w>J
-nnoremap <silent> <leader>K <C-w>K
-nnoremap <silent> <leader>L <C-w>L
+nnoremap <silent> <leader>wh <C-w>H
+nnoremap <silent> <leader>wj <C-w>J
+nnoremap <silent> <leader>wk <C-w>K
+nnoremap <silent> <leader>wl <C-w>L
 " <leader>q: close window
 nnoremap <silent> <leader>q :close<CR>
 
