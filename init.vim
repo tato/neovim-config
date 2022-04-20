@@ -54,22 +54,46 @@ Plug 'feline-nvim/feline.nvim'
 Plug 'mhinz/vim-startify'
 call plug#end()
 
-set fileformats=unix,dos
 set hidden undofile
 set clipboard+=unnamedplus
 set tabstop=4 shiftwidth=4 expandtab
 set ignorecase smartcase
 set scrolloff=5
 set title cursorline number relativenumber showmatch noruler
-set noswapfile
-set formatoptions-=tc formatoptions+=roj textwidth=79 " reminder: i_CTRL-U
+set formatoptions-=tc formatoptions+=rojq textwidth=79 " reminder: i_CTRL-U
 set termguicolors
 set inccommand=nosplit
 set linebreak breakindent
 let &showbreak = "→   "
 
-colorscheme supok
+" When opening a file for editing, assume unix line endings always. If vim
+" opens a file with dos line endings in this manner, it will show ^M at the end
+" of each line, which is a very obvious sign that something is wrong.
+"
+" Some help buffers have dos line endings on Windows for some reason, and they
+" throw an error when opened because vim can't parse the modeline. Allow help
+" buffers to be opened with dos line endings to avoid that error.
+"
+" I have no way to detect if the buffer is a help buffer before the modeline
+" has been processed so I run the workaround for all .txt files. I'm sure this
+" will never come up in the future.
+set fileformats=unix
+augroup line_endings_dont_matter_in_help_buffers
+    autocmd!
+    au BufReadPre  *.txt set fileformats+=dos
+    au BufReadPost *.txt set fileformats-=dos
+augroup END
 
+" I don't like swap files. I set swapfile by default so that vim doesn't choke
+" on huge files. After opening a file, check if it's small enough (<256MiB) and
+" set noswapfile locally.
+set swapfile
+augroup ignore_swapfile_for_small_files
+    autocmd!
+    au BufReadPost * if getfsize(expand("%")) < 256*1024*1024 | setlocal noswapfile | end
+augroup END
+
+colorscheme supok
 
 " TODO: keybinding considerations:
 "  - is there a better option for <ESC> than jk?: jj, ctrl-c, ctrl-[, 
