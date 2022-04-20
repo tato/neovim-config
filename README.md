@@ -1,1 +1,1 @@
-![doggos fighting in the snow](media/utala.png)
+<p align=center>🦇</p>
