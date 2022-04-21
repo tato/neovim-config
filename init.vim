@@ -20,23 +20,21 @@
 "⣿⣿⡏⠀⣿⣿⣿⠿⠃⢀⣴⣶⣾⣿⣿⣿⣿⣷⣾⢠⣶⣾⣮⣙⡻⣿⢿⣿⣿⣿⣿
 "⣿⣿⡇⠀⣿⣿⠃⠀⠀⣼⣿⣿⣿⣿⣿⣿⣿⣿⡟⡼⠿⣿⣿⣿⣿⣮⡑⡝⣿⣿⣿
 
-" try to set english language for the editor. it is usually spanish by default
-" on my systems, which is annoying when comparing certain error messages and
-" such. in theory this could fail, but i would be surprised if it does.
+" set english language for the editor. it is usually spanish by default on my
+" systems, which is annoying when comparing certain error messages and such. in
+" theory this could fail, but i would be surprised if it does.
 silent! language en_US
 silent! language en_US.utf-8
 
-" set mapleader before anything else. if any plugin defines a <Leader> mapping
-" while mapleader isn't set, it would use the default value of \. usually i
-" don't want plugins to set mappings by default, but just in case.
+" set mapleader before any other config. if any plugin defines a <Leader>
+" mapping while mapleader isn't set, it would use the default value of \.
+" usually i don't want plugins to set mappings by default, but just in case.
 let mapleader = " "
 
 call plug#begin(stdpath("data") . "/plugged")
 Plug 'rktjmp/lush.nvim'
 
-" TODO: dig into nvim-lspconfig 
 Plug 'neovim/nvim-lspconfig'
-" TODO: dig into coq_nvim
 Plug 'ms-jpq/coq_nvim', {'branch': 'coq'}
 
 Plug 'cespare/vim-toml'
@@ -114,10 +112,10 @@ nnoremap <silent> <C-l> :nohlsearch <bar> diffupdate <bar> cclose <bar> mode<CR>
 
 " <leader>h/j/k/l: move to window in a direction. if it doesn't
 " exist, create it.
-nnoremap <silent> <leader>h :lua require('config').move('h')<CR>
-nnoremap <silent> <leader>j :lua require('config').move('j')<CR>
-nnoremap <silent> <leader>k :lua require('config').move('k')<CR>
-nnoremap <silent> <leader>l :lua require('config').move('l')<CR>
+nnoremap <silent> <leader>h :lua require('my_config').move('h')<CR>
+nnoremap <silent> <leader>j :lua require('my_config').move('j')<CR>
+nnoremap <silent> <leader>k :lua require('my_config').move('k')<CR>
+nnoremap <silent> <leader>l :lua require('my_config').move('l')<CR>
 " <leader>H/J/K/L: move window to a direction
 nnoremap <silent> <leader>wh <C-w>H
 nnoremap <silent> <leader>wj <C-w>J
@@ -131,55 +129,7 @@ nnoremap <silent> <leader>fed :e $MYVIMRC<CR>
 nnoremap <silent> <leader>fsd :source $MYVIMRC<CR> | nohlsearch
 
 
-" TODO: 
-" - better mapping for completion... I got used to doing ctrl-n because
-" ctrl-x+ctrl-o is so annoying
-" - don't autocomplete "BUF" stuff... aka word completion
-" - compilation/running/etc
-lua << EOF
-    local lspconfig = require("lspconfig")
-    local coq = require("coq")
-    vim.g.coq_settings = { 
-        ["clients.snippets.warn"] = {},
-        ["display.icons.mode"] = "none",
-    }
-
-    -- Mappings.
-    -- See `:help vim.diagnostic.*` for documentation on any of the below functions
-    local map = vim.api.nvim_set_keymap
-    local opts = { noremap=true, silent=true }
-    map('n', '<space>e', '<cmd>lua vim.diagnostic.open_float()<CR>', opts)
-    map('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<CR>', opts)
-    map('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>', opts)
-    -- map('n', '<space>q', '<cmd>lua vim.diagnostic.setloclist()<CR>', opts)
-
-    local on_attach = function(client, bufnr)
-      -- Enable completion triggered by <c-x><c-o>
-      -- vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
-
-      -- Mappings.
-      -- See `:help vim.lsp.*` for documentation on any of the below functions
-      local bufmap = vim.api.nvim_buf_set_keymap
-      bufmap(bufnr, 'n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>', opts)
-      bufmap(bufnr, 'n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
-      bufmap(bufnr, 'n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
-      bufmap(bufnr, 'n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
-      bufmap(bufnr, 'n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
-      -- bufmap(bufnr, 'n', '<space>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', opts)
-      -- bufmap(bufnr, 'n', '<space>wr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', opts)
-      -- bufmap(bufnr, 'n', '<space>wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', opts)
-      bufmap(bufnr, 'n', '<space>D', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
-      bufmap(bufnr, 'n', '<space>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
-      -- bufmap(bufnr, 'n', '<space>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
-      bufmap(bufnr, 'n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
-      bufmap(bufnr, 'n', '<space>f', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
-    end
-
-    local servers = { "zls" }
-    for _, lsp in pairs(servers) do
-        lspconfig[lsp].setup(coq.lsp_ensure_capabilities{ on_attach = on_attach, })
-    end
-EOF
+lua require("my_config").setup_lsp()
 COQnow -s
 
 " TODO
@@ -371,3 +321,5 @@ function! <SID>SynStack()
     endif
     echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
 endfunction
+
+" tested on my daily driver, neovim 0.7.0
