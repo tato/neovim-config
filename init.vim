@@ -32,8 +32,6 @@ silent! language en_US.utf-8
 let mapleader = " "
 
 call plug#begin(stdpath("data") . "/plugged")
-Plug 'rktjmp/lush.nvim'
-
 Plug 'neovim/nvim-lspconfig'
 Plug 'ms-jpq/coq_nvim', {'branch': 'coq'}
 
@@ -43,13 +41,13 @@ Plug 'beyondmarc/glsl.vim'
 
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-treesitter/nvim-treesitter'
-" TODO: dig into telescope
 Plug 'nvim-telescope/telescope.nvim'
 
-" TODO: replace feline and get rid of gitsigns 
-Plug 'lewis6991/gitsigns.nvim'
-Plug 'feline-nvim/feline.nvim'
+Plug 'tpope/vim-fugitive'
+
 Plug 'mhinz/vim-startify'
+Plug 'rktjmp/lush.nvim'
+Plug 'sainnhe/sonokai'
 call plug#end()
 
 set hidden undofile
@@ -91,7 +89,7 @@ augroup gui_conf
     autocmd!
     au UIEnter * set guifont=Iosevka\ Fixed:h18
 augroup END
-colorscheme supok
+colorscheme sonokai
 
 inoremap jk <ESC>
 nnoremap j gj
@@ -132,135 +130,7 @@ nnoremap <silent> <leader>fsd :source $MYVIMRC<CR> | nohlsearch
 lua require("my_config").setup_lsp()
 COQnow -s
 
-" TODO
-" lua require("statusline").setup()
-
-lua << EOF
-    require("gitsigns").setup { signcolumn = false }
-
-    local feline = require("feline")
-    local vi_mode_utils = require("feline.providers.vi_mode")
-
-    local mode_hl = function (fg)
-        return function() 
-            if fg == "bg" then fg = "fg" end
-            return {
-                name = vi_mode_utils.get_mode_highlight_name(),
-                fg = fg,
-                -- bg = vi_mode_utils.get_mode_color(),
-                bg = "bg",
-                style = "bold",
-            }
-        end
-    end
-    
-    local components = { active = {}, inactive = {} }
-    components.active[1] = {
-        {
-            provider = "▊ ",
-            hl = mode_hl("purple"),
-        },
-        {
-            provider = "vi_mode",
-            hl = mode_hl("bg"),
-            right_sep = { str = " ", hl = mode_hl("bg") },
-            icon = "",
-        },
-        {
-            provider = "file_info",
-            hl = { fg = "fg", bg = "purple", style = "bold" },
-            left_sep = { str = " ", hl = { bg = "purple" } },
-            right_sep = { str = " ", hl = { bg = "purple", } },
-            icon = "",
-        },
-        {
-            provider = "file_size",
-            left_sep = { str = " ", hl = "StatusLine" },
-            hl = "StatusLine",
-            right_sep = {
-                { str = " ", hl = "StatusLine" },
-                { str = "vertical_bar_thin", hl = "StatusLine" },
-            },
-        },
-        {
-            provider = "position",
-            left_sep = " ",
-            right_sep = {
-                " ",
-                { str = "vertical_bar_thin", hl = { fg = "fg", bg = "bg" } },
-            },
-        },
-        {
-            provider = "diagnostic_errors", icon = "X"
-        },
-        {
-            provider = "diagnostic_warnings", icon = "!"
-        },
-    }
-
-    components.active[2] = {
-        {
-            provider = "git_branch",
-            hl = { style = "bold" },
-            left_sep = {
-                { str = "vertical_bar_thin", hl = { fg = "fg", bg = "bg" } },
-            },
-            icon = " ",
-        },
-        {
-            provider = "git_diff_added",
-            icon = " +",
-        },
-        {
-            provider = "git_diff_changed",
-            icon = " ~",
-        },
-        {
-            provider = "git_diff_removed",
-            right_sep = {
-                " ",
-                { str = "vertical_bar_thin", hl = { fg = "fg", bg = "bg" } },
-            },
-            icon = " -",
-        },
-        {
-            provider = "line_percentage",
-            hl = { style = "bold" },
-            left_sep = " ",
-            right_sep = " ",
-        },
-        {
-            provider = "scroll_bar",
-            hl = { fg = "purple", style = "bold" },
-        },
-    }
-
-    components.inactive[1] = {
-        {
-            provider = "file_info",
-            icon = "",
-            hl = { fg = "fg", bg = "purple", style = "bold" },
-            left_sep = { str = " ", hl = { fg = "NONE", bg = "purple" } },
-            right_sep = {
-                { str = " ", hl = { fg = "NONE", bg = "purple" } },
-                " ",
-            },
-        },
-        -- Empty component to fix the highlight till the end of the statusline
-        {},
-    }
-
-    local supok_theme = {
-        bg = "#EEF6EF",
-        fg = "#141411",
-        purple = "#b79ef7",
-    }
-
-    feline.setup({
-        components = components,
-        theme = supok_theme,
-    });
-EOF
+lua require("statusline").setup()
 
 let b:banner =<< trim END
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⡴⠞⢳⠀⠀⠀⠀⠀
@@ -284,6 +154,7 @@ let g:startify_commands = [ ]
 let g:startify_custom_header = startify#pad(b:banner)
 
 
+" Todo: configure telescope
 lua << EOF
     require("telescope").setup {
     }
