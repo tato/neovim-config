@@ -45,9 +45,14 @@ Plug 'nvim-telescope/telescope.nvim'
 
 Plug 'tpope/vim-fugitive'
 
-Plug 'mhinz/vim-startify'
+Plug 'echasnovski/mini.nvim', { 'branch': 'stable' }
+Plug 'akinsho/toggleterm.nvim', { 'tag': 'v2.*' }
+
 Plug 'rktjmp/lush.nvim'
 Plug 'sainnhe/sonokai'
+Plug 'mcchrish/zenbones.nvim'
+Plug 'fcpg/vim-fahrenheit'
+Plug 'vigoux/oak'
 call plug#end()
 
 set hidden undofile
@@ -89,7 +94,7 @@ augroup gui_conf
     autocmd!
     au UIEnter * set guifont=Iosevka\ Fixed:h18
 augroup END
-colorscheme sonokai
+colorscheme komi
 
 inoremap jk <ESC>
 nnoremap j gj
@@ -132,32 +137,34 @@ COQnow -s
 
 lua require("statusline").setup()
 
-let b:banner =<< trim END
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⡴⠞⢳⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡔⠋⠀⢰⠎⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣼⢆⣤⡞⠃⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣼⢠⠋⠁⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⢀⣀⣾⢳⠀⠀⠀⠀⢸⢠⠃⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⣀⡤⠴⠊⠉⠀⠀⠈⠳⡀⠀⠀⠘⢎⠢⣀⣀⣀⠀⠀⠀⠀⠀⠀⠀
-⠳⣄⠀⠀⡠⡤⡀⠀⠘⣇⡀⠀⠀⠀⠉⠓⠒⠺⠭⢵⣦⡀⠀⠀⠀
-⠀⢹⡆⠀⢷⡇⠁⠀⠀⣸⠇⠀⠀⠀⠀⠀⢠⢤⠀⠀⠘⢷⣆⡀⠀      NEOVIIIIIIIIIIIIIIM
-⠀⠀⠘⠒⢤⡄⠖⢾⣭⣤⣄⠀⡔⢢⠀⡀⠎⣸⠀⠀⠀⠀⠹⣿⡀              
-⠀⠀⢀⡤⠜⠃⠀⠀⠘⠛⣿⢸⠀⡼⢠⠃⣤⡟⠀⠀⠀⠀⠀⣿⡇
-⠀⠀⠸⠶⠖⢏⠀⠀⢀⡤⠤⠇⣴⠏⡾⢱⡏⠁⠀⠀⠀⠀⢠⣿⠃
-⠀⠀⠀⠀⠀⠈⣇⡀⠿⠀⠀⠀⡽⣰⢶⡼⠇⠀⠀⠀⠀⣠⣿⠟⠀
-⠀⠀⠀⠀⠀⠀⠈⠳⢤⣀⡶⠤⣷⣅⡀⠀⠀⠀⣀⡠⢔⠕⠁⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠙⠫⠿⠿⠿⠛⠋⠁⠀⠀⠀⠀
-END
-let g:startify_files_number = 5
-let g:startify_bookmarks = [ { "c": "~/.config/nvim" }, { "l": "C:/code/land" } ]
-let g:startify_commands = [ ]
-let g:startify_custom_header = startify#pad(b:banner)
-
-
-" Todo: configure telescope
 lua << EOF
-    require("telescope").setup {
-    }
+local starter = require("mini.starter")
+starter.setup {
+    header = "🦇 NEOVIIIIIIIIIIIIIIM 🦇",
+    footer = "<C-c> closes this buffer",
+    items = {
+        starter.sections.builtin_actions(),
+        {   name = "Config folder",
+            action = "cd ~/.config/nvim | e .",
+            section = "Bookmarks",
+        },
+        {   name = "Tiny Habitat",
+            action = "cd c:/code/tiny_habitat | e .",
+            section = "Bookmarks",
+        },
+    },
+    content_hooks = {
+        starter.gen_hook.adding_bullet(),
+        starter.gen_hook.aligning("center", "center"),
+    },
+}
+
+require("toggleterm").setup {
+    open_mapping = "<F3>"
+}
+
+-- TODO: configure telescope
+require("telescope").setup {}
 EOF
 nnoremap <C-p> <cmd>lua require('telescope.builtin').find_files()<cr>
 nnoremap <leader>fg <cmd>lua require('telescope.builtin').live_grep()<cr>
