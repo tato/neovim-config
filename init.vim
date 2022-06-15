@@ -152,7 +152,7 @@ starter.setup {
         },
         {
             name = "Git (via Fugitive)",
-            action = "Git | wincmd w | q",
+            action = "0Git",
             section = "Actions",
         },
         {
