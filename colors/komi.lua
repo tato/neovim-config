@@ -34,7 +34,7 @@ local theme = lush(function()
         NonText { Comment },
         Pmenu { Comment },
 
-        Statement { fg=hsluv(250, 80, 60) },
+        Statement { fg=hsluv(250, 75, 55) },
         Type { Statement },
         StorageClass { Statement },
         Structure { Statement },
@@ -87,6 +87,13 @@ local theme = lush(function()
 
         StatusLine { bg=Normal.fg, fg=Normal.bg },
         StatusLineNC { bg=Normal.fg.darken(50), fg=Normal.bg },
+
+        -- treesitter
+        TSConstBuiltin { Constant },
+        TSTodo { Todo },
+        TSType { fg=Type.fg.lighten(45) },
+        -- TSTypeBuiltin { TSType },
+        TSTypeQualifier { TSType },
 
         -- vim
         vimUserFunc { },
