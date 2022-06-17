@@ -90,6 +90,9 @@ local theme = lush(function()
         DiffChange { bg=yellow, fg=Normal.bg },
         DiffDelete { bg=red, fg=Normal.bg },
         DiffText { Normal },
+        diffAdded { DiffAdd },
+        diffChanged { DiffChange },
+        diffRemoved { DiffDelete },
 
         StatusLine { bg=Normal.fg.darken(20), fg=Normal.bg },
         StatusLineNC { bg=Normal.fg, fg=Normal.bg },
