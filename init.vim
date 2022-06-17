@@ -46,7 +46,6 @@ Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-vinegar'
 
 Plug 'echasnovski/mini.nvim', { 'branch': 'stable' }
-Plug 'akinsho/toggleterm.nvim', { 'tag': 'v2.*' }
 
 Plug 'rktjmp/lush.nvim'
 Plug 'sainnhe/sonokai'
@@ -61,7 +60,6 @@ lua require "telescope".setup {}
 lua require "mini.starter".setup(require "plugin_config.mini_starter")
 lua require "mini.tabline".setup(require "plugin_config.mini_tabline")
 lua require "mini.statusline".setup(require "plugin_config.mini_statusline")
-lua require "toggleterm".setup { open_mapping = "<F3>" }
 lua require "nvim-treesitter.configs".setup(require "plugin_config.nvim_treesitter")
 lua require "lspconfig"["zls"].setup { on_attach = require "plugin_config.lspconfig".on_attach }
 
