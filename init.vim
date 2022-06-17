@@ -123,6 +123,10 @@ nnoremap gV `[v`]
 " clear search highlighting, close quickfix window, reload display
 nnoremap <silent> <C-l> :nohlsearch <bar> diffupdate <bar> cclose <bar> mode<CR>
 
+" edit/source init.vim
+nnoremap <silent> <leader>fed :e $MYVIMRC<CR>
+nnoremap <silent> <leader>fsd :source $MYVIMRC<CR> | nohlsearch
+
 " <leader>h/j/k/l: move to window in a direction. if it doesn't
 " exist, create it.
 nnoremap <silent> <leader>h :lua require 'my_config'.move 'h'<CR>
@@ -140,10 +144,6 @@ nnoremap <silent> <leader>q :close<CR>
 nnoremap <silent> <leader>bn :bn<CR>
 nnoremap <silent> <leader>bd :lua require 'mini.bufremove'.delete()<CR>
 nnoremap <silent> <leader>!bd :lua require 'mini.bufremove'.delete(0, true)<CR>
-
-" edit/source init.vim
-nnoremap <silent> <leader>fed :e $MYVIMRC<CR>
-nnoremap <silent> <leader>fsd :source $MYVIMRC<CR> | nohlsearch
 
 nnoremap zp <cmd>lua require 'telescope.builtin'.find_files()<cr>
 nnoremap zz <cmd>lua require 'telescope.builtin'.builtin()<cr>
