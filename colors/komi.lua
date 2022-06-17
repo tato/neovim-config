@@ -87,6 +87,9 @@ local theme = lush(function()
 
         StatusLine { bg=Normal.fg, fg=Normal.bg },
         StatusLineNC { bg=Normal.fg.darken(50), fg=Normal.bg },
+        TabLine{ StatusLineNC },
+        TabLineFill{ StatusLineNC },
+        TabLineSel{ StatusLine },
 
         -- treesitter
         TSConstBuiltin { Constant },

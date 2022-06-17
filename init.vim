@@ -57,6 +57,15 @@ Plug 'cocopon/iceberg.vim'
 Plug 'owickstrom/vim-colors-paramount'
 call plug#end()
 
+lua require("statusline").setup()
+lua require("telescope").setup {}
+lua require("mini.starter").setup(require("plugin_config.mini_starter"))
+lua require("toggleterm").setup { open_mapping = "<F3>" }
+lua require("nvim-treesitter.configs").setup(require("plugin_config.nvim_treesitter"))
+
+lua require("my_config").setup_lsp()
+COQnow -s
+
 set hidden undofile
 set clipboard+=unnamedplus
 set tabstop=4 shiftwidth=4 expandtab
@@ -133,73 +142,8 @@ nnoremap <silent> <leader>q :close<CR>
 nnoremap <silent> <leader>fed :e $MYVIMRC<CR>
 nnoremap <silent> <leader>fsd :source $MYVIMRC<CR> | nohlsearch
 
-
-lua require("my_config").setup_lsp()
-COQnow -s
-
-lua require("statusline").setup()
-
-lua << EOF
-local starter = require("mini.starter")
-starter.setup {
-    header = "🦇 NEOVIIIIIIIIIIIIIIM 🦇",
-    footer = "<C-c> closes this buffer",
-    items = {
-        {
-            name = "Edit new buffer",
-            action = "enew",
-            section = "Actions",
-        },
-        {
-            name = "Git (via Fugitive)",
-            action = "0Git",
-            section = "Actions",
-        },
-        {
-            name = "Telescope",
-            action = "Telescope",
-            section = "Actions",
-        },
-        {
-            name = "Quit vim",
-            action = "quit",
-            section = "Actions",
-        },
-        {   name = "Config folder",
-            action = "cd ~/.config/nvim | e .",
-            section = "Bookmarks",
-        },
-        {   name = "Tiny Habitat",
-            action = "cd c:/code/tiny_habitat | e .",
-            section = "Bookmarks",
-        },
-    },
-    content_hooks = {
-        starter.gen_hook.adding_bullet(),
-        starter.gen_hook.aligning("center", "center"),
-    },
-}
-
-require("toggleterm").setup {
-    open_mapping = "<F3>"
-}
-
--- TODO: configure telescope
-require("telescope").setup {}
-
-require("nvim-treesitter.configs").setup {
-    ensure_installed = { "zig" },
-    sync_install = false,
-    highlight = {
-        enable = true,
-        additional_vim_regex_highlighting = false,
-    }
-}
-EOF
-nnoremap <C-p> <cmd>lua require('telescope.builtin').find_files()<cr>
-nnoremap <leader>fg <cmd>lua require('telescope.builtin').live_grep()<cr>
-nnoremap <leader>fb <cmd>lua require('telescope.builtin').buffers()<cr>
-nnoremap <leader>fh <cmd>lua require('telescope.builtin').help_tags()<cr>
+nnoremap zp <cmd>lua require('telescope.builtin').find_files()<cr>
+nnoremap zz <cmd>lua require('telescope.builtin').builtin()<cr>
 
 " When editing a file, always jump to the last known cursor position.
 " Don't do it when the position is invalid, when inside an event handler
