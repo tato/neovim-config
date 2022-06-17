@@ -138,6 +138,9 @@ nnoremap <silent> <leader>wl <C-w>L
 " <leader>q: close window
 nnoremap <silent> <leader>q :close<CR>
 
+nnoremap <silent> <leader>bd :lua require('mini.bufremove').delete()<CR>
+nnoremap <silent> <leader>bn :bn<CR>
+
 " edit/source init.vim
 nnoremap <silent> <leader>fed :e $MYVIMRC<CR>
 nnoremap <silent> <leader>fsd :source $MYVIMRC<CR> | nohlsearch
