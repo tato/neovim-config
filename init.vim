@@ -106,7 +106,7 @@ augroup gui_conf
     autocmd!
     au UIEnter * set guifont=Iosevka\ Fixed:h18
 augroup END
-colorscheme komi
+colorscheme nightlight
 
 inoremap jk <ESC>
 nnoremap j gj
