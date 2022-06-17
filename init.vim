@@ -120,7 +120,7 @@ noremap ; :
 noremap : ;
 nnoremap <C-s> :wa<CR>
 nnoremap Q :q<CR>
-map Y y$
+noremap Y y$
 nnoremap gV `[v`]
 
 " clear search highlighting, close quickfix window, reload display
