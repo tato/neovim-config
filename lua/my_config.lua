@@ -1,9 +1,9 @@
-local M = {}
+local my_config = {}
 
 -- move to the window in a direction. if there is no window in that
 -- direction, create a new one.
 -- this function can only take as argument "h", "j", "k" or "l"
-function M.move(direction)
+function my_config.move(direction)
     local nr = vim.fn.winnr()
     vim.cmd("wincmd "..direction)
     if vim.fn.winnr() == nr then
@@ -23,8 +23,6 @@ function M.move(direction)
             vim.opt.splitright = true
             vim.cmd("vsplit")
         end
-
-        vim.cmd("enew")
 
         vim.opt.splitbelow = splitbelow
         vim.opt.splitright = splitright
@@ -48,7 +46,7 @@ end
 --    * I would love <TAB> but I think it isn't possible because VIM is ancient trash
 --    * I got used to doing ctrl-n because ctrl-x+ctrl-o is so annoying
 --  * don't suggest "BUF" completions (aka word completion)
-function M.setup_lsp()
+function my_config.setup_lsp()
     local lspconfig = require("lspconfig")
     local coq = require("coq")
     vim.g.coq_settings = { 
@@ -89,4 +87,4 @@ function M.setup_lsp()
 end
 
 
-return M
+return my_config
