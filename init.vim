@@ -44,6 +44,7 @@ Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'nvim-telescope/telescope.nvim'
 
 Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-vinegar'
 
 Plug 'echasnovski/mini.nvim', { 'branch': 'stable' }
 Plug 'akinsho/toggleterm.nvim', { 'tag': 'v2.*' }
