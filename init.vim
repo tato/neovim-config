@@ -116,10 +116,10 @@ nnoremap <silent> <leader>fsd :source $MYVIMRC<CR> | nohlsearch
 
 " <leader>h/j/k/l: move to window in a direction. if it doesn't
 " exist, create it.
-nnoremap <silent> <leader>h :lua require 'my_config'.move 'h'<CR>
-nnoremap <silent> <leader>j :lua require 'my_config'.move 'j'<CR>
-nnoremap <silent> <leader>k :lua require 'my_config'.move 'k'<CR>
-nnoremap <silent> <leader>l :lua require 'my_config'.move 'l'<CR>
+nnoremap <silent> <leader>h :call bufmove#move('h')<CR>
+nnoremap <silent> <leader>j :call bufmove#move('j')<CR>
+nnoremap <silent> <leader>k :call bufmove#move('k')<CR>
+nnoremap <silent> <leader>l :call bufmove#move('l')<CR>
 " <leader>H/J/K/L: move window to a direction
 nnoremap <silent> <leader>wh <C-w>H
 nnoremap <silent> <leader>wj <C-w>J
