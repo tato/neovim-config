@@ -57,9 +57,10 @@ Plug 'cocopon/iceberg.vim'
 Plug 'owickstrom/vim-colors-paramount'
 call plug#end()
 
-lua require("statusline").setup()
 lua require("telescope").setup {}
 lua require("mini.starter").setup(require("plugin_config.mini_starter"))
+lua require("mini.tabline").setup(require("plugin_config.mini_tabline"))
+lua require("mini.statusline").setup(require("plugin_config.mini_statusline"))
 lua require("toggleterm").setup { open_mapping = "<F3>" }
 lua require("nvim-treesitter.configs").setup(require("plugin_config.nvim_treesitter"))
 
