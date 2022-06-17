@@ -18,10 +18,6 @@ vim.g.colors_name = "nightlight"
 local lush = require("lush")
 local hsluv = lush.hsluv
 
-local background = hsluv("#000000")
-local foreground = hsluv("#bfc8f2")
-local light_grey = hsluv("#a0a0a0")
-
 local blue    = hsluv("#62AAE4")
 local red     = hsluv("#f6768d")
 local green = hsluv("#9fd06d")
@@ -32,19 +28,20 @@ local yellow  = hsluv("#FBCD37").lighten(20)
 
 local theme = lush(function()
     return {
-        Normal { bg=background, fg=foreground, },
+        Normal { bg=hsluv(270, 70, 1), fg=hsluv(260, 50, 100), },
+        -- Normal { bg=hsluv(270, 70, 1), fg=hsluv(260, 50, 90), },
         VertSplit { Normal },
 
-        Identifier { fg=foreground.darken(20) },
+        Identifier { fg=Normal.fg.darken(20) },
 
-        Comment { fg=foreground.darken(30).desaturate(50) },
+        Comment { fg=Normal.fg.darken(30).desaturate(50) },
         Conceal { Comment },
         Folded { Comment },
         LineNr { Comment },
         LineNrAbove { Comment },
         LineNrBelow { Comment },
         NonText { bg=Comment.bg, fg=Comment.fg.darken(60) },
-        Pmenu { gui=Comment.gui, bg=background, fg=Comment.fg },
+        Pmenu { gui=Comment.gui, bg=Normal.bg, fg=Comment.fg },
 
         Statement { gui="bold", fg=blue },
         Type { Statement },
@@ -58,13 +55,13 @@ local theme = lush(function()
         String { fg=green },
         SpecialChar { Constant },
         Directory { Constant },
-        CursorLineNr { bg=background, fg=yellow, },
+        CursorLineNr { bg=Normal.bg, fg=yellow, },
 
-        Todo { gui="underline", bg=background, fg=red },
+        Todo { gui="underline", bg=Normal.bg, fg=red },
 
-        ColorColumn { bg=background },
-        CursorColumn { bg=background },
-        CursorLine { bg=background },
+        ColorColumn { bg=Normal.bg },
+        CursorColumn { bg=Normal.bg },
+        CursorLine { bg=Normal.bg },
 
         Operator { },
         Delimiter { },
@@ -96,6 +93,9 @@ local theme = lush(function()
 
         StatusLine { bg=Normal.fg.darken(20), fg=Normal.bg },
         StatusLineNC { bg=Normal.fg, fg=Normal.bg },
+        TabLine{ StatusLineNC },
+        TabLineFill{ StatusLineNC },
+        TabLineSel{ StatusLine },
 
         -- vim
         vimUserFunc { },
@@ -105,7 +105,7 @@ local theme = lush(function()
         zigVarDecl { Statement },
         zigExecution { Statement },
         zigEscape { Constant },
-        zigBuiltinFn { fg=foreground.darken(20) },
+        zigBuiltinFn { fg=Normal.fg.darken(20) },
 
         -- lua
         luaTable { },
