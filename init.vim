@@ -139,8 +139,9 @@ nnoremap <silent> <leader>wl <C-w>L
 " <leader>q: close window
 nnoremap <silent> <leader>q :close<CR>
 
-nnoremap <silent> <leader>bd :lua require('mini.bufremove').delete()<CR>
 nnoremap <silent> <leader>bn :bn<CR>
+nnoremap <silent> <leader>bd :lua require('mini.bufremove').delete()<CR>
+nnoremap <silent> <leader>!bd :lua require('mini.bufremove').delete(0, true)<CR>
 
 " edit/source init.vim
 nnoremap <silent> <leader>fed :e $MYVIMRC<CR>
