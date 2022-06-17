@@ -1,5 +1,5 @@
 return {
-    ensure_installed = { "zig" },
+    ensure_installed = { "zig", "toml", "glsl" },
     sync_install = false,
     highlight = {
         enable = true,

@@ -32,12 +32,9 @@ silent! language en_US.utf-8
 let mapleader = " "
 
 call plug#begin(stdpath("data") . "/plugged")
-Plug 'neovim/nvim-lspconfig'
-
-Plug 'cespare/vim-toml'
 Plug 'ziglang/zig.vim'
-Plug 'beyondmarc/glsl.vim'
 
+Plug 'neovim/nvim-lspconfig'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'nvim-telescope/telescope.nvim'
