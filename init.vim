@@ -58,14 +58,14 @@ Plug 'cocopon/iceberg.vim'
 Plug 'owickstrom/vim-colors-paramount'
 call plug#end()
 
-lua require("telescope").setup {}
-lua require("mini.starter").setup(require("plugin_config.mini_starter"))
-lua require("mini.tabline").setup(require("plugin_config.mini_tabline"))
-lua require("mini.statusline").setup(require("plugin_config.mini_statusline"))
-lua require("toggleterm").setup { open_mapping = "<F3>" }
-lua require("nvim-treesitter.configs").setup(require("plugin_config.nvim_treesitter"))
+lua require "telescope".setup {}
+lua require "mini.starter".setup(require "plugin_config.mini_starter")
+lua require "mini.tabline".setup(require "plugin_config.mini_tabline")
+lua require "mini.statusline".setup(require "plugin_config.mini_statusline")
+lua require "toggleterm".setup { open_mapping = "<F3>" }
+lua require "nvim-treesitter.configs".setup(require "plugin_config.nvim_treesitter")
 
-lua require("my_config").setup_lsp()
+lua require "my_config".setup_lsp()
 COQnow -s
 
 set hidden undofile
@@ -128,10 +128,10 @@ nnoremap <silent> <C-l> :nohlsearch <bar> diffupdate <bar> cclose <bar> mode<CR>
 
 " <leader>h/j/k/l: move to window in a direction. if it doesn't
 " exist, create it.
-nnoremap <silent> <leader>h :lua require('my_config').move('h')<CR>
-nnoremap <silent> <leader>j :lua require('my_config').move('j')<CR>
-nnoremap <silent> <leader>k :lua require('my_config').move('k')<CR>
-nnoremap <silent> <leader>l :lua require('my_config').move('l')<CR>
+nnoremap <silent> <leader>h :lua require 'my_config'.move 'h'<CR>
+nnoremap <silent> <leader>j :lua require 'my_config'.move 'j'<CR>
+nnoremap <silent> <leader>k :lua require 'my_config'.move 'k'<CR>
+nnoremap <silent> <leader>l :lua require 'my_config'.move 'l'<CR>
 " <leader>H/J/K/L: move window to a direction
 nnoremap <silent> <leader>wh <C-w>H
 nnoremap <silent> <leader>wj <C-w>J
@@ -141,15 +141,15 @@ nnoremap <silent> <leader>wl <C-w>L
 nnoremap <silent> <leader>q :close<CR>
 
 nnoremap <silent> <leader>bn :bn<CR>
-nnoremap <silent> <leader>bd :lua require('mini.bufremove').delete()<CR>
-nnoremap <silent> <leader>!bd :lua require('mini.bufremove').delete(0, true)<CR>
+nnoremap <silent> <leader>bd :lua require 'mini.bufremove'.delete()<CR>
+nnoremap <silent> <leader>!bd :lua require 'mini.bufremove'.delete(0, true)<CR>
 
 " edit/source init.vim
 nnoremap <silent> <leader>fed :e $MYVIMRC<CR>
 nnoremap <silent> <leader>fsd :source $MYVIMRC<CR> | nohlsearch
 
-nnoremap zp <cmd>lua require('telescope.builtin').find_files()<cr>
-nnoremap zz <cmd>lua require('telescope.builtin').builtin()<cr>
+nnoremap zp <cmd>lua require 'telescope.builtin'.find_files()<cr>
+nnoremap zz <cmd>lua require 'telescope.builtin'.builtin()<cr>
 
 " When editing a file, always jump to the last known cursor position.
 " Don't do it when the position is invalid, when inside an event handler
