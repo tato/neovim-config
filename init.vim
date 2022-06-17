@@ -33,7 +33,6 @@ let mapleader = " "
 
 call plug#begin(stdpath("data") . "/plugged")
 Plug 'neovim/nvim-lspconfig'
-Plug 'ms-jpq/coq_nvim', {'branch': 'coq'}
 
 Plug 'cespare/vim-toml'
 Plug 'ziglang/zig.vim'
@@ -64,9 +63,7 @@ lua require "mini.tabline".setup(require "plugin_config.mini_tabline")
 lua require "mini.statusline".setup(require "plugin_config.mini_statusline")
 lua require "toggleterm".setup { open_mapping = "<F3>" }
 lua require "nvim-treesitter.configs".setup(require "plugin_config.nvim_treesitter")
-
-lua require "my_config".setup_lsp()
-COQnow -s
+lua require "lspconfig"["zls"].setup { on_attach = require "plugin_config.lspconfig".on_attach }
 
 set hidden undofile
 set clipboard+=unnamedplus
