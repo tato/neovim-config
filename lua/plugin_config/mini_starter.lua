@@ -1,4 +1,28 @@
 local starter = require("mini.starter")
+
+local bookmarks = {}
+local bookmark = function(name, path)
+    return {
+        name = name,
+        action = "cd "..path.." | e .",
+        section = "Bookmarks",
+    }
+end
+
+local config_folder = vim.fn.getenv("XDG_CONFIG_HOME")
+if config_folder == vim.v.null then
+    if vim.fn.has("win32") == 1 then
+        config_folder = "~/AppData/Local/nvim"
+    else
+        config_folder = "~/.config/nvim"
+    end
+end
+table.insert(bookmarks, bookmark("Config folder", config_folder))
+
+if vim.fn.hostname() == "BASE" then
+    table.insert(bookmarks, bookmark("Tiny Habitat", "c:/code/tiny_habitat"))
+end
+
 return {
     header = "🦇 NEOVIIIIIIIIIIIIIIM 🦇",
     footer = "<C-c> closes this buffer",
@@ -23,14 +47,7 @@ return {
             action = "quit",
             section = "Actions",
         },
-        {   name = "Config folder",
-            action = "cd ~/.config/nvim | e .",
-            section = "Bookmarks",
-        },
-        {   name = "Tiny Habitat",
-            action = "cd c:/code/tiny_habitat | e .",
-            section = "Bookmarks",
-        },
+        bookmarks,
     },
     content_hooks = {
         starter.gen_hook.adding_bullet(),
