@@ -45,7 +45,7 @@ Plug 'fcpg/vim-fahrenheit'
 Plug 'owickstrom/vim-colors-paramount'
 call plug#end()
 
-lua require "telescope".setup {}
+lua require "telescope".setup(require "plugin_config.telescope")
 lua require "mini.starter".setup(require "plugin_config.mini_starter")
 lua require "mini.tabline".setup(require "plugin_config.mini_tabline")
 lua require "mini.statusline".setup(require "plugin_config.mini_statusline")
