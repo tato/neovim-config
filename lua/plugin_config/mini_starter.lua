@@ -13,6 +13,7 @@ table.insert(bookmarks, bookmark("Config folder", vim.fn.stdpath("config")))
 
 if vim.fn.hostname() == "BASE" then
     table.insert(bookmarks, bookmark("Tiny Habitat", "c:/code/tiny_habitat"))
+    table.insert(bookmarks, bookmark("monky garden", "d:/monky garden"))
 end
 
 return {
