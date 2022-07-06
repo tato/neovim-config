@@ -32,24 +32,25 @@ silent! language en_US.utf-8
 let mapleader = " "
 
 call plug#begin(stdpath("data") . "/plugged")
-Plug 'neovim/nvim-lspconfig'
-Plug 'nvim-lua/plenary.nvim'
-Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
-Plug 'nvim-telescope/telescope.nvim'
-Plug 'echasnovski/mini.nvim', { 'branch': 'stable' }
+Plug 'rktjmp/lush.nvim'
+Plug 'fcpg/vim-fahrenheit'
+Plug 'sainnhe/gruvbox-material'
+Plug 'owickstrom/vim-colors-paramount'
 Plug 'ziglang/zig.vim'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-vinegar'
-Plug 'rktjmp/lush.nvim'
-Plug 'fcpg/vim-fahrenheit'
-Plug 'owickstrom/vim-colors-paramount'
+Plug 'neovim/nvim-lspconfig'
+Plug 'nvim-lua/plenary.nvim'
+Plug 'nvim-telescope/telescope.nvim'
+Plug 'echasnovski/mini.nvim', { 'branch': 'stable' }
+" Plug 'nvim-treesitter/nvim-treesitter', { 'do': ':TSUpdate' }
 call plug#end()
 
 lua require "telescope".setup(require "plugin_config.telescope")
 lua require "mini.starter".setup(require "plugin_config.mini_starter")
 lua require "mini.tabline".setup(require "plugin_config.mini_tabline")
 lua require "mini.statusline".setup(require "plugin_config.mini_statusline")
-lua require "nvim-treesitter.configs".setup(require "plugin_config.nvim_treesitter")
+" lua require "nvim-treesitter.configs".setup(require "plugin_config.nvim_treesitter")
 lua require "lspconfig"["zls"].setup { on_attach = require "plugin_config.lspconfig".on_attach }
 
 set hidden undofile
@@ -91,7 +92,11 @@ augroup gui_conf
     autocmd!
     au UIEnter * set guifont=Iosevka\ Fixed:h18
 augroup END
-colorscheme nightlight
+set background=light
+let g:gruvbox_material_foreground = "mix"
+let g:gruvbox_material_background = "hard"
+let g:gruvbox_material_better_performance = 1
+colorscheme gruvbox-material
 
 inoremap jk <ESC>
 nnoremap j gj
