@@ -40,6 +40,7 @@ Plug 'neovim/nvim-lspconfig'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
 Plug 'echasnovski/mini.nvim', { 'branch': 'stable' }
+Plug 'folke/which-key.nvim'
 call plug#end()
 
 lua require "telescope".setup(require "plugin_config.telescope")
@@ -47,6 +48,7 @@ lua require "mini.starter".setup(require "plugin_config.mini_starter")
 lua require "mini.tabline".setup(require "plugin_config.mini_tabline")
 lua require "mini.statusline".setup(require "plugin_config.mini_statusline")
 lua require "lspconfig"["zls"].setup { on_attach = require "plugin_config.lspconfig".on_attach }
+lua require "which-key".setup(require "plugin_config.which_key")
 
 set hidden undofile
 set clipboard+=unnamedplus

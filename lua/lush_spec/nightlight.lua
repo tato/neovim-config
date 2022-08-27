@@ -8,6 +8,7 @@ local yellow = hsluv "#FBCD37".lighten(20)
 return lush(function()
     return {
         Normal { bg=hsluv(270, 30, 1), fg=hsluv(260, 15, 100), },
+        NormalFloat { bg=Normal.bg.lighten(20), fg=Normal.fg },
 
         Identifier { fg=Normal.fg },
         Comment { fg=Normal.fg.darken(30) },
