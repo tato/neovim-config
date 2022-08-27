@@ -58,7 +58,6 @@ set formatoptions-=tc formatoptions+=rojq textwidth=79 " reminder: i_CTRL-U
 set termguicolors
 set inccommand=nosplit
 set linebreak breakindent
-set mouse=
 let &showbreak = "→   "
 
 " When opening a file for editing, assume unix line endings always. If vim
@@ -87,8 +86,18 @@ augroup END
 augroup gui_conf
     autocmd!
     au UIEnter * set guifont=Iosevka\ Fixed:h18
-    au UIEnter * GuiTabline 0
 augroup END
+if exists(":GuiFont") 
+    GuiFont! Iosevka\ Fixed:h18
+    GuiTabline 1
+    GuiPopupmenu 1
+    GuiScrollBar 0
+endif
+if exists("g:neovide")
+    let g:neovide_transparency=0.85
+    let g:neovide_fullscreen=v:true
+endif
+set mouse=a
 set background=dark
 colorscheme nightlight
 
