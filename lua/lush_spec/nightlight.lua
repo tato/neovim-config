@@ -11,8 +11,6 @@ return lush(function()
 
         Identifier { fg=Normal.fg },
         Comment { fg=Normal.fg.darken(30) },
-        -- Comment { fg=hsluv(350, 100, 65)},
-        -- Comment { fg=hsluv("#926e51") },
         Conceal { fg=Normal.fg.darken(30).desaturate(50) },
         Folded { Conceal },
         LineNr { Conceal },
@@ -28,7 +26,6 @@ return lush(function()
         TypeDef { Statement },
         PreProc { Statement },
         Title { Statement },
-        CursorLineNr { fg=Statement.fg },
 
         Type {  gui="", fg=hsluv(150, 55, 80) },
         String { bg=hsluv(260, 55, 15) },
@@ -37,10 +34,13 @@ return lush(function()
         Directory { Constant },
 
         Todo { fg=red },
+        WarningMsg { Todo },
+        MoreMsg { Type },
 
         ColorColumn { bg=Normal.bg.lighten(5) },
         CursorColumn { bg=Normal.bg.lighten(5) },
         CursorLine { bg=Normal.bg.lighten(5) },
+        CursorLineNr { fg=Statement.fg, bg=CursorLine.bg },
 
         Operator { fg="NONE", bg="NONE", gui="NONE" },
         Delimiter { Operator },
@@ -73,8 +73,8 @@ return lush(function()
         diffChanged { DiffChange },
         diffRemoved { DiffDelete },
 
-        StatusLine { bg=Normal.fg.darken(20), fg=Normal.bg },
-        StatusLineNC { bg=Normal.fg, fg=Normal.bg },
+        StatusLine { bg=Normal.fg, fg=Normal.bg },
+        StatusLineNC { bg=Normal.fg.darken(40), fg=Normal.bg },
         TabLine{ StatusLineNC },
         TabLineFill{ StatusLineNC },
         TabLineSel{ StatusLine },
@@ -91,16 +91,5 @@ return lush(function()
 
         -- lua
         luaTable { Operator },
-
-        -- mini.starter
-        -- MiniStarterCurrent {},
-        -- MiniStarterFooter {},
-        -- MiniStarterHeader {},
-        -- MiniStarterInactive {},
-        -- MiniStarterItem {},
-        -- MiniStarterItemBullet {},
-        -- MiniStarterItemPrefix {},
-        -- MiniStarterSection {},
-        -- MiniStarterQuery {},
     }
 end)

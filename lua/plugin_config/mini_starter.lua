@@ -16,6 +16,18 @@ if vim.fn.hostname() == "BASE" then
     table.insert(bookmarks, bookmark("monky garden", "d:/monky garden"))
 end
 
+vim.cmd[[
+au VimEnter * ++once hi link MiniStarterCurrent    CursorLine
+au VimEnter * ++once hi link MiniStarterFooter     Type
+au VimEnter * ++once hi link MiniStarterHeader     Type
+au VimEnter * ++once hi link MiniStarterInactive   Comment
+au VimEnter * ++once hi link MiniStarterItem       Normal
+au VimEnter * ++once hi link MiniStarterItemBullet Normal
+au VimEnter * ++once hi link MiniStarterItemPrefix Statement
+au VimEnter * ++once hi link MiniStarterSection    Delimiter
+au VimEnter * ++once hi link MiniStarterQuery      Search
+]]
+
 return {
     header = "🦇 NEOVIIIIIIIIIIIIIIM 🦇",
     footer = "<C-c> closes this buffer",

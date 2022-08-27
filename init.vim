@@ -33,9 +33,6 @@ let mapleader = " "
 
 call plug#begin(stdpath("data") . "/plugged")
 Plug 'rktjmp/lush.nvim'
-Plug 'fcpg/vim-fahrenheit'
-Plug 'sainnhe/gruvbox-material'
-Plug 'owickstrom/vim-colors-paramount'
 Plug 'ziglang/zig.vim'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-vinegar'
@@ -43,14 +40,12 @@ Plug 'neovim/nvim-lspconfig'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
 Plug 'echasnovski/mini.nvim', { 'branch': 'stable' }
-" Plug 'nvim-treesitter/nvim-treesitter', { 'do': ':TSUpdate' }
 call plug#end()
 
 lua require "telescope".setup(require "plugin_config.telescope")
 lua require "mini.starter".setup(require "plugin_config.mini_starter")
 lua require "mini.tabline".setup(require "plugin_config.mini_tabline")
 lua require "mini.statusline".setup(require "plugin_config.mini_statusline")
-" lua require "nvim-treesitter.configs".setup(require "plugin_config.nvim_treesitter")
 lua require "lspconfig"["zls"].setup { on_attach = require "plugin_config.lspconfig".on_attach }
 
 set hidden undofile
@@ -63,6 +58,7 @@ set formatoptions-=tc formatoptions+=rojq textwidth=79 " reminder: i_CTRL-U
 set termguicolors
 set inccommand=nosplit
 set linebreak breakindent
+set mouse=
 let &showbreak = "→   "
 
 " When opening a file for editing, assume unix line endings always. If vim
@@ -91,12 +87,10 @@ augroup END
 augroup gui_conf
     autocmd!
     au UIEnter * set guifont=Iosevka\ Fixed:h18
+    au UIEnter * GuiTabline 0
 augroup END
-set background=light
-let g:gruvbox_material_foreground = "mix"
-let g:gruvbox_material_background = "hard"
-let g:gruvbox_material_better_performance = 1
-colorscheme gruvbox-material
+set background=dark
+colorscheme nightlight
 
 inoremap jk <ESC>
 nnoremap j gj
@@ -111,6 +105,7 @@ nnoremap <C-s> :wa<CR>
 nnoremap Q :q<CR>
 noremap Y y$
 nnoremap gV `[v`]
+nnoremap gb <C-6>
 
 " clear search highlighting, close quickfix window, reload display
 nnoremap <silent> <C-l> :nohlsearch <bar> diffupdate <bar> cclose <bar> mode<CR>
@@ -139,6 +134,7 @@ nnoremap <silent> <leader>!bd :lua require 'mini.bufremove'.delete(0, true)<CR>
 
 nnoremap zp <cmd>lua require 'telescope.builtin'.find_files()<cr>
 nnoremap zz <cmd>lua require 'telescope.builtin'.builtin()<cr>
+nnoremap zm <cmd>lua require 'telescope.builtin'.marks()<cr>
 
 " When editing a file, always jump to the last known cursor position.
 " Don't do it when the position is invalid, when inside an event handler
@@ -151,13 +147,6 @@ augroup last_position_jump
         \ |     exe "normal! g`\""
         \ | endif
 augroup END
-
-" When writing a search query in the command line, but before committing
-" to that search, use Tab to go to the next match and Shift-Tab to go to the
-" previous match
-" set wildcharm=<C-z>
-" cnoremap <expr> <Tab> getcmdtype() == "/" \|\| getcmdtype() == "?" ? "<C-g>" : "<C-z>"
-" cnoremap <expr> <S-Tab> getcmdtype() == "/" \|\| getcmdtype() == "?" ? "<C-t>" : "<S-Tab>"
 
 " echo the names of the highlighting groups applied to the character under the
 " cursor. The names may be linked to a more general group, which isn't shown.

@@ -99,6 +99,20 @@ local inactive = function()
     }
 end
 
+vim.cmd[[
+au VimEnter * ++once hi link MiniStatuslineModeNormal  Cursor
+au VimEnter * ++once hi link MiniStatuslineModeInsert  DiffChange
+au VimEnter * ++once hi link MiniStatuslineModeVisual  DiffAdd
+au VimEnter * ++once hi link MiniStatuslineModeReplace DiffDelete
+au VimEnter * ++once hi link MiniStatuslineModeCommand DiffText
+au VimEnter * ++once hi link MiniStatuslineModeOther   IncSearch
+
+au VimEnter * ++once hi link MiniStatuslineDevinfo  StatusLine
+au VimEnter * ++once hi link MiniStatuslineFilename StatusLine
+au VimEnter * ++once hi link MiniStatuslineFileinfo StatusLine
+au VimEnter * ++once hi link MiniStatuslineInactive StatusLineNC
+]]
+
 return {
     -- content = {
     --     active = active,
