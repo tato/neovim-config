@@ -36,7 +36,6 @@ local my_size_section = function()
 end
 
 local percent_section = function(args)
-    -- TODO: len == 2 if not trunc, len == 1 if trunc
     local curr = vim.fn.line(".")
     local last = vim.fn.line("$")
     if     curr == 0         then return "  "
@@ -76,16 +75,13 @@ local active = function()
     local percent = percent_section({ trunc_width = 120 });
 
     return st.combine_groups {
-        { hl = mode_hl, strings = { "" } }, "▊",
-        { strings = { my_mode_name() } },
+        { hl = mode_hl, strings = { my_mode_name() } },
 
         { hl = "StatusLine", strings = { filename } },
         "%<", -- Mark general truncate point
-        { strings = {  "│", my_size_section(), "%l:%c" } },
+        { strings = {  "│", my_size_section(), "%l:%c", "│ %p%%" } },
         "%=", -- End left alignment
-        -- TODO { strings = { git, diagnostics } },
-
-        percent,
+        { strings = { "%{FugitiveHead()}", diagnostics } },
     }
 end
 
@@ -93,9 +89,7 @@ local inactive = function()
     local filename = st.section_filename({ trunc_width = 80 })
     local fileinfo = st.section_fileinfo({ trunc_width = 80 })
     return st.combine_groups {
-        "▊",
         { strings = { filename }},
-        { strings = {  "│", my_size_section(), "%l:%c" } },
     }
 end
 
@@ -114,8 +108,8 @@ au VimEnter * ++once hi link MiniStatuslineInactive StatusLineNC
 ]]
 
 return {
-    -- content = {
-    --     active = active,
-    --     inactive = inactive,
-    -- },
+    content = {
+        active = active,
+        inactive = inactive,
+    },
 }
