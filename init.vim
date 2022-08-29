@@ -41,6 +41,15 @@ Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
 Plug 'echasnovski/mini.nvim', { 'branch': 'stable' }
 Plug 'folke/which-key.nvim'
+Plug 'nvim-treesitter/nvim-treesitter'
+
+Plug 'hrsh7th/vim-vsnip'
+Plug 'hrsh7th/cmp-vsnip'
+Plug 'hrsh7th/cmp-nvim-lsp'
+Plug 'hrsh7th/cmp-buffer'
+Plug 'hrsh7th/cmp-path'
+Plug 'hrsh7th/cmp-cmdline'
+Plug 'hrsh7th/nvim-cmp'
 call plug#end()
 
 lua require "telescope".setup(require "plugin_config.telescope")
@@ -49,6 +58,10 @@ lua require "mini.tabline".setup(require "plugin_config.mini_tabline")
 lua require "mini.statusline".setup(require "plugin_config.mini_statusline")
 lua require "lspconfig"["zls"].setup { on_attach = require "plugin_config.lspconfig".on_attach }
 lua require "which-key".setup(require "plugin_config.which_key")
+lua require "nvim-treesitter.configs".setup(require "plugin_config.nvim_treesitter")
+
+set completeopt=menu,menuone,noselect
+lua require "cmp".setup(require "plugin_config.cmp")
 
 set hidden undofile
 set clipboard+=unnamedplus
@@ -96,7 +109,6 @@ if exists(":GuiFont")
     GuiScrollBar 0
 endif
 if exists("g:neovide")
-    let g:neovide_transparency=0.85
     let g:neovide_fullscreen=v:true
 endif
 set mouse=a

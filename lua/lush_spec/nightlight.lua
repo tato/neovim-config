@@ -43,7 +43,9 @@ return lush(function()
         CursorLine { bg=Normal.bg.lighten(5) },
         CursorLineNr { fg=Statement.fg, bg=CursorLine.bg },
 
-        Operator { fg="NONE", bg="NONE", gui="NONE" },
+        -- Operator { fg="NONE", bg="NONE", gui="NONE" },
+        -- Operator { fg=hsluv(260, 90, 90) },
+        Operator { Comment },
         Delimiter { Operator },
         Special { Operator },
         FoldColumn { Operator },
@@ -82,13 +84,6 @@ return lush(function()
 
         -- vim
         vimUserFunc { },
-
-        -- zig (via zig.vim)
-        zigDummyVariable { },
-        zigVarDecl { Statement },
-        zigExecution { Statement },
-        zigEscape { Constant },
-        zigBuiltinFn { fg=Normal.fg.darken(20) },
 
         -- lua
         luaTable { Operator },
