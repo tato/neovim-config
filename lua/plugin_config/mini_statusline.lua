@@ -94,17 +94,20 @@ local inactive = function()
 end
 
 vim.cmd[[
-au VimEnter * ++once hi link MiniStatuslineModeNormal  Cursor
-au VimEnter * ++once hi link MiniStatuslineModeInsert  DiffChange
-au VimEnter * ++once hi link MiniStatuslineModeVisual  DiffAdd
-au VimEnter * ++once hi link MiniStatuslineModeReplace DiffDelete
-au VimEnter * ++once hi link MiniStatuslineModeCommand DiffText
-au VimEnter * ++once hi link MiniStatuslineModeOther   IncSearch
+augroup mini_sl_hl
+autocmd!
+au VimEnter * hi link MiniStatuslineModeNormal  Cursor
+au VimEnter * hi link MiniStatuslineModeInsert  DiffChange
+au VimEnter * hi link MiniStatuslineModeVisual  DiffAdd
+au VimEnter * hi link MiniStatuslineModeReplace DiffDelete
+au VimEnter * hi link MiniStatuslineModeCommand DiffText
+au VimEnter * hi link MiniStatuslineModeOther   IncSearch
 
-au VimEnter * ++once hi link MiniStatuslineDevinfo  StatusLine
-au VimEnter * ++once hi link MiniStatuslineFilename StatusLine
-au VimEnter * ++once hi link MiniStatuslineFileinfo StatusLine
-au VimEnter * ++once hi link MiniStatuslineInactive StatusLineNC
+au VimEnter * hi link MiniStatuslineDevinfo  StatusLine
+au VimEnter * hi link MiniStatuslineFilename StatusLine
+au VimEnter * hi link MiniStatuslineFileinfo StatusLine
+au VimEnter * hi link MiniStatuslineInactive StatusLineNC
+augroup end
 ]]
 
 return {

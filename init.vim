@@ -137,7 +137,7 @@ nnoremap <silent> <C-l> :nohlsearch <bar> diffupdate <bar> cclose <bar> mode<CR>
 
 " edit/source init.vim
 nnoremap <silent> <leader>fed :e $MYVIMRC<CR>
-nnoremap <silent> <leader>fsd :source $MYVIMRC<CR> | nohlsearch
+nnoremap <silent> <leader>fsd :source $MYVIMRC<CR> | doautocmd VimEnter
 
 " <leader>h/j/k/l: move to window in a direction. if it doesn't
 " exist, create it.
