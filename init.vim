@@ -42,6 +42,7 @@ Plug 'nvim-telescope/telescope.nvim'
 Plug 'echasnovski/mini.nvim', { 'branch': 'stable' }
 Plug 'folke/which-key.nvim'
 Plug 'nvim-treesitter/nvim-treesitter'
+Plug 'akinsho/toggleterm.nvim', { 'tag': 'v2.*' }
 
 Plug 'hrsh7th/vim-vsnip'
 Plug 'hrsh7th/cmp-vsnip'
@@ -59,6 +60,7 @@ lua require "mini.statusline".setup(require "plugin_config.mini_statusline")
 lua require "lspconfig"["zls"].setup { on_attach = require "plugin_config.lspconfig".on_attach }
 lua require "which-key".setup(require "plugin_config.which_key")
 lua require "nvim-treesitter.configs".setup(require "plugin_config.nvim_treesitter")
+lua require "toggleterm".setup(require "plugin_config.toggleterm")
 
 set completeopt=menu,menuone,noselect
 lua require "cmp".setup(require "plugin_config.cmp")
@@ -181,4 +183,4 @@ function! <SID>SynStack()
     echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
 endfunction
 
-" tested on my daily driver, neovim 0.7.0
+
