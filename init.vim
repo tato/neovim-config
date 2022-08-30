@@ -43,6 +43,7 @@ Plug 'echasnovski/mini.nvim', { 'branch': 'stable' }
 Plug 'folke/which-key.nvim'
 Plug 'nvim-treesitter/nvim-treesitter'
 Plug 'akinsho/toggleterm.nvim', { 'tag': 'v2.*' }
+Plug 'wellle/context.vim'
 
 Plug 'hrsh7th/vim-vsnip'
 Plug 'hrsh7th/cmp-vsnip'
@@ -61,6 +62,7 @@ lua require "lspconfig"["zls"].setup { on_attach = require "plugin_config.lspcon
 lua require "which-key".setup(require "plugin_config.which_key")
 lua require "nvim-treesitter.configs".setup(require "plugin_config.nvim_treesitter")
 lua require "toggleterm".setup(require "plugin_config.toggleterm")
+let g:context_enabled = 1
 
 set completeopt=menu,menuone,noselect
 lua require "cmp".setup(require "plugin_config.cmp")
