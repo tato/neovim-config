@@ -17,6 +17,6 @@ return {
         { name = "vsnip" },
         { name = "buffer" },
         { name = "path" },
-        { name = "cmdline" },
+        --{ name = "cmdline" },
     }),
 }

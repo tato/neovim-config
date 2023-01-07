@@ -33,17 +33,17 @@ let mapleader = " "
 
 call plug#begin(stdpath("data") . "/plugged")
 Plug 'rktjmp/lush.nvim'
-Plug 'ziglang/zig.vim'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-vinegar'
+Plug 'tato/zig.vim'
 Plug 'neovim/nvim-lspconfig'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
 Plug 'echasnovski/mini.nvim', { 'branch': 'stable' }
 Plug 'folke/which-key.nvim'
-Plug 'nvim-treesitter/nvim-treesitter'
-Plug 'akinsho/toggleterm.nvim', { 'tag': 'v2.*' }
-Plug 'wellle/context.vim'
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+Plug 'nvim-treesitter/nvim-treesitter-context'
+" Plug 'ggandor/leap.nvim'
 
 Plug 'hrsh7th/vim-vsnip'
 Plug 'hrsh7th/cmp-vsnip'
@@ -55,15 +55,17 @@ Plug 'hrsh7th/nvim-cmp'
 call plug#end()
 
 lua require "telescope".setup(require "plugin_config.telescope")
-lua require "mini.starter".setup(require "plugin_config.mini_starter")
+" lua require "mini.starter".setup(require "plugin_config.mini_starter")
 lua require "mini.tabline".setup(require "plugin_config.mini_tabline")
 lua require "mini.statusline".setup(require "plugin_config.mini_statusline")
-lua require "lspconfig"["zls"].setup { on_attach = require "plugin_config.lspconfig".on_attach }
+for b:lsp in ["zls"]
+    lua require "lspconfig"[vim.b.lsp].setup { on_attach = require "plugin_config.lspconfig".on_attach }
+endfor
 lua require "which-key".setup(require "plugin_config.which_key")
 lua require "nvim-treesitter.configs".setup(require "plugin_config.nvim_treesitter")
-lua require "toggleterm".setup(require "plugin_config.toggleterm")
-let g:context_enabled = 1
-
+lua require "treesitter-context".setup({})
+" lua require "leap".set_default_keymaps()
+ 
 set completeopt=menu,menuone,noselect
 lua require "cmp".setup(require "plugin_config.cmp")
 
@@ -112,9 +114,6 @@ if exists(":GuiFont")
     GuiPopupmenu 1
     GuiScrollBar 0
 endif
-if exists("g:neovide")
-    let g:neovide_fullscreen=v:true
-endif
 set mouse=a
 set background=dark
 colorscheme nightlight
@@ -132,7 +131,7 @@ nnoremap <C-s> :wa<CR>
 nnoremap Q :q<CR>
 noremap Y y$
 nnoremap gV `[v`]
-nnoremap gb <C-6>
+noremap gb <C-6>
 
 " clear search highlighting, close quickfix window, reload display
 nnoremap <silent> <C-l> :nohlsearch <bar> diffupdate <bar> cclose <bar> mode<CR>
