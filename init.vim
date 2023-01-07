@@ -63,7 +63,7 @@ for b:lsp in ["zls"]
 endfor
 lua require "which-key".setup(require "plugin_config.which_key")
 lua require "nvim-treesitter.configs".setup(require "plugin_config.nvim_treesitter")
-lua require "treesitter-context".setup({})
+lua require "treesitter-context".setup(require "plugin_config.nvim_treesitter_context")
 " lua require "leap".set_default_keymaps()
  
 set completeopt=menu,menuone,noselect
