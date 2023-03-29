@@ -4,9 +4,10 @@ local hsluv = lush.hsluv
 return lush(function()
     return {
         Normal { bg=hsluv(0, 0, 0), fg=hsluv(0, 0, 90) },
+        NormalFloat { bg=Normal.bg.lighten(10), fg=Normal.fg },
         VertSplit { fg=Normal.fg.darken(50) },
 
-        Identifier { Normal },
+        Identifier { fg=Normal.fg },
 
         Comment { fg=hsluv(250, 00, 50), gui="italic" },
         Conceal { Comment },
@@ -29,13 +30,13 @@ return lush(function()
         String { Constant },
         SpecialChar { Constant },
         Directory { Constant },
-        CursorLineNr { Constant },
 
         Todo { fg=hsluv(50, 100, 80), gui="underline bold" },
 
-        CursorLine { bg=Normal.bg.lighten(20) },
+        CursorLine { bg=Normal.bg.lighten(10) },
         ColorColumn { CursorLine },
         CursorColumn { CursorLine },
+        CursorLineNr { fg=Constant.fg, bg=CursorLine.bg },
 
         Operator { },
         Delimiter { },

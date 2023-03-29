@@ -48,10 +48,10 @@ Plug 'nvim-treesitter/nvim-treesitter-context'
 Plug 'hrsh7th/vim-vsnip'
 Plug 'hrsh7th/cmp-vsnip'
 Plug 'hrsh7th/cmp-nvim-lsp'
-Plug 'hrsh7th/cmp-buffer'
 Plug 'hrsh7th/cmp-path'
-Plug 'hrsh7th/cmp-cmdline'
 Plug 'hrsh7th/nvim-cmp'
+
+Plug 'mcchrish/zenbones.nvim'
 call plug#end()
 
 lua require "telescope".setup(require "plugin_config.telescope")
@@ -115,8 +115,9 @@ if exists(":GuiFont")
     GuiScrollBar 0
 endif
 set mouse=a
-set background=dark
-colorscheme nightlight
+set background=light
+let g:zenbones_lightness = "bright"
+colorscheme zenbones
 
 inoremap jk <ESC>
 nnoremap j gj
@@ -184,4 +185,4 @@ function! <SID>SynStack()
     echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
 endfunction
 
-
+let g:ruby_recommended_style = 0
