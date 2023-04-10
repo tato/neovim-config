@@ -1,5 +1,5 @@
 "⠀⠀⠀⠀⢀⣤⡀⣀⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-"⠀⠀⠀⠀⣿⠉⢻⠟⢹⣷⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠘⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀ ⡜⠀⠀ 
+"⠀⠀⠀⠀⣿⠉⢻⠟⢹⣷⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠘⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡜⠀⠀⠀
 "⠀⠀⠀⢀⣿⡄⠀⠀⣼⡏⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣤⣄⣠⣤⣄⠀⠀⠀⠑⡀⠀⠀⠀⠀VIIIIIIIIIIM⠀⠀⠀⠀⡔⠁⠀⠀⠀
 "⠀⠀⣰⡿⠋⠀⣀⣀⠈⣿⠂⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢻⣇⠘⠋⠀⣿⠇⠀⠀⠀⠈⠢⢄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⠴⠊⠀⠀⠀⠀⠀
 "⠀⣠⡟⠀⢀⣾⠟⠻⠿⠿⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣀⣀⣀⣀⡀⠀⠀⣾⠋⢀⣀⠈⠻⢶⣄⠀⠀⠀⠀⠀⢸⠀⠀⠀⢀⣀⣀⣀⣀⣀⡀⠤⠄⠒⠈⠀⠀⠀⠀⠀⠀⠀⠀
@@ -33,38 +33,23 @@ Plug 'rktjmp/lush.nvim'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-vinegar'
 Plug 'tato/zig.vim'
-Plug 'neovim/nvim-lspconfig'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
-Plug 'echasnovski/mini.nvim', { 'branch': 'stable' }
 Plug 'folke/which-key.nvim'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'nvim-treesitter/nvim-treesitter-context'
 " Plug 'ggandor/leap.nvim'
-
-Plug 'hrsh7th/vim-vsnip'
-Plug 'hrsh7th/cmp-vsnip'
-Plug 'hrsh7th/cmp-nvim-lsp'
-Plug 'hrsh7th/cmp-path'
-Plug 'hrsh7th/nvim-cmp'
-
-Plug 'mcchrish/zenbones.nvim'
+Plug 'nvim-lualine/lualine.nvim'
+Plug 'kdheepak/tabline.nvim'
 call plug#end()
 
 lua require "telescope".setup(require "plugin_config.telescope")
-" lua require "mini.starter".setup(require "plugin_config.mini_starter")
-lua require "mini.tabline".setup(require "plugin_config.mini_tabline")
-lua require "mini.statusline".setup(require "plugin_config.mini_statusline")
-for b:lsp in ["zls"]
-    lua require "lspconfig"[vim.b.lsp].setup { on_attach = require "plugin_config.lspconfig".on_attach }
-endfor
 lua require "which-key".setup(require "plugin_config.which_key")
 lua require "nvim-treesitter.configs".setup(require "plugin_config.nvim_treesitter")
 lua require "treesitter-context".setup(require "plugin_config.nvim_treesitter_context")
 " lua require "leap".set_default_keymaps()
- 
-set completeopt=menu,menuone,noselect
-lua require "cmp".setup(require "plugin_config.cmp")
+lua require "lualine".setup(require "plugin_config.lualine")
+lua require "tabline".setup(require "plugin_config.tabline")
 
 set hidden undofile
 set clipboard+=unnamedplus
@@ -105,16 +90,14 @@ augroup gui_conf
     autocmd!
     au UIEnter * set guifont=Iosevka\ Fixed:h18
 augroup END
-if exists(":GuiFont") 
+if exists(":GuiFont")
     GuiFont! Iosevka\ Fixed:h18
     GuiTabline 1
     GuiPopupmenu 1
     GuiScrollBar 0
 endif
 set mouse=a
-set background=light
-let g:zenbones_lightness = "bright"
-colorscheme zenbones
+colorscheme nightlight
 
 inoremap jk <ESC>
 nnoremap j gj
@@ -153,8 +136,8 @@ nnoremap <silent> <leader>wl <C-w>L
 nnoremap <silent> <leader>q :close<CR>
 
 nnoremap <silent> <leader>bn :bn<CR>
-nnoremap <silent> <leader>bd :lua require 'mini.bufremove'.delete()<CR>
-nnoremap <silent> <leader>!bd :lua require 'mini.bufremove'.delete(0, true)<CR>
+" TODO nnoremap <silent> <leader>bd :lua require 'mini.bufremove'.delete()<CR>
+" TODO nnoremap <silent> <leader>!bd :lua require 'mini.bufremove'.delete(0, true)<CR>
 
 nnoremap zp <cmd>lua require 'telescope.builtin'.find_files()<cr>
 nnoremap zz <cmd>lua require 'telescope.builtin'.builtin()<cr>

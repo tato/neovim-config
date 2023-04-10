@@ -21,16 +21,16 @@ return lush(function()
         VertSplit { NonText },
         Pmenu { gui=Conceal.gui, bg=Normal.bg, fg=Conceal.fg },
 
-        Statement { gui="", fg=hsluv(260, 100, 60) },
+        Statement { gui="", fg=hsluv(260, 90, 60) },
         StorageClass { Statement },
         Structure { Statement },
         TypeDef { Statement },
         PreProc { Statement },
         Title { Statement },
 
-        Type {  gui="", fg=hsluv(150, 55, 80) },
-        String { bg=hsluv(260, 55, 15) },
-        Constant { fg=hsluv(100, 55, 80) },
+        Type {  gui="", fg=hsluv(150, 70, 80) },
+        String { bg=hsluv(260, 70, 10) },
+        Constant { fg=hsluv(100, 70, 85) },
         SpecialChar { Constant },
         Directory { Constant },
 
@@ -38,13 +38,11 @@ return lush(function()
         WarningMsg { Todo },
         MoreMsg { Type },
 
-        ColorColumn { bg=Normal.bg.lighten(5) },
-        CursorColumn { bg=Normal.bg.lighten(5) },
-        CursorLine { bg=Normal.bg.lighten(5) },
+        ColorColumn { bg=Normal.bg.lighten(2) },
+        CursorColumn { bg=Normal.bg.lighten(2) },
+        CursorLine { bg=Normal.bg.lighten(2) },
         CursorLineNr { fg=Statement.fg, bg=CursorLine.bg },
 
-        -- Operator { fg="NONE", bg="NONE", gui="NONE" },
-        -- Operator { fg=hsluv(260, 90, 90) },
         Operator { Comment },
         Delimiter { Operator },
         Special { Operator },
@@ -87,5 +85,8 @@ return lush(function()
 
         -- lua
         luaTable { Operator },
+
+        -- zig
+        zigVarDecl { StorageClass },
     }
 end)
