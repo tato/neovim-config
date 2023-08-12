@@ -38,7 +38,8 @@ Plug 'nvim-telescope/telescope.nvim'
 Plug 'folke/which-key.nvim'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'nvim-treesitter/nvim-treesitter-context'
-" Plug 'ggandor/leap.nvim'
+Plug 'ggandor/leap.nvim'
+" Plug 'ggandor/lightspeed.nvim'
 Plug 'nvim-lualine/lualine.nvim'
 Plug 'kdheepak/tabline.nvim'
 call plug#end()
@@ -47,7 +48,7 @@ lua require "telescope".setup(require "plugin_config.telescope")
 lua require "which-key".setup(require "plugin_config.which_key")
 lua require "nvim-treesitter.configs".setup(require "plugin_config.nvim_treesitter")
 lua require "treesitter-context".setup(require "plugin_config.nvim_treesitter_context")
-" lua require "leap".set_default_keymaps()
+lua require "leap".set_default_keymaps()
 lua require "lualine".setup(require "plugin_config.lualine")
 lua require "tabline".setup(require "plugin_config.tabline")
 
